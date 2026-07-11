@@ -75,7 +75,7 @@ export default async function waldemar(pi: ExtensionAPI) {
           quietStartup: true,
           defaultThinkingLevel: "medium",
           hideThinkingBlock: false,
-          theme: "dark",
+          theme: "chronicle-keeper",
           editorPaddingX: 1,
           outputPad: 1,
           compaction: {
@@ -99,7 +99,7 @@ export default async function waldemar(pi: ExtensionAPI) {
         fs.writeFileSync(settingsPath, JSON.stringify(merged, null, 2));
 
         ctx.ui.notify(
-          "✅ Waldemar's settings have been applied to ~/.pi/agent/settings.json\n\nRestart pi for changes to take effect: pi /reload",
+          "✅ Waldemar's settings have been applied to ~/.pi/agent/settings.json\n\nApplied settings:\n  • theme: chronicle-keeper (Fantasy-inspired parchment aesthetic)\n  • quietStartup: true (No startup header)\n  • defaultThinkingLevel: medium\n  • Optimized compaction settings\n\nRestart pi for changes to take effect: pi /reload",
           "info"
         );
       } catch (e) {
