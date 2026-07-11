@@ -1,0 +1,73 @@
+{
+  "$schema": "./external-skills.schema.json",
+  "description": "External skills Waldemar bootstraps via the Skills CLI. Keep custom, handwritten Waldemar skills in ./skills only.",
+  "skills": [
+    {
+      "name": "agent-browser",
+      "source": "vercel-labs/agent-browser",
+      "enabled": true,
+      "fullDepth": false,
+      "postInstall": [
+        "npm install -g agent-browser",
+        "agent-browser install"
+      ]
+    },
+    {
+      "name": "find-skills",
+      "source": "vercel-labs/skills",
+      "enabled": true
+    },
+    {
+      "name": "gh-cli",
+      "source": "github/awesome-copilot",
+      "enabled": false,
+      "note": "Disabled: github/awesome-copilot no longer exposes a gh-cli skill; keep custom replacement in skills/ if needed."
+    },
+    {
+      "name": "excalidraw-diagram-generator",
+      "source": "github/awesome-copilot",
+      "enabled": true
+    },
+    {
+      "name": "postgres",
+      "source": "planetscale/database-skills",
+      "enabled": true
+    },
+    {
+      "name": "pgvector-semantic-search",
+      "source": "timescale/pg-aiguide",
+      "enabled": true
+    },
+    {
+      "name": "sentry-cli",
+      "source": "getsentry/sentry-for-ai",
+      "enabled": true
+    },
+    {
+      "name": "sentry-fix-issues",
+      "source": "getsentry/sentry-for-ai",
+      "enabled": true
+    },
+    {
+      "name": "sentry-feature-setup",
+      "source": "getsentry/sentry-for-ai",
+      "enabled": true
+    },
+    {
+      "name": "sentry-php-sdk",
+      "source": "getsentry/sentry-for-ai",
+      "enabled": true
+    },
+    {
+      "name": "microsoft-foundry",
+      "source": "microsoft/azure-skills",
+      "enabled": true,
+      "fullDepth": true
+    },
+    {
+      "name": "tabler",
+      "source": "josAlba/tabler@skill",
+      "enabled": true
+    }
+  ]
+}

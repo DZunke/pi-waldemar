@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["skills"],
+  "properties": {
+    "description": { "type": "string" },
+    "skills": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "source"],
+        "properties": {
+          "name": { "type": "string" },
+          "source": { "type": "string" },
+          "enabled": { "type": "boolean", "default": true },
+          "fullDepth": { "type": "boolean", "default": false },
+          "postInstall": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}
