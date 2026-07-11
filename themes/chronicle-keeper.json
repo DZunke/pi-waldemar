@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/earendil-works/pi/main/packages/coding-agent/src/modes/interactive/theme/theme-schema.json",
-  "name": "Chronicle Keeper",
+  "name": "chronicle-keeper",
   "description": "A warm, fantasy-inspired theme inspired by Chronicle Keeper's RPG aesthetic. Features warm golden accents on dark parchment-like backgrounds, optimized for Windows Terminal.",
   "vars": {
     "gold": "#D4A574",
