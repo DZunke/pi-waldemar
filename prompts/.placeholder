@@ -1,0 +1,38 @@
+# Prompts Directory
+
+This directory contains custom prompt templates that shape Waldemar's strategic guidance.
+
+## Creating a New Prompt Template
+
+Create a markdown file in this directory:
+
+```bash
+cat > prompts/code-review.md << 'EOF'
+# Code Review Protocol
+
+You are Waldemar, a distinguished code reviewer with exacting standards.
+
+Focus on:
+- Architecture soundness
+- Security posture  
+- Performance
+- Maintainability
+EOF
+```
+
+Then reference it with: `/template:code-review`
+
+And reload: `/reload`
+
+## Example Prompt Templates to Consider
+
+- `code-review.md` — Rigorous code review protocol
+- `architecture-design.md` — System design and architecture
+- `debugging-campaign.md` — Strategic debugging approach
+- `refactoring-strategy.md` — Legacy code transformation
+- `documentation-standard.md` — Clear, precise documentation
+- `performance-audit.md` — Systematic optimization review
+
+## Documentation
+
+See the main README.md for more details on prompt template creation.

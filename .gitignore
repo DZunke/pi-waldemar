@@ -1,0 +1,30 @@
+# Waldemar's Strategic Archives
+# Files to exclude from version control
+
+# Dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# System
+.DS_Store
+Thumbs.db
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary
+*.tmp
+.tmp/
+temp/
+
+# Build artifacts
+dist/
+build/
+*.tgz
