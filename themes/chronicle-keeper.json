@@ -68,11 +68,11 @@
     "thinkingHigh": "#e5c96f",
     "thinkingXhigh": "#f8f2e6",
     "thinkingMax": "lightCream",
-    "bashMode": "ruby",
-    "export": {
-      "pageBg": "#1a1410",
-      "cardBg": "#242018",
-      "infoBg": "#2d2420"
-    }
+    "bashMode": "ruby"
+  },
+  "export": {
+    "pageBg": "#1a1410",
+    "cardBg": "#242018",
+    "infoBg": "#2d2420"
   }
 }
