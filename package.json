@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "⚔️ Waldemar - Your Noble Captain of the Personal Guard. A distinguished and snobby military commander, the finest developer friend a Principal Engineer could ask for in these modern times.",
   "author": "The Court",
-  "keywords": ["pi-package", "waldemar", "developer-agent", "noble"],
+  "maintainers": [],
+  "keywords": ["pi-package", "waldemar", "developer-agent", "noble", "extension", "theme", "coding-agent", "fantasy-theme"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yourusername/waldemar.git"
@@ -13,5 +14,10 @@
     "skills": ["./skills"],
     "prompts": ["./prompts"],
     "themes": ["./themes"]
-  }
+  },
+  "homepage": "https://github.com/yourusername/waldemar#readme",
+  "bugs": {
+    "url": "https://github.com/yourusername/waldemar/issues"
+  },
+  "license": "MIT"
 }
