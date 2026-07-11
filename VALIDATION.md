@@ -4,11 +4,11 @@
 
 ### Structure & Organization
 - ✅ **package.json** - Proper pi manifest with all required fields
-- ✅ **extensions/** - Contains index.ts with proper ExtensionAPI implementation
+- ✅ **extensions/** - Contains focused single-purpose ExtensionAPI entrypoints
 - ✅ **themes/** - Contains chronicle-keeper.json theme file
 - ✅ **skills/** - Ready for custom skill additions (empty by default)
 - ✅ **prompts/** - Ready for custom prompt templates (empty by default)
-- ✅ **Documentation** - Comprehensive README.md, QUICKSTART.md, and HERALDRY.md
+- ✅ **Documentation** - Comprehensive README.md, QUICKSTART.md, HERALDRY.md, and focused docs/ guides
 
 ### Pi Coding Agent Compliance ✅
 
@@ -18,7 +18,7 @@
 - ✅ **Error handling** - Try-catch blocks with user-friendly error messages
 - ✅ **File system safety** - Handles missing/corrupted settings.json gracefully
 - ✅ **User interaction** - Uses ctx.ui.notify() for all user-facing messages
-- ✅ **Settings management** - `/waldemar-setup` command applies settings safely
+- ✅ **Settings management** - `/waldemar-setup` command applies settings, package dependencies, external skills, and MCP server config safely
 - ✅ **Status indicators** - Footer status with `ctx.ui.setStatus()`
 - ✅ **Command registration** - Proper `/command` registration with descriptions
 
@@ -44,6 +44,8 @@
 The package includes a `/waldemar-setup` command that:
 - ✅ Creates `~/.pi/agent/settings.json` if missing
 - ✅ Applies recommended settings (quietStartup, theme, thinking level)
+- ✅ Declares required third-party package dependencies in `package.json` (`pi-mcp-adapter`, `mcp-postgres`, `@sentry/mcp-server`) for pi-managed installation
+- ✅ Creates/merges `~/.pi/agent/mcp.json` with codegraph, postgres, and sentry MCP servers
 - ✅ Merges intelligently with existing settings
 - ✅ Handles file system errors gracefully
 - ✅ Provides user feedback on success/failure
@@ -51,7 +53,9 @@ The package includes a `/waldemar-setup` command that:
 ### Fully Transportable Setup ✅
 
 This package is designed for complete portability:
-- ✅ Single `pi install` command brings all extensions, skills, prompts, and themes
+- ✅ Single `pi install` command brings Waldemar extensions, custom skills, prompts, and themes
+- ✅ Third-party pi extensions and MCP server packages are declared as npm dependencies in `package.json`
+- ✅ External reused skills are defined in `config/external-skills.json` and installed by `scripts/bootstrap-skills.sh`
 - ✅ `/waldemar-setup` applies all optimized settings to the global config
 - ✅ No manual setup required beyond two commands
 - ✅ Can be published to GitHub and installed on any machine
@@ -122,7 +126,7 @@ The Chronicle Keeper theme draws inspiration from:
 - [x] Event listeners configured correctly
 - [x] Commands registered with descriptions
 - [x] Error handling for file operations
-- [x] No external dependencies (uses only pi built-ins)
+- [x] Runtime package dependencies are declared in `package.json`
 
 ### Theme Validation ✅
 - [x] All 51 required color tokens defined
@@ -157,16 +161,16 @@ The Chronicle Keeper theme draws inspiration from:
 
 ```
 Waldemar Pi Package
-├── Extensions: 1 (index.ts)
+├── Extensions: 7 focused entrypoints (persona, setup, startup, sessions, inventory, customize, status)
 ├── Themes: 1 (chronicle-keeper.json)
 ├── Skills: 0 (ready for expansion)
 ├── Prompts: 0 (ready for expansion)
-├── Commands: 3 (/waldemar-setup, /sessions, /waldemar-customize, /waldemar-status)
+├── Commands: 5 (/waldemar-setup, /waldemar-inventory, /sessions, /waldemar-customize, /waldemar-status)
 ├── Events: 4 (session_start, agent_start, agent_end, lifecycle monitoring)
-└── Documentation: 3 files (README, QUICKSTART, HERALDRY)
+└── Documentation: README, QUICKSTART, HERALDRY, AGENTS.md, and docs/ guides
 
 Lines of Code
-├── Extensions: ~180 LOC
+├── Extensions: focused TypeScript entrypoints plus shared lib helpers
 ├── Themes: 1 theme file with full color palette
 └── Documentation: ~400 lines
 
@@ -199,7 +203,7 @@ Package Quality
 - Add custom skills in `./skills/` directory
 - Add custom prompts in `./prompts/` directory
 - Create additional themes in `./themes/` directory
-- Extend functionality in `./extensions/index.ts`
+- Extend functionality by adding focused files in `./extensions/` and shared helpers in `./lib/`
 
 ---
 

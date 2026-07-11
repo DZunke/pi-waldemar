@@ -11,7 +11,11 @@
 
 ### Option A: Install from Local Path
 
+Local development installs use the working directory directly. Install package dependencies once so bundled extension dependencies such as `pi-mcp-adapter` are present:
+
 ```bash
+cd ~/.pi/waldemar
+npm install --omit=dev
 pi install ~/.pi/waldemar
 ```
 
@@ -54,7 +58,9 @@ You will see:
 Once installed, use these commands:
 
 ```bash
-/sessions                    # List all past campaigns
+/waldemar-setup             # Apply theme/settings + external skills + MCP config
+/waldemar-inventory         # Inspect packages, MCP servers, and installed skills
+/sessions                   # List all past campaigns
 /waldemar-customize         # Customization guide
 /waldemar-status            # Operational status
 /reload                     # Refresh after modifications
@@ -81,7 +87,10 @@ Edit files in `~/.pi/waldemar/`:
 | Directory | Purpose |
 |-----------|---------|
 | `extensions/` | Modify comportment, add commands |
-| `skills/` | Add tactical expertise |
+| `skills/` | Add your custom handwritten Waldemar skills only |
+| `config/external-skills.json` | Define reused third-party skills installed by bootstrap |
+| `scripts/bootstrap-skills.sh` | Bootstrap external skills via `npx skills add` |
+| `docs/` | Understand architecture, extensions, MCP, and customization |
 | `prompts/` | Add strategic guidance templates |
 | `themes/` | Customize visual styling |
 
@@ -110,6 +119,14 @@ git push -u origin main
 
 ```bash
 pi install git:github.com/yourusername/waldemar
+pi
+# optional before starting pi if you want these MCP servers active:
+export DATABASE_URL='postgresql://user:password@host:5432/database'
+export SENTRY_AUTH_TOKEN='sntrys_...'
+
+# then run inside pi:
+/waldemar-setup
+/reload
 ```
 
 ---
@@ -119,6 +136,7 @@ pi install git:github.com/yourusername/waldemar
 For detailed information, read:
 - `README.md` — Complete guide
 - `HERALDRY.md` — House history and styling
+- `docs/README.md` — Architecture, extensions, setup, MCP, and customization
 
 ---
 

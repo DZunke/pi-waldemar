@@ -30,6 +30,17 @@ I am not merely an AI agent. I am a distinguished officer of considerable expert
 - **🔄 Session Awareness** — I remember your past campaigns and offer continuity
 - **⚙️ Endlessly Customizable** — Your vision shapes my comportment
 
+### Communication Rules
+
+Waldemar is also enforced through the focused system-prompt extension `extensions/persona.ts`, backed by shared rules in `lib/waldemar.ts`. The extension appends persona rules before every agent run:
+
+- refined military bearing and noble courtesy
+- occasional address as "my liege" or "Principal Engineer"
+- medieval campaign language where it improves flavour without harming clarity
+- exacting standards with tasteful disdain for mediocrity, never for the user
+- technical accuracy, safety, and concise usefulness always outrank theatrics
+- reduced flourish for serious problems, security issues, destructive operations, failures, and dense debugging
+
 ---
 
 ## 🚀 Installation
@@ -38,6 +49,8 @@ I am not merely an AI agent. I am a distinguished officer of considerable expert
 
 ```bash
 # From local development
+cd ~/.pi/waldemar
+npm install --omit=dev   # local-path installs use this working tree directly
 pi install ~/.pi/waldemar
 
 # Or from your GitHub repository (once pushed)
@@ -93,6 +106,12 @@ This displays the complete customization guide, showing you where to:
 ### `/waldemar-status`
 Request a status report. Waldemar shall provide a full operational briefing.
 
+### `/waldemar-inventory`
+Inspect installed Waldemar packages, MCP servers, and installed skills on the current machine.
+
+### `/waldemar-setup`
+Reconcile this machine with Waldemar defaults: theme, compaction settings, MCP server configuration, and external skills. Third-party pi extensions such as `pi-mcp-adapter` and MCP server packages for postgres/sentry are declared in `package.json` dependencies. Pi should install package dependencies automatically for git/npm package installs. Setup configures the `codegraph`, `postgres`, and `sentry` MCP servers and executes `scripts/bootstrap-skills.sh`.
+
 ### `/reload`
 Refresh Waldemar's entire arsenal (extensions, skills, prompts, themes).
 
@@ -105,13 +124,27 @@ Execute this after any modifications to your captain's configuration.
 ```
 waldemar/
 ├── package.json              # The official charter
-├── extensions/
-│   └── index.ts             # Waldemar's primary comportment
-├── skills/                  # Specialized tactical expertise
-├── prompts/                 # Strategic guidance templates
-├── themes/                  # Heraldic visual styling
+├── AGENTS.md               # Development rules for keeping Waldemar orderly
+├── extensions/             # Small single-purpose pi extension entrypoints
+│   ├── persona.ts          # System-prompt persona and communication rules
+│   ├── setup.ts            # Machine bootstrap and settings reconciliation
+│   ├── startup.ts          # Greeting and lifecycle status
+│   ├── sessions.ts         # Campaign/session commands
+│   ├── inventory.ts        # Package/MCP/skill inspection
+│   ├── customize.ts        # Customization guidance
+│   └── status.ts           # Operational status report
+├── lib/
+│   └── waldemar.ts         # Shared constants, helpers, and types
+├── skills/                 # Your custom handwritten Waldemar skills only
+├── config/
+│   └── external-skills.json # Defined list of reused third-party skills
+├── scripts/
+│   └── bootstrap-skills.sh # Installs external skills via npx skills
+├── prompts/                # Strategic guidance templates
+├── themes/                 # Heraldic visual styling
+├── docs/                   # Focused documentation for architecture and extensions
 ├── README.md               # This noble document
-└── HERALDRY.md            # (Optional) House sigil and history
+└── HERALDRY.md             # (Optional) House sigil and history
 ```
 
 ---
@@ -124,18 +157,15 @@ Waldemar's behavior, capabilities, and presentation are entirely within your con
 
 **Path:** `~/.pi/waldemar/extensions/`
 
-Edit `index.ts` to:
-- Modify greeting messages
-- Add custom commands
-- Adjust military formality level
-- Implement tactical behaviors
+Each extension file should own one clear concern. Shared helpers belong in `lib/`, not in top-level `extensions/` helper files.
 
-Example: Change greeting language
+Examples:
+- Modify greeting messages in `extensions/startup.ts`
+- Adjust persona language in `extensions/persona.ts` and `lib/waldemar.ts`
+- Add setup/bootstrap logic in `extensions/setup.ts`
+- Add a new command in its own focused `extensions/<command-name>.ts`
 
-```typescript
-// In extensions/index.ts
-ctx.ui.notify("⚔️ Waldemar reports: A pleasure to engage in further conquests!", "info");
-```
+Avoid recreating a monolithic `extensions/index.ts`; such sprawl is unbecoming of a disciplined guard.
 
 ### 2. Creating Specialized Skills
 
@@ -249,7 +279,14 @@ Simply install from your repository:
 pi install git:github.com/yourusername/waldemar
 ```
 
-Your entire configuration—extensions, skills, prompts, themes, comportment—transfers instantly.
+Your core configuration—extensions, skills, prompts, themes, comportment—transfers instantly. After installing on a fresh machine, run `/waldemar-setup` once to reconcile machine-local settings, npm package dependencies, external skills, and MCP servers such as codegraph, postgres, and sentry.
+
+For postgres and sentry MCP usage, provide credentials through environment variables before starting pi:
+
+```bash
+export DATABASE_URL='postgresql://user:password@host:5432/database'
+export SENTRY_AUTH_TOKEN='sntrys_...'
+```
 
 ---
 
@@ -285,14 +322,16 @@ For complex configurations, you may organize Waldemar's comportment across multi
 
 ```
 extensions/
-├── index.ts                    # Main bearing and greeting
-├── safety-protocols.ts         # Military discipline guardrails
-├── tactical-commands.ts        # Custom commands
-├── strategic-tools.ts          # Specialized capabilities
-└── ceremonial-rendering.ts     # Visual presentation
+├── persona.ts                  # System prompt/persona rules
+├── setup.ts                    # Machine setup and bootstrap
+├── startup.ts                  # Greeting and lifecycle status
+├── sessions.ts                 # Session/campaign commands
+├── inventory.ts                # Package/MCP/skill inspection
+├── customize.ts                # Customization guidance
+└── status.ts                   # Operational status report
 ```
 
-Each file exports its own default function and is automatically discovered.
+Each top-level extension file exports its own default function and is automatically discovered. Shared helpers belong in `lib/`, not in top-level `extensions/` helper files.
 
 ---
 
@@ -313,10 +352,20 @@ Each file exports its own default function and is automatically discovered.
 
 ## 📚 Extended Resources
 
+For Waldemar package internals:
+
+- [Waldemar docs index](docs/README.md)
+- [Architecture](docs/architecture.md)
+- [Setup and portability](docs/setup-and-portability.md)
+- [MCP servers](docs/mcp.md)
+- [External skills](docs/external-skills.md)
+- [Customization](docs/customization.md)
+- [Extension index](docs/extensions/README.md)
+
 For deeper understanding of pi's capabilities and your captain's potential:
 
 - [Pi Extensions Documentation](https://pi.dev/docs/extensions)
-- [Pi Packages Guide](https://pi.dev/docs/packages)  
+- [Pi Packages Guide](https://pi.dev/docs/packages)
 - [Extension Examples](https://github.com/earendil-works/pi-coding-agent/tree/main/examples/extensions)
 
 ---
