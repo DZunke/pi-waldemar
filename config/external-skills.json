@@ -34,12 +34,6 @@
       "enabled": true
     },
     {
-      "name": "excalidraw-diagram-generator",
-      "source": "github/awesome-copilot",
-      "installer": "gh-skill",
-      "enabled": true
-    },
-    {
       "name": "postgres",
       "source": "planetscale/database-skills",
       "enabled": true
@@ -72,12 +66,6 @@
       "name": "sentry-php-sdk",
       "source": "getsentry/sentry-for-ai",
       "enabled": true
-    },
-    {
-      "name": "microsoft-foundry",
-      "source": "microsoft/azure-skills",
-      "enabled": true,
-      "fullDepth": true
     },
     {
       "name": "tabler",

@@ -36,9 +36,9 @@ gh skill install <source> <name> --agent pi --scope user --force
 - `find-skills` — discover additional installable skills.
 - `grill-me` — adversarial review and challenge prompts from `mattpocock/skills`.
 - `interview-me` — interview-practice prompts from `addyosmani/agent-skills`.
-- `gh-cli` and `excalidraw-diagram-generator` — installed from `github/awesome-copilot` through `gh skill install`.
+- `gh-cli` — installed from `github/awesome-copilot` through `gh skill install`.
 - `sentry-cli` — installs the Sentry CLI through post-install commands.
-- Sentry, Postgres, pgvector, Azure Foundry, Tabler, and diagramming skills are also declared in `config/external-skills.json`.
+- Sentry, Postgres, pgvector, and Tabler skills are also declared in `config/external-skills.json`.
 
 ## Bootstrap behaviour
 
