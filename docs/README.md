@@ -9,6 +9,7 @@ This directory explains how the Waldemar pi package is structured and how to mod
 - [Command Reference](commands.md) — commands added by the Waldemar package
 - [MCP Servers](mcp.md) — codegraph MCP configuration
 - [External Skills](external-skills.md) — reused skills installed by the bootstrap script
+- [Prompt Templates](prompts.md) — on-demand workflows and prompt-vs-skill decision flow
 - [Customization](customization.md) — where to change behaviour, tone, skills, prompts, and themes
 - [Extension Index](extensions/README.md) — purpose of each focused extension
 

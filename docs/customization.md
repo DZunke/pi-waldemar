@@ -34,6 +34,18 @@ When commands are added, removed, or materially changed, update:
 - External skills list: `config/external-skills.json`
 - External skills installer: `scripts/bootstrap-skills.sh`
 
+## Add a prompt workflow
+
+Create a Markdown template in:
+
+```text
+prompts/my-workflow.md
+```
+
+Use prompt templates for explicit on-demand workflows such as `/write-ticket`. If the workflow grows into a larger reusable method, promote it to a skill. If it needs enforced UI or control flow, promote it to a focused extension command.
+
+See `docs/prompts.md` for the decision flow.
+
 ## Add a custom skill
 
 Create:
