@@ -50,14 +50,6 @@ const WALDEMAR_STARTUP_REPORTS: StartupReport[] = [
       "A disciplined engagement should discourage it.",
     ],
   },
-  {
-    title: "Falkensee Watch",
-    lines: [
-      "Falcon sight is upon the codefield.",
-      "Speed remains welcome; avoidable ruin remains beneath contempt.",
-      "The standards are raised; the field awaits your order.",
-    ],
-  },
 ];
 
 const WALDEMAR_STATUS_MOODS: StatusMood[] = [
