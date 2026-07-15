@@ -5,7 +5,7 @@ Waldemar is intended to make a fresh machine operational quickly.
 ## Fresh machine flow
 
 ```bash
-pi install git:github.com/yourusername/waldemar
+pi install git:github.com/DZunke/pi-waldemar
 pi
 ```
 

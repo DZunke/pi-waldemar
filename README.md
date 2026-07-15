@@ -1,5 +1,9 @@
 # Waldemar of Falkensee
 
+<p align="center">
+  <img src="waldemar-of-falkensee.png" alt="Heraldic portrait of Waldemar of Falkensee" width="360">
+</p>
+
 A portable [pi](https://pi.dev/) coding-agent package for a disciplined personal codewright: Waldemar of Falkensee, Captain of the King's Personal Guard and Warden of the Ordered Line.
 
 > Excellence is not negotiable. It is inevitable.
@@ -8,7 +12,7 @@ Waldemar packages persona, focused extensions, themes, prompts, custom skills, e
 
 ## What this package provides
 
-- A Falkensee persona and operating doctrine grounded in [`HERALDRY.md`](HERALDRY.md)
+- The Waldemar of Falkensee persona and operating doctrine grounded in [`HERALDRY.md`](HERALDRY.md)
 - Focused pi extensions for setup, presence, postures, safeguards, sessions, inventory, chronicle, and status
 - A command chamber via `/waldemar`
 - The `falkensee-heraldry` and `chronicle-keeper` themes
@@ -27,7 +31,7 @@ pi install .
 From GitHub after publishing:
 
 ```bash
-pi install git:github.com/yourusername/waldemar
+pi install git:github.com/DZunke/pi-waldemar
 ```
 
 Then start pi and run:

@@ -1,7 +1,7 @@
 ```
 ╔════════════════════════════════════════════════════════════════════════╗
 ║                          QUICK START GUIDE                            ║
-║                  For Installing House Falkensee's Guard                ║
+║                For Installing Waldemar of Falkensee                    ║
 ╚════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -24,7 +24,7 @@ pi install ~/.pi/waldemar
 First, push your package to GitHub, then:
 
 ```bash
-pi install git:github.com/yourusername/waldemar
+pi install git:github.com/DZunke/pi-waldemar
 ```
 
 ### Option C: Test Without Installing
@@ -114,14 +114,14 @@ cd ~/.pi/waldemar
 git init
 git add .
 git commit -m "⚔️ Waldemar reports for duty"
-git remote add origin git@github.com:yourusername/waldemar.git
+git remote add origin git@github.com:DZunke/pi-waldemar.git
 git push -u origin main
 ```
 
 ### Install on Another Machine
 
 ```bash
-pi install git:github.com/yourusername/waldemar
+pi install git:github.com/DZunke/pi-waldemar
 pi
 # then run inside pi:
 /waldemar-setup

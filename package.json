@@ -16,7 +16,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourusername/waldemar.git"
+    "url": "git+https://github.com/DZunke/pi-waldemar.git"
   },
   "pi": {
     "extensions": [
@@ -48,9 +48,9 @@
   "scripts": {
     "bootstrap:skills": "./scripts/bootstrap-skills.sh"
   },
-  "homepage": "https://github.com/yourusername/waldemar#readme",
+  "homepage": "https://github.com/DZunke/pi-waldemar#readme",
   "bugs": {
-    "url": "https://github.com/yourusername/waldemar/issues"
+    "url": "https://github.com/DZunke/pi-waldemar/issues"
   },
   "license": "MIT"
 }
