@@ -117,7 +117,7 @@ export default function startupExtension(pi: ExtensionAPI) {
       sessionHistory = [];
     }
 
-    displayNobleGreeting(ctx, sessionHistory);
+    displayStartupRapport(ctx, sessionHistory);
 
     try {
       const settingsPath = path.join(os.homedir(), ".pi/agent/settings.json");
@@ -157,53 +157,18 @@ function randomStatusMood(): StatusMood {
   return WALDEMAR_STATUS_MOODS[Math.floor(Math.random() * WALDEMAR_STATUS_MOODS.length)];
 }
 
-function displayNobleGreeting(ctx: any, sessionHistory: SessionInfo[]) {
+function displayStartupRapport(ctx: any, sessionHistory: SessionInfo[]) {
   const report = randomStartupReport();
   const dominionName = path.basename(ctx.cwd) || ctx.cwd;
   const campaignWord = sessionHistory.length === 1 ? "campaign" : "campaigns";
+  const fieldLine = report.lines[Math.floor(Math.random() * report.lines.length)];
 
-  const greeting = formatWaldemarBox(report.title, [
-    "Waldemar of Falkensee reports.",
-    "Captain of the King's Personal Guard. Warden of the Ordered Line.",
-    "",
-    ...report.lines,
-    "",
-    `Dominion: ${dominionName}`,
-    `Chronicle: ${sessionHistory.length} recorded ${campaignWord} in this field`,
-    "Command chamber: /waldemar",
-    "Direct orders: /posture  /chronicle  /sessions  /waldemar-status",
-  ]);
-
-  ctx.ui.notify(greeting, "info");
+  ctx.ui.notify(
+    `📜 ${report.title}: ${fieldLine}\nDominion: ${dominionName} · Chronicle: ${sessionHistory.length} recorded ${campaignWord} · Chamber: /waldemar`,
+    "info"
+  );
 }
 
 function randomStartupReport(): StartupReport {
   return WALDEMAR_STARTUP_REPORTS[Math.floor(Math.random() * WALDEMAR_STARTUP_REPORTS.length)];
-}
-
-function formatWaldemarBox(title: string, lines: string[]) {
-  const width = 78;
-  const innerWidth = width - 4;
-  const heading = ` Waldemar — ${title} `;
-  const leftRule = Math.max(1, Math.floor((innerWidth - heading.length) / 2));
-  const rightRule = Math.max(1, innerWidth - heading.length - leftRule);
-  const top = `┌${"─".repeat(leftRule)}${heading}${"─".repeat(rightRule)}┐`;
-  const body = lines.flatMap((line) => wrapBoxLine(line, innerWidth - 1)).map((line) => `│ ${line.padEnd(innerWidth - 1)}│`);
-  const bottom = `└${"─".repeat(innerWidth)}┘`;
-  return [top, ...body, bottom].join("\n");
-}
-
-function wrapBoxLine(line: string, width: number): string[] {
-  if (line.length <= width) return [line];
-
-  const wrapped: string[] = [];
-  let remaining = line;
-  while (remaining.length > width) {
-    const breakAt = remaining.lastIndexOf(" ", width);
-    const sliceAt = breakAt > 0 ? breakAt : width;
-    wrapped.push(remaining.slice(0, sliceAt));
-    remaining = remaining.slice(sliceAt).trimStart();
-  }
-  wrapped.push(remaining);
-  return wrapped;
 }
