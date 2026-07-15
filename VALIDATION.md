@@ -20,7 +20,7 @@
 - ✅ **User interaction** - Uses ctx.ui.notify() for all user-facing messages
 - ✅ **Settings management** - `/waldemar-setup` command applies settings, package dependencies, external skills, and MCP server config safely
 - ✅ **Status indicators** - Footer status with `ctx.ui.setStatus()` plus a custom Falkensee footer via `ctx.ui.setFooter()`
-- ✅ **Command registration** - Proper `/command` registration with descriptions
+- ✅ **Command registration** - Proper `/command` registration with descriptions; core commands exercised in print mode for runtime load faults
 - ✅ **Custom TUI components** - Command chamber, compact display, heraldic image overlay, custom header/footer, and chronicle entry renderer
 - ✅ **Tool/event interception** - Guard postures and loyal-dissent safeguards adjust tools, thinking level, system prompt, and risky tool calls
 
@@ -45,7 +45,7 @@
 
 The package includes a `/waldemar-setup` command that:
 - ✅ Creates `~/.pi/agent/settings.json` if missing
-- ✅ Applies recommended settings (quietStartup, theme, thinking level)
+- ✅ Applies recommended settings (quietStartup, `falkensee-heraldry` theme, thinking level)
 - ✅ Declares required third-party package dependencies in `package.json` (`pi-mcp-adapter`, `mcp-postgres`, `@sentry/mcp-server`) for pi-managed installation
 - ✅ Creates/merges `~/.pi/agent/mcp.json` with codegraph, postgres, and sentry MCP servers
 - ✅ Merges intelligently with existing settings
@@ -129,6 +129,8 @@ The Chronicle Keeper theme draws inspiration from:
 - [x] Commands registered with descriptions
 - [x] Error handling for file operations
 - [x] Runtime package dependencies are declared in `package.json`
+- [x] Package explicitly loads through `pi -e ~/.pi/waldemar --offline --list-models`
+- [x] Core command handlers exercised with `pi --offline -e ~/.pi/waldemar --no-session -p`
 
 ### Theme Validation ✅
 - [x] All 51 required color tokens defined
@@ -191,7 +193,7 @@ Package Quality
 ### For Personal Use
 1. Run `pi install ~/.pi/waldemar` (if not already done)
 2. Run `pi` to start pi
-3. Execute `/waldemar-setup` to apply recommended settings
+3. Execute `/waldemar-setup` to apply recommended settings, including `falkensee-heraldry`
 4. Execute `/reload` to apply theme changes
 5. Run `pi --theme chronicle-keeper` or `pi --theme falkensee-heraldry` to test a packaged theme
 

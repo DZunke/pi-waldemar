@@ -23,7 +23,7 @@ export default function presenceExtension(pi: ExtensionAPI) {
   let phase: PresencePhase = "ready";
   let postureLabel = "Watch";
   let modelLabel = "no model";
-  let thinkingLabel = pi.getThinkingLevel();
+  let thinkingLabel = "medium";
   let renderFooter: (() => void) | undefined;
 
   const requestFooterRender = () => renderFooter?.();
@@ -113,8 +113,9 @@ function installFooter(
       render(width: number): string[] {
         const state = getState();
         const branch = footerData.getGitBranch() || "no branch";
-        const statuses = Array.from(footerData.getExtensionStatuses().values())
-          .filter(Boolean)
+        const statuses = Array.from(footerData.getExtensionStatuses().entries())
+          .filter(([key, value]) => Boolean(value) && key !== "waldemar-presence" && key !== "waldemar-posture")
+          .map(([, value]) => value)
           .slice(0, 2)
           .join(" │ ");
 

@@ -45,4 +45,4 @@ Edit or add files in `themes/`. Packaged themes are:
 - `chronicle-keeper` — warm parchment, leather, and gold.
 - `falkensee-heraldry` — dark lake blue, crimson-forward accents, restrained earned gold, and clear silver from Waldemar's heraldic achievement.
 
-The default theme is selected by `/waldemar-setup` via the `theme` setting. To choose the heraldic theme manually, set `"theme": "falkensee-heraldry"` in `~/.pi/agent/settings.json` or select it through `/settings`.
+The default theme selected by `/waldemar-setup` is `falkensee-heraldry`. To choose another livery manually, set `"theme": "chronicle-keeper"` or another theme name in `~/.pi/agent/settings.json`, use `/waldemar-theme`, or select it through `/settings`.

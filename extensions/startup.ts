@@ -170,8 +170,8 @@ function displayNobleGreeting(ctx: any, sessionHistory: SessionInfo[]) {
     "",
     `Dominion: ${dominionName}`,
     `Chronicle: ${sessionHistory.length} recorded ${campaignWord} in this field`,
-    "Standing orders: /sessions  /waldemar-status  /waldemar-inventory",
-    "Customs and armory: /waldemar-customize",
+    "Command chamber: /waldemar",
+    "Direct orders: /posture  /chronicle  /sessions  /waldemar-status",
   ]);
 
   ctx.ui.notify(greeting, "info");

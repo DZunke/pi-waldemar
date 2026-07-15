@@ -124,7 +124,7 @@ export default function setupExtension(pi: ExtensionAPI) {
 
         ctx.ui.setStatus("waldemar-setup", "⚔️ setup: complete");
         ctx.ui.notify(
-          `✅ Waldemar's settings have been applied.\n\nUpdated ~/.pi/agent/settings.json:\n  • theme: chronicle-keeper\n  • quietStartup: true\n  • defaultThinkingLevel: medium\n  • optimized compaction settings\n\nPackage dependencies:\n  • pi-mcp-adapter is declared in Waldemar package.json and should be installed by pi for git/npm package installs${dependencyNotice}\n\nUpdated ~/.pi/agent/mcp.json:\n  • codegraph MCP server via: codegraph serve --mcp\n  • postgres MCP server via bundled mcp-postgres in read-only mode\n  • sentry MCP server via bundled @sentry/mcp-server${mcpNotice}\n\nSkills:${skillsNotice || "\n  • no external skill bootstrap script found"}\n\nNext step: run /reload or restart pi if dependencies were newly installed.`,
+          `✅ Waldemar's settings have been applied.\n\nUpdated ~/.pi/agent/settings.json:\n  • theme: falkensee-heraldry\n  • quietStartup: true\n  • defaultThinkingLevel: medium\n  • optimized compaction settings\n\nPackage dependencies:\n  • pi-mcp-adapter is declared in Waldemar package.json and should be installed by pi for git/npm package installs${dependencyNotice}\n\nUpdated ~/.pi/agent/mcp.json:\n  • codegraph MCP server via: codegraph serve --mcp\n  • postgres MCP server via bundled mcp-postgres in read-only mode\n  • sentry MCP server via bundled @sentry/mcp-server${mcpNotice}\n\nSkills:${skillsNotice || "\n  • no external skill bootstrap script found"}\n\nNext step: run /reload or restart pi if dependencies were newly installed.`,
           "info"
         );
       } catch (error) {

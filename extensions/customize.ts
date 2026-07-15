@@ -12,9 +12,14 @@ export default function customizeExtension(pi: ExtensionAPI) {
 
 Your noble captain's demeanor and capabilities may be adjusted thusly:
 
-📁 EXTENSIONS (Behavioral & Commands)
+📁 EXTENSIONS (Standing Orders & Commands)
    Path: ${packagePath}/extensions/
    → Keep one concern per extension file
+   → presence.ts: command-chamber header, footer, title, and working indicator
+   → postures.ts: tactical guard formations and posture prompt rules
+   → safeguards.ts: loyal-dissent confirmations for risky operations
+   → chamber.ts: central command chamber, arms, compact, and theme controls
+   → chronicle.ts: durable TUI-only campaign records
    → Shared code belongs in ${packagePath}/lib/
    → Do not build another monolithic index.ts; such things are for lesser courts
 
@@ -43,6 +48,8 @@ Your noble captain's demeanor and capabilities may be adjusted thusly:
 
 🎨 THEMES (Heraldic Coloring)
    Path: ${packagePath}/themes/
+   → falkensee-heraldry is the default command-chamber livery
+   → chronicle-keeper remains available for warmer parchment styling
    → Customize the visual presentation of your command center
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

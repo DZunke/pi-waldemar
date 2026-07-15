@@ -18,7 +18,7 @@ Then inside pi:
 
 ## What `/waldemar-setup` does
 
-- writes recommended global pi settings
+- writes recommended global pi settings, including the `falkensee-heraldry` theme
 - preserves existing package entries in global settings
 - writes/merges `~/.pi/agent/mcp.json`
 - configures codegraph, postgres, and sentry MCP servers

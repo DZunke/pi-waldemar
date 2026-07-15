@@ -15,6 +15,7 @@ type PathRisk = {
 
 const DESTRUCTIVE_COMMAND_PATTERNS: Array<{ pattern: RegExp; reason: string }> = [
   { pattern: /(^|[;&|]\s*)rm\s+[^\n]*(?:-[^\s]*r[^\s]*f|-[^\s]*f[^\s]*r)/i, reason: "recursive force removal" },
+  { pattern: /(^|[;&|]\s*)rm\s+(?=[^\n]*(?:--recursive|-[^\s]*r))(?=[^\n]*(?:--force|-[^\s]*f))/i, reason: "recursive force removal" },
   { pattern: /\bsudo\b/i, reason: "privileged command" },
   { pattern: /\bgit\s+reset\s+--hard\b/i, reason: "hard git reset" },
   { pattern: /\bgit\s+clean\s+[^\n]*-[^\n]*f/i, reason: "force-cleaning untracked files" },
@@ -31,13 +32,26 @@ const DESTRUCTIVE_COMMAND_PATTERNS: Array<{ pattern: RegExp; reason: string }> =
 /** Loyal-dissent safeguards for destructive commands, sensitive paths, and dirty working trees. */
 export default function safeguardsExtension(pi: ExtensionAPI) {
   let dirtyRepoAcknowledged = false;
+  let initialDirtySummary: string | undefined;
+  let initialDirtyChecked = false;
 
   pi.on("session_start", async () => {
     dirtyRepoAcknowledged = false;
+    initialDirtySummary = undefined;
+    initialDirtyChecked = false;
   });
 
   pi.on("tool_call", async (event, ctx) => {
-    const objection = await inspectToolCall(pi, event.toolName, event.input as Record<string, unknown>, ctx, dirtyRepoAcknowledged);
+    if ((event.toolName === "edit" || event.toolName === "write") && !initialDirtyChecked) {
+      initialDirtySummary = await getDirtyRepoSummary(pi, ctx.cwd);
+      initialDirtyChecked = true;
+      if (!initialDirtySummary) dirtyRepoAcknowledged = true;
+    }
+
+    const objection = await inspectToolCall(event.toolName, event.input as Record<string, unknown>, ctx, {
+      dirtyRepoAcknowledged,
+      initialDirtySummary,
+    });
     if (!objection) return;
 
     if (!ctx.hasUI) {
@@ -62,11 +76,10 @@ export default function safeguardsExtension(pi: ExtensionAPI) {
 }
 
 async function inspectToolCall(
-  pi: ExtensionAPI,
   toolName: string,
   input: Record<string, unknown>,
   ctx: ExtensionContext,
-  dirtyRepoAcknowledged: boolean,
+  dirtyRepo: { dirtyRepoAcknowledged: boolean; initialDirtySummary?: string },
 ): Promise<Objection | undefined> {
   if (toolName === "bash") {
     const command = String(input.command ?? "");
@@ -93,16 +106,13 @@ async function inspectToolCall(
       };
     }
 
-    if (!dirtyRepoAcknowledged && ctx.hasUI) {
-      const dirty = await getDirtyRepoSummary(pi, ctx.cwd);
-      if (dirty) {
-        return {
-          title: "Captain's Objection: Dirty Dominion",
-          message: `The working tree already contains uncommitted changes. I should not let one campaign trample another without your explicit order.\n\nCurrent changes:\n${dirty}`,
-          severity: "warning",
-          blockWithoutUi: false,
-        };
-      }
+    if (!dirtyRepo.dirtyRepoAcknowledged && dirtyRepo.initialDirtySummary && ctx.hasUI) {
+      return {
+        title: "Captain's Objection: Dirty Dominion",
+        message: `The working tree already contained uncommitted changes before this mutation. I should not let one campaign trample another without your explicit order.\n\nPre-existing changes:\n${dirtyRepo.initialDirtySummary}`,
+        severity: "warning",
+        blockWithoutUi: false,
+      };
     }
   }
 
