@@ -36,7 +36,7 @@
 
 #### Documentation Quality
 - ✅ **Setup instructions** - Step-by-step installation guide
-- ✅ **Command reference** - All commands documented with use cases
+- ✅ **Command reference** - `docs/commands.md` is the canonical Waldemar command roster; README keeps a concise fast summary
 - ✅ **Customization guide** - Clear paths for extending functionality
 - ✅ **Structure explanation** - Directory organization well documented
 - ✅ **Git support** - Instructions for publishing to GitHub
@@ -145,7 +145,7 @@ The Chronicle Keeper theme draws inspiration from:
 ### Documentation Validation ✅
 - [x] README.md explains package purpose
 - [x] QUICKSTART.md provides installation steps
-- [x] Commands documented with examples
+- [x] Commands documented in `docs/commands.md` with README fast summary
 - [x] Customization paths clearly stated
 - [x] Git publishing instructions included
 - [x] Theme customization guidance provided

@@ -76,71 +76,19 @@ You shall be greeted with:
 
 ## 🛡️ Commands at Your Disposal
 
-Once Waldemar is activated, the following commands become available:
+Use `/waldemar` as the command-room door when you do not remember the exact order.
 
-### `/waldemar`
-Open Waldemar's command chamber: posture, status, inventory, chronicle, arms, compact, theme, customization, and setup orders.
+| Command | Purpose |
+| --- | --- |
+| `/waldemar` | Open the command chamber: posture, status, inventory, chronicle, arms, compact, theme, customization, and setup orders. |
+| `/posture [name]` | Set the current guard formation: `watch`, `reconnaissance`, `forge`, `seal`, `siege`, or `council`. |
+| `/chronicle [message]` | Mark the Falkensee campaign record without adding noise to model context. |
+| `/waldemar-status` | Request an operational status report. |
+| `/waldemar-inventory` | Inspect installed packages, MCP servers, and skills. |
+| `/waldemar-setup` | Reconcile global settings, theme, MCP config, and external skills. |
+| `/waldemar-customize` | Show a concise customization map and documentation pointers. |
 
-### `/waldemar-arms`
-Display Waldemar of Falkensee's heraldic achievement when the terminal supports images.
-
-### `/falkensee-compact`
-Display the Falkensee Compact.
-
-### `/waldemar-theme [falkensee-heraldry|chronicle-keeper]`
-Switch the current TUI session's Waldemar livery.
-
-### `/sessions`
-Review all past campaigns recorded in your current dominion.
-
-```bash
-pi
-/sessions
-```
-
-This displays your session history, from which you may select any previous engagement.
-
-### `/resume <path>`
-Return to a previously abandoned campaign.
-
-```
-/resume path/to/session.jsonl
-```
-
-### `/waldemar-customize`
-Examine Waldemar's quarters and adjust his comportment.
-
-This displays the complete customization guide, showing you where to:
-- Add extensions
-- Create skills
-- Add prompt templates
-- Customize themes
-
-### `/waldemar-status`
-Request a status report. Waldemar shall provide a full operational briefing.
-
-### `/posture [watch|reconnaissance|forge|seal|siege|council]`
-Set Waldemar's guard formation for the current campaign: scouting, implementation, validation, deep debugging, architecture council, or balanced watch.
-
-### `/postures`
-List all available Falkensee guard postures.
-
-### `/chronicle [message]`
-Record a durable Falkensee campaign mark in the TUI chronicle without adding it to model context.
-
-### `/chronicles`
-Review recent Falkensee chronicle marks.
-
-### `/waldemar-inventory`
-Inspect installed Waldemar packages, MCP servers, and installed skills on the current machine.
-
-### `/waldemar-setup`
-Reconcile this machine with Waldemar defaults: theme, compaction settings, MCP server configuration, and external skills. Third-party pi extensions such as `pi-mcp-adapter` and MCP server packages for postgres/sentry are declared in `package.json` dependencies. Pi should install package dependencies automatically for git/npm package installs. Setup configures the `codegraph`, `postgres`, and `sentry` MCP servers and executes `scripts/bootstrap-skills.sh`.
-
-### `/reload`
-Refresh Waldemar's entire arsenal (extensions, skills, prompts, themes).
-
-Execute this after any modifications to your captain's configuration.
+For the full roster, see [Command Reference](docs/commands.md). Pi built-ins such as `/reload`, `/resume`, `/settings`, `/help`, and `/tree` remain available.
 
 ---
 
@@ -391,6 +339,7 @@ For Waldemar package internals:
 - [Waldemar docs index](docs/README.md)
 - [Architecture](docs/architecture.md)
 - [Setup and portability](docs/setup-and-portability.md)
+- [Command reference](docs/commands.md)
 - [MCP servers](docs/mcp.md)
 - [External skills](docs/external-skills.md)
 - [Customization](docs/customization.md)

@@ -139,6 +139,7 @@ export SENTRY_AUTH_TOKEN='sntrys_...'
 For detailed information, read:
 - `README.md` — Complete guide
 - `HERALDRY.md` — House history and styling
+- `docs/commands.md` — Waldemar command roster
 - `docs/README.md` — Architecture, extensions, setup, MCP, and customization
 
 ---

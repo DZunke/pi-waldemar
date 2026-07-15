@@ -11,7 +11,7 @@ Keep technical clarity and safety above theatrical flavour. `HERALDRY.md` is the
 
 Edit `WALDEMAR_STATUS_MOODS` in `extensions/startup.ts`.
 
-## Add a command
+## Add or change a command
 
 Create a focused file in `extensions/`, for example:
 
@@ -20,6 +20,12 @@ extensions/my-command.ts
 ```
 
 Each extension file should export a default function accepting `ExtensionAPI`.
+
+When commands are added, removed, or materially changed, update:
+
+- `docs/commands.md` — canonical command roster
+- `README.md` — fast user-facing command summary
+- `docs/extensions/<extension>.md` — implementation responsibility
 
 ## Change setup behaviour
 

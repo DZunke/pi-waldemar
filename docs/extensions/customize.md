@@ -2,4 +2,4 @@
 
 Purpose: register `/waldemar-customize`.
 
-Displays the main customization map for extensions, custom skills, external skills, prompts, themes, command-chamber presence, guard postures, safeguards, chamber controls, and chronicle records.
+Displays a concise customization map and points to durable documentation. It should remain a signpost, not a duplicated README. Command details belong in `docs/commands.md`; implementation details belong in the relevant `docs/extensions/*.md` file.

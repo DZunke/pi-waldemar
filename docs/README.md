@@ -6,6 +6,7 @@ This directory explains how the Waldemar pi package is structured and how to mod
 
 - [Architecture](architecture.md) — repository layout and design rules
 - [Setup and Portability](setup-and-portability.md) — fresh-machine bootstrap flow
+- [Command Reference](commands.md) — commands added by the Waldemar package
 - [MCP Servers](mcp.md) — codegraph, postgres, and sentry MCP configuration
 - [External Skills](external-skills.md) — reused skills installed by the bootstrap script
 - [Customization](customization.md) — where to change behaviour, tone, skills, prompts, and themes
