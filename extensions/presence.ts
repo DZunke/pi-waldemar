@@ -33,6 +33,10 @@ export default function presenceExtension(pi: ExtensionAPI) {
     requestFooterRender();
   });
 
+  pi.events.on("waldemar:footer-render", () => {
+    requestFooterRender();
+  });
+
   pi.on("session_start", async (_event, ctx) => {
     if (!ctx.hasUI) return;
 
@@ -129,6 +133,12 @@ function installFooter(
           const leftPad = Math.max(1, Math.floor((width - used) / 2));
           const rightPad = Math.max(1, width - used - leftPad);
           return [truncateToWidth(left + " ".repeat(leftPad) + middle + " ".repeat(rightPad) + right, width)];
+        }
+
+        if (middle) {
+          const leftAndStatus = `${left} ${middle}`;
+          if (visibleWidth(leftAndStatus) <= width) return [truncateToWidth(leftAndStatus, width)];
+          return [truncateToWidth(middle.trim(), width)];
         }
 
         return [truncateToWidth(`${left} ${right}`, width)];

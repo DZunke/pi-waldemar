@@ -17,7 +17,7 @@ export default function setupExtension(pi: ExtensionAPI) {
     handler: async (_args, ctx) => {
       try {
         ctx.ui.notify("⚔️ Waldemar setup commenced. Reconciling this machine's arsenal...", "info");
-        ctx.ui.setStatus("waldemar-setup", "⚔️ setup: preparing");
+        setSetupStatus(pi, ctx, "⚔️ setup: preparing");
 
         const settingsPath = path.join(os.homedir(), ".pi/agent/settings.json");
         const settingsDir = path.dirname(settingsPath);
@@ -59,7 +59,7 @@ export default function setupExtension(pi: ExtensionAPI) {
         };
 
         fs.writeFileSync(settingsPath, JSON.stringify(merged, null, 2));
-        ctx.ui.setStatus("waldemar-setup", "⚔️ setup: settings written");
+        setSetupStatus(pi, ctx, "⚔️ setup: settings written");
 
         const mcpPath = path.join(os.homedir(), ".pi/agent/mcp.json");
         let mcpConfig: any = {};
@@ -75,7 +75,7 @@ export default function setupExtension(pi: ExtensionAPI) {
           ...WALDEMAR_MCP_SERVERS,
         };
         fs.writeFileSync(mcpPath, JSON.stringify(mcpConfig, null, 2));
-        ctx.ui.setStatus("waldemar-setup", "⚔️ setup: MCP configured");
+        setSetupStatus(pi, ctx, "⚔️ setup: MCP configured");
 
         const dependencyNotice = fs.existsSync(WALDEMAR_MCP_EXTENSION_DIR)
           ? ""
@@ -91,6 +91,7 @@ export default function setupExtension(pi: ExtensionAPI) {
             label: "skills bootstrap",
             timeoutMs: 600_000,
             ctx,
+            onStatusChange: () => pi.events.emit("waldemar:footer-render", {}),
           });
 
           if (result.ok) {
@@ -100,7 +101,7 @@ export default function setupExtension(pi: ExtensionAPI) {
           }
         }
 
-        ctx.ui.setStatus("waldemar-setup", "⚔️ setup: checking MCP prerequisites");
+        setSetupStatus(pi, ctx, "⚔️ setup: checking MCP prerequisites");
         let mcpNotice = "";
         try {
           execFileSync("codegraph", ["--version"], { stdio: "ignore" });
@@ -109,17 +110,22 @@ export default function setupExtension(pi: ExtensionAPI) {
         }
         mcpNotice += "\n  ℹ️ sentry MCP uses remote OAuth. Run /mcp-auth sentry after /reload if authentication is required.";
 
-        ctx.ui.setStatus("waldemar-setup", "⚔️ setup: complete");
+        setSetupStatus(pi, ctx, "⚔️ setup: complete");
         ctx.ui.notify(
           `✅ Waldemar's settings have been applied.\n\nUpdated ~/.pi/agent/settings.json:\n  • theme: falkensee-heraldry\n  • quietStartup: true\n  • defaultThinkingLevel: medium\n  • optimized compaction settings\n\nPackage dependencies:\n  • pi-mcp-adapter is declared in Waldemar package.json and should be installed by pi for git/npm package installs${dependencyNotice}\n\nUpdated ~/.pi/agent/mcp.json:\n  • codegraph MCP server via: codegraph serve --mcp\n  • sentry remote MCP server via https://mcp.sentry.dev/mcp using OAuth${mcpNotice}\n\nSkills:${skillsNotice || "\n  • no external skill bootstrap script found"}\n\nNext step: run /reload or restart pi if dependencies were newly installed.`,
           "info"
         );
       } catch (error) {
-        ctx.ui.setStatus("waldemar-setup", "⚔️ setup: failed");
+        setSetupStatus(pi, ctx, "⚔️ setup: failed");
         ctx.ui.notify(`❌ Failed to apply settings: ${String(error)}`, "error");
       }
     },
   });
+}
+
+function setSetupStatus(pi: ExtensionAPI, ctx: any, text: string) {
+  ctx.ui.setStatus("waldemar-setup", text);
+  pi.events.emit("waldemar:footer-render", {});
 }
 
 interface ProcessProgressOptions {
@@ -129,10 +135,11 @@ interface ProcessProgressOptions {
   label: string;
   timeoutMs: number;
   ctx: any;
+  onStatusChange?: () => void;
 }
 
 async function runProcessWithProgress(options: ProcessProgressOptions): Promise<{ ok: boolean; summary: string }> {
-  const { command, args, cwd, label, timeoutMs, ctx } = options;
+  const { command, args, cwd, label, timeoutMs, ctx, onStatusChange } = options;
   const startedAt = Date.now();
   const tail: string[] = [];
   const spinner = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
@@ -155,6 +162,7 @@ async function runProcessWithProgress(options: ProcessProgressOptions): Promise<
   const publishProgress = (message: string, forceNotify = false) => {
     currentStep = message;
     ctx.ui.setStatus("waldemar-setup", `⚔️ setup: ${currentStep}`);
+    onStatusChange?.();
 
     const now = Date.now();
     const shouldNotify = forceNotify || (message !== lastNotifiedStep && now - lastNotifyAt > 8_000);
@@ -187,6 +195,7 @@ async function runProcessWithProgress(options: ProcessProgressOptions): Promise<
   const timer = setInterval(() => {
     const elapsed = Math.floor((Date.now() - startedAt) / 1000);
     ctx.ui.setStatus("waldemar-setup", `${spinner[spinnerIndex++ % spinner.length]} ${currentStep} (${elapsed}s)`);
+    onStatusChange?.();
 
     const now = Date.now();
     if (now - lastNotifyAt > 30_000) {
@@ -217,6 +226,7 @@ async function runProcessWithProgress(options: ProcessProgressOptions): Promise<
 
       if (code === 0) {
         ctx.ui.setStatus("waldemar-setup", `⚔️ setup: ${label} complete`);
+        onStatusChange?.();
         resolve({ ok: true, summary: "complete" });
         return;
       }
