@@ -17,22 +17,36 @@ Requires the `codegraph` binary on `PATH`.
 
 ### sentry
 
-`/waldemar-setup` writes an absolute path to Waldemar's package-installed Sentry MCP binary:
+Waldemar uses Sentry's **remote MCP server**, not a local Node MCP package:
 
 ```json
 {
-  "command": "<waldemar>/node_modules/.bin/sentry-mcp",
-  "args": []
+  "url": "https://mcp.sentry.dev/mcp",
+  "auth": "oauth"
 }
 ```
 
-Sentry MCP requires authentication. Provide the token **before starting pi**:
+Authenticate through `pi-mcp-adapter` after setup and reload:
 
-```bash
-export SENTRY_AUTH_TOKEN='sntrys_...'
+```text
+/waldemar-setup
+/reload
+/mcp-auth sentry
 ```
 
-Waldemar reports missing Sentry authentication in both `/waldemar-status` and `/waldemar-inventory`.
+For remote/headless sessions, use the MCP proxy OAuth flow:
+
+```js
+mcp({ action: "auth-start", server: "sentry" })
+```
+
+Then open the returned URL locally and complete the flow with the redirected URL:
+
+```js
+mcp({ action: "auth-complete", server: "sentry", args: '{"redirectUrl":"http://localhost:..."}' })
+```
+
+Waldemar reports whether Sentry is configured as the remote OAuth MCP in both `/waldemar-status` and `/waldemar-inventory`.
 
 ## Removed servers
 

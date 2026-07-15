@@ -122,13 +122,12 @@ git push -u origin main
 
 ```bash
 pi install git:github.com/yourusername/waldemar
-# Optional: before starting pi, set Sentry auth if you want Sentry MCP active.
-export SENTRY_AUTH_TOKEN='sntrys_...'
-
 pi
 # then run inside pi:
 /waldemar-setup
 /reload
+# optional, if you want Sentry MCP active:
+/mcp-auth sentry
 ```
 
 ---

@@ -3,7 +3,7 @@ import { SessionManager } from "@earendil-works/pi-coding-agent";
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
-import { WALDEMAR_SENTRY_MCP_BIN } from "../lib/waldemar";
+import { WALDEMAR_SENTRY_REMOTE_MCP_URL } from "../lib/waldemar";
 
 /** Waldemar operational status report. */
 export default function statusExtension(pi: ExtensionAPI) {
@@ -74,14 +74,13 @@ function getMcpStatusReport(): string {
     lines.push("  • postgres: removed from Waldemar MCP defaults");
   }
 
-  if (!configuredServers.sentry) {
+  const sentry = configuredServers.sentry as { url?: string; auth?: string } | undefined;
+  if (!sentry) {
     lines.push("  ⚠️ sentry: not configured; run /waldemar-setup");
-  } else if (!fs.existsSync(WALDEMAR_SENTRY_MCP_BIN)) {
-    lines.push(`  ⚠️ sentry: configured but binary missing at ${WALDEMAR_SENTRY_MCP_BIN}`);
-  } else if (!process.env.SENTRY_AUTH_TOKEN) {
-    lines.push("  ⚠️ sentry: SENTRY_AUTH_TOKEN is missing; export it before starting pi");
+  } else if (sentry.url !== WALDEMAR_SENTRY_REMOTE_MCP_URL || sentry.auth !== "oauth") {
+    lines.push("  ⚠️ sentry: configured, but not as Waldemar's remote OAuth MCP; run /waldemar-setup");
   } else {
-    lines.push("  • sentry: configured and SENTRY_AUTH_TOKEN is present");
+    lines.push("  • sentry: remote OAuth MCP configured; authenticate with /mcp-auth sentry if not logged in");
   }
 
   return lines.join("\n");

@@ -21,7 +21,7 @@ Then inside pi:
 - writes recommended global pi settings, including the `falkensee-heraldry` theme
 - preserves existing package entries in global settings
 - writes/merges `~/.pi/agent/mcp.json`
-- configures codegraph and sentry MCP servers
+- configures codegraph and Sentry's remote OAuth MCP server
 - removes stale postgres MCP entries from older Waldemar installations
 - runs `scripts/bootstrap-skills.sh` for external skills
 - reports progress in the footer while long-running skill installation proceeds
@@ -30,4 +30,4 @@ Then inside pi:
 
 - It does not run `npm install` inside Waldemar.
 - It does not vendor third-party skills into `skills/`.
-- It does not create secrets such as `SENTRY_AUTH_TOKEN`.
+- It does not complete Sentry OAuth for you; run `/mcp-auth sentry` after setup and reload when you need Sentry MCP access.
