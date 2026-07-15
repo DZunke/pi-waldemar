@@ -27,6 +27,7 @@ for (const skill of config.skills || []) {
   const payload = {
     name: skill.name,
     source: skill.source,
+    installer: skill.installer || "skills-cli",
     fullDepth: !!skill.fullDepth,
     postInstall: skill.postInstall || []
   };
@@ -41,13 +42,31 @@ INSTALLED=()
 for spec in "${SPECS[@]}"; do
   name="$(node -e 'console.log(JSON.parse(process.argv[1]).name)' "$spec")"
   source="$(node -e 'console.log(JSON.parse(process.argv[1]).source)' "$spec")"
+  installer="$(node -e 'console.log(JSON.parse(process.argv[1]).installer || "skills-cli")' "$spec")"
   full_depth="$(node -e 'console.log(JSON.parse(process.argv[1]).fullDepth ? "yes" : "no")' "$spec")"
 
-  echo "==> Installing skill: $name from $source"
-  cmd=(npx -y skills add "$source" -g -y -a "*" -s "$name")
-  if [[ "$full_depth" == "yes" ]]; then
-    cmd+=(--full-depth)
-  fi
+  echo "==> Installing skill: $name from $source via $installer"
+  case "$installer" in
+    skills-cli)
+      cmd=(npx -y skills add "$source" -g -y -a "*" -s "$name")
+      if [[ "$full_depth" == "yes" ]]; then
+        cmd+=(--full-depth)
+      fi
+      ;;
+    gh-skill)
+      if ! command -v gh >/dev/null 2>&1; then
+        echo "WARN: gh is required to install skill '$name' from '$source'; continuing." >&2
+        FAILED+=("$name:missing-gh")
+        continue
+      fi
+      cmd=(gh skill install "$source" "$name" --agent pi --scope user --force)
+      ;;
+    *)
+      echo "WARN: unknown installer '$installer' for skill '$name'; continuing." >&2
+      FAILED+=("$name:installer")
+      continue
+      ;;
+  esac
 
   if "${cmd[@]}"; then
     INSTALLED+=("$name")

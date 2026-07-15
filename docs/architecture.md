@@ -23,6 +23,6 @@ Pi discovers top-level `extensions/*.ts` files from the package manifest. Becaus
 
 ## Package dependencies
 
-Third-party pi extensions are declared in `package.json` and referenced in `pi.extensions`. Waldemar currently uses `pi-mcp-adapter` this way. Sentry is configured as a remote OAuth MCP server, so no local Sentry MCP package is required.
+Third-party pi extensions are declared in `package.json` and referenced in `pi.extensions`. Waldemar currently uses `pi-mcp-adapter` this way. Sentry access is handled by external skills and the Sentry CLI, not MCP.
 
 Do not run `npm install` from setup commands. Pi should reconcile dependencies for git/npm package installs. A local development install may require a one-time manual `npm install`.

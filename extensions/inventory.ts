@@ -2,7 +2,7 @@ import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
-import { listSkillNames, WALDEMAR_SENTRY_REMOTE_MCP_URL } from "../lib/waldemar";
+import { listSkillNames } from "../lib/waldemar";
 
 /** Machine inventory for transportability checks. */
 export default function inventoryExtension(pi: ExtensionAPI) {
@@ -41,15 +41,6 @@ function buildMcpReadiness(mcpServers: Record<string, unknown>): string {
   const lines: string[] = [];
 
   lines.push(mcpServers.codegraph ? "  • codegraph: configured" : "  ⚠️ codegraph: not configured");
-
-  const sentry = mcpServers.sentry as { url?: string; auth?: string } | undefined;
-  if (!sentry) {
-    lines.push("  ⚠️ sentry: not configured; run /waldemar-setup");
-  } else if (sentry.url !== WALDEMAR_SENTRY_REMOTE_MCP_URL || sentry.auth !== "oauth") {
-    lines.push("  ⚠️ sentry: configured, but not as Waldemar's remote OAuth MCP; run /waldemar-setup");
-  } else {
-    lines.push("  • sentry: remote OAuth MCP configured; authenticate with /mcp-auth sentry if not logged in");
-  }
 
   return lines.join("\n");
 }

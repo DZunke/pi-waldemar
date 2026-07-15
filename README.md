@@ -117,7 +117,7 @@ waldemar/
 ├── config/
 │   └── external-skills.json # Defined list of reused third-party skills
 ├── scripts/
-│   └── bootstrap-skills.sh # Installs external skills via npx skills
+│   └── bootstrap-skills.sh # Installs external skills via Skills CLI or gh skill
 ├── prompts/                # Strategic guidance templates
 ├── themes/                 # Heraldic visual styling
 ├── docs/                   # Focused documentation for architecture and extensions
@@ -257,15 +257,9 @@ Simply install from your repository:
 pi install git:github.com/yourusername/waldemar
 ```
 
-Your core configuration—extensions, skills, prompts, themes, comportment—transfers instantly. After installing on a fresh machine, run `/waldemar-setup` once to reconcile machine-local settings, npm package dependencies, external skills, and MCP servers such as codegraph and sentry.
+Your core configuration—extensions, skills, prompts, themes, comportment—transfers instantly. After installing on a fresh machine, run `/waldemar-setup` once to reconcile machine-local settings, npm package dependencies, external skills, and MCP servers such as codegraph.
 
-For Sentry MCP usage, Waldemar configures Sentry's remote OAuth MCP server. After setup and reload, authenticate through the adapter:
-
-```text
-/mcp-auth sentry
-```
-
-`/waldemar-status` and `/waldemar-inventory` report whether Sentry is configured as the remote OAuth MCP.
+For Sentry usage, Waldemar relies on the Sentry external skills and the Sentry CLI. `/waldemar-setup` bootstraps the `sentry-cli` skill and runs its post-install commands to install `sentry-cli`.
 
 ---
 

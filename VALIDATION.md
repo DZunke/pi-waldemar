@@ -47,7 +47,7 @@ The package includes a `/waldemar-setup` command that:
 - ✅ Creates `~/.pi/agent/settings.json` if missing
 - ✅ Applies recommended settings (quietStartup, `falkensee-heraldry` theme, thinking level)
 - ✅ Declares required third-party package dependencies in `package.json` (`pi-mcp-adapter`) for pi-managed installation
-- ✅ Creates/merges `~/.pi/agent/mcp.json` with codegraph and Sentry remote OAuth MCP servers
+- ✅ Creates/merges `~/.pi/agent/mcp.json` with the codegraph MCP server
 - ✅ Merges intelligently with existing settings
 - ✅ Handles file system errors gracefully
 - ✅ Provides user feedback on success/failure
@@ -56,7 +56,7 @@ The package includes a `/waldemar-setup` command that:
 
 This package is designed for complete portability:
 - ✅ Single `pi install` command brings Waldemar extensions, custom skills, prompts, and themes
-- ✅ Third-party pi extensions and MCP server packages are declared as npm dependencies in `package.json`
+- ✅ Third-party pi extensions are declared as npm dependencies in `package.json`
 - ✅ External reused skills are defined in `config/external-skills.json` and installed by `scripts/bootstrap-skills.sh`
 - ✅ `/waldemar-setup` applies all optimized settings to the global config
 - ✅ No manual setup required beyond two commands

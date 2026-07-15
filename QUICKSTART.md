@@ -92,7 +92,7 @@ Edit files in `~/.pi/waldemar/`:
 | `extensions/` | Modify comportment, add commands |
 | `skills/` | Add your custom handwritten Waldemar skills only |
 | `config/external-skills.json` | Define reused third-party skills installed by bootstrap |
-| `scripts/bootstrap-skills.sh` | Bootstrap external skills via `npx skills add` |
+| `scripts/bootstrap-skills.sh` | Bootstrap external skills via Skills CLI or `gh skill install` |
 | `docs/` | Understand architecture, extensions, MCP, and customization |
 | `prompts/` | Add strategic guidance templates |
 | `themes/` | Customize visual styling |
@@ -126,8 +126,8 @@ pi
 # then run inside pi:
 /waldemar-setup
 /reload
-# optional, if you want Sentry MCP active:
-/mcp-auth sentry
+# optional, if you want Sentry project auth:
+sentry-cli login
 ```
 
 ---

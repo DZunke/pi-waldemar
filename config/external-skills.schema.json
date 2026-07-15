@@ -13,6 +13,7 @@
           "name": { "type": "string" },
           "source": { "type": "string" },
           "enabled": { "type": "boolean", "default": true },
+          "installer": { "type": "string", "enum": ["skills-cli", "gh-skill"], "default": "skills-cli" },
           "fullDepth": { "type": "boolean", "default": false },
           "postInstall": { "type": "array", "items": { "type": "string" } }
         }

@@ -108,11 +108,10 @@ export default function setupExtension(pi: ExtensionAPI) {
         } catch {
           mcpNotice += "\n  ⚠️ codegraph binary was not found on PATH; install it before using the codegraph MCP server.";
         }
-        mcpNotice += "\n  ℹ️ sentry MCP uses remote OAuth. Run /mcp-auth sentry after /reload if authentication is required.";
 
         setSetupStatus(pi, ctx, "⚔️ setup: complete");
         ctx.ui.notify(
-          `✅ Waldemar's settings have been applied.\n\nUpdated ~/.pi/agent/settings.json:\n  • theme: falkensee-heraldry\n  • quietStartup: true\n  • defaultThinkingLevel: medium\n  • optimized compaction settings\n\nPackage dependencies:\n  • pi-mcp-adapter is declared in Waldemar package.json and should be installed by pi for git/npm package installs${dependencyNotice}\n\nUpdated ~/.pi/agent/mcp.json:\n  • codegraph MCP server via: codegraph serve --mcp\n  • sentry remote MCP server via https://mcp.sentry.dev/mcp using OAuth${mcpNotice}\n\nSkills:${skillsNotice || "\n  • no external skill bootstrap script found"}\n\nNext step: run /reload or restart pi if dependencies were newly installed.`,
+          `✅ Waldemar's settings have been applied.\n\nUpdated ~/.pi/agent/settings.json:\n  • theme: falkensee-heraldry\n  • quietStartup: true\n  • defaultThinkingLevel: medium\n  • optimized compaction settings\n\nPackage dependencies:\n  • pi-mcp-adapter is declared in Waldemar package.json and should be installed by pi for git/npm package installs${dependencyNotice}\n\nUpdated ~/.pi/agent/mcp.json:\n  • codegraph MCP server via: codegraph serve --mcp${mcpNotice}\n\nSkills:${skillsNotice || "\n  • no external skill bootstrap script found"}\n\nNext step: run /reload or restart pi if dependencies were newly installed.`,
           "info"
         );
       } catch (error) {

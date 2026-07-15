@@ -1,6 +1,6 @@
 {
   "$schema": "./external-skills.schema.json",
-  "description": "External skills Waldemar bootstraps via the Skills CLI. Keep custom, handwritten Waldemar skills in ./skills only.",
+  "description": "External skills Waldemar bootstraps via the configured installer. Keep custom, handwritten Waldemar skills in ./skills only.",
   "skills": [
     {
       "name": "agent-browser",
@@ -30,12 +30,13 @@
     {
       "name": "gh-cli",
       "source": "github/awesome-copilot",
-      "enabled": false,
-      "note": "Disabled: github/awesome-copilot no longer exposes a gh-cli skill; keep custom replacement in skills/ if needed."
+      "installer": "gh-skill",
+      "enabled": true
     },
     {
       "name": "excalidraw-diagram-generator",
       "source": "github/awesome-copilot",
+      "installer": "gh-skill",
       "enabled": true
     },
     {
@@ -51,7 +52,11 @@
     {
       "name": "sentry-cli",
       "source": "getsentry/sentry-for-ai",
-      "enabled": true
+      "enabled": true,
+      "postInstall": [
+        "npm install -g @sentry/cli",
+        "sentry-cli --version"
+      ]
     },
     {
       "name": "sentry-fix-issues",
