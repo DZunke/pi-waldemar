@@ -6,7 +6,7 @@ Commands and shortcuts:
 
 - `/waldemar-system-prompt` — show the first captured system prompt.
 - `/waldemar-system-prompt latest` — show the latest captured system prompt.
-- `Ctrl+Shift+O` — open the latest captured prompt, or the first prompt if no later capture exists.
+- `Ctrl+Shift+O` — open the latest captured prompt, or the first prompt if no later capture exists. This shortcut is documented in `docs/keybindings.md`.
 
 Implementation notes:
 

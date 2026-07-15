@@ -20,7 +20,21 @@ Flow:
 4. Validate again.
 5. Return the final ticket plus a short validation summary.
 
-If required context is missing, the template tells Waldemar to ask concise clarification questions instead of inventing details.
+### `/write-epic`
+
+File: `prompts/write-epic.md`
+
+Purpose: write an Epic, validate it with the local ticket validator skill, and iterate until the result has no blocking quality gaps.
+
+Flow:
+
+1. Use `epic-writer` to draft the Epic.
+2. Use `ticket-validator` to evaluate the draft as an Epic.
+3. Rewrite when validation finds Blocking or Important gaps.
+4. Validate again.
+5. Return the final Epic plus a short validation summary.
+
+If required context is missing, the templates tell Waldemar to ask concise clarification questions instead of inventing details.
 
 ## Decision flow: prompt, skill, posture, or extension?
 
