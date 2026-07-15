@@ -6,7 +6,7 @@ This is the canonical reference for commands added by the Waldemar package. Pi b
 
 | Command | Purpose |
 | --- | --- |
-| `/waldemar` | Open Waldemar's command chamber: posture, status, inventory, chronicle, arms, compact, theme, customization, and setup orders. |
+| `/waldemar` | Open Waldemar's command chamber: posture, status, inventory, system prompt, chronicle, arms, compact, theme, customization, and setup orders. |
 
 Use `/waldemar` first when you do not remember the exact order. It is the command-room door.
 
@@ -47,6 +47,7 @@ Postures adjust active tools, thinking level, status display, and per-turn syste
 | --- | --- |
 | `/waldemar-status` | Show Waldemar's operational status report. |
 | `/waldemar-inventory` | Inspect installed packages, MCP servers, and skills. |
+| `/waldemar-system-prompt [first\|latest]` | Inspect the captured full system prompt in a scrollable TUI viewer. |
 | `/waldemar-setup` | Reconcile global settings, theme, MCP config, external skills, and package dependency expectations. |
 | `/waldemar-customize` | Show a concise customization map and point to the durable documentation. |
 

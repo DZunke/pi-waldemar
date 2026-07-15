@@ -9,6 +9,7 @@ type ChamberAction =
   | "posture"
   | "status"
   | "inventory"
+  | "systemPrompt"
   | "chronicles"
   | "arms"
   | "compact"
@@ -82,6 +83,7 @@ async function chooseChamberAction(ctx: ExtensionContext): Promise<ChamberAction
     { value: "posture", label: "Change guard posture", description: "Reconnaissance, Forge, Seal, Siege, Council, or Watch" },
     { value: "status", label: "Request status report", description: "Operational report from Waldemar" },
     { value: "inventory", label: "Inspect arsenal", description: "Packages, MCP servers, and skills" },
+    { value: "systemPrompt", label: "Inspect system prompt", description: "View the first captured system prompt in a scrollable panel" },
     { value: "chronicles", label: "Review chronicle", description: "Recent Falkensee campaign marks" },
     { value: "arms", label: "Display arms", description: "Waldemar of Falkensee's heraldic achievement" },
     { value: "compact", label: "Recite compact", description: "The Falkensee Compact" },
@@ -135,6 +137,9 @@ async function executeChamberAction(pi: ExtensionAPI, ctx: ExtensionContext, act
       return;
     case "inventory":
       pi.sendUserMessage("/waldemar-inventory");
+      return;
+    case "systemPrompt":
+      pi.sendUserMessage("/waldemar-system-prompt");
       return;
     case "chronicles":
       pi.sendUserMessage("/chronicles");

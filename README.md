@@ -56,6 +56,7 @@ Common direct commands:
 - `/waldemar-setup` — reconcile global settings, external skills, and MCP config
 - `/waldemar-status` — operational status report
 - `/waldemar-inventory` — installed packages, MCP servers, and skills
+- `/waldemar-system-prompt` — inspect the captured full system prompt
 - `/posture` — select the current guard posture
 - `/chronicle` — add a campaign note
 - `/waldemar-customize` — pointers for customization

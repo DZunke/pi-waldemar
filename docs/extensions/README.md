@@ -14,3 +14,4 @@ Each top-level file in `extensions/` is loaded by pi. Keep each file focused.
 - [chronicle](chronicle.md) — durable TUI-only campaign records and chronicle marks
 - [customize](customize.md) — customization guide command
 - [status](status.md) — operational status command
+- [system-prompt](system-prompt.md) — captured system prompt inspection
