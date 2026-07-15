@@ -5,7 +5,7 @@
 ### Structure & Organization
 - ✅ **package.json** - Proper pi manifest with all required fields
 - ✅ **extensions/** - Contains focused single-purpose ExtensionAPI entrypoints
-- ✅ **themes/** - Contains chronicle-keeper.json theme file
+- ✅ **themes/** - Contains chronicle-keeper.json and falkensee-heraldry.json theme files
 - ✅ **skills/** - Ready for custom skill additions (empty by default)
 - ✅ **prompts/** - Ready for custom prompt templates (empty by default)
 - ✅ **Documentation** - Comprehensive README.md, QUICKSTART.md, HERALDRY.md, and focused docs/ guides
@@ -102,7 +102,7 @@ This package is designed for complete portability:
 ### Design Philosophy
 
 The Chronicle Keeper theme draws inspiration from:
-- **Fantasy RPG aesthetic** - Warm, medieval fantasy tone fitting for campaign management
+- **House Falkensee heraldry** - Warm RPG tone anchored in Waldemar's arms, compact, and ordered-codewright background
 - **Parchment & Leather** - Dark backgrounds evoke ancient libraries and chronicles
 - **Golden Accents** - Warm gold represents nobility, importance, and fantasy opulence
 - **Readability** - High contrast between text and backgrounds for terminal clarity
@@ -162,7 +162,7 @@ The Chronicle Keeper theme draws inspiration from:
 ```
 Waldemar Pi Package
 ├── Extensions: 7 focused entrypoints (persona, setup, startup, sessions, inventory, customize, status)
-├── Themes: 1 (chronicle-keeper.json)
+├── Themes: 2 (chronicle-keeper.json, falkensee-heraldry.json)
 ├── Skills: 0 (ready for expansion)
 ├── Prompts: 0 (ready for expansion)
 ├── Commands: 5 (/waldemar-setup, /waldemar-inventory, /sessions, /waldemar-customize, /waldemar-status)
@@ -171,7 +171,7 @@ Waldemar Pi Package
 
 Lines of Code
 ├── Extensions: focused TypeScript entrypoints plus shared lib helpers
-├── Themes: 1 theme file with full color palette
+├── Themes: 2 theme files with full color palettes
 └── Documentation: ~400 lines
 
 Package Quality
@@ -191,7 +191,7 @@ Package Quality
 2. Run `pi` to start pi
 3. Execute `/waldemar-setup` to apply recommended settings
 4. Execute `/reload` to apply theme changes
-5. Run `pi --theme chronicle-keeper` to test the new theme
+5. Run `pi --theme chronicle-keeper` or `pi --theme falkensee-heraldry` to test a packaged theme
 
 ### For Distribution
 1. Update `package.json` repository URL to your GitHub

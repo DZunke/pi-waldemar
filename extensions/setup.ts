@@ -41,7 +41,7 @@ export default function setupExtension(pi: ExtensionAPI) {
           quietStartup: true,
           defaultThinkingLevel: "medium",
           hideThinkingBlock: false,
-          theme: "chronicle-keeper",
+          theme: "falkensee-heraldry",
           editorPaddingX: 1,
           outputPad: 1,
           compaction: {

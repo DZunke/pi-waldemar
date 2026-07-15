@@ -1,7 +1,7 @@
 ```
 ╔════════════════════════════════════════════════════════════════════════╗
 ║                          QUICK START GUIDE                            ║
-║                     For Installing House Waldemar                      ║
+║                  For Installing House Falkensee's Guard                ║
 ╚════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -39,7 +39,7 @@ This loads Waldemar for one session only—perfect for testing before full insta
 
 ## 2️⃣ Verify Installation
 
-Start pi and observe Waldemar's noble greeting:
+Start pi and observe Waldemar of Falkensee's formal greeting:
 
 ```bash
 pi
@@ -159,7 +159,7 @@ For detailed information, read:
 ```
 ╔════════════════════════════════════════════════════════════════════════╗
 ║                                                                        ║
-║               "Your captain stands ready for duty, liege."             ║
+║            "The line is ordered. The work shall be worthy."            ║
 ║                                                                        ║
 ║                         Begin your campaign now.                       ║
 ║                                                                        ║

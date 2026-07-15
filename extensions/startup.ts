@@ -12,6 +12,54 @@ type StatusMood = {
   settled: string;
 };
 
+type StartupReport = {
+  title: string;
+  lines: string[];
+};
+
+const WALDEMAR_STARTUP_REPORTS: StartupReport[] = [
+  {
+    title: "Morning Rapport",
+    lines: [
+      "The watch has changed without incident.",
+      "The archives are quiet, which is suspicious but acceptable.",
+      "I await the first lawful order of the day.",
+    ],
+  },
+  {
+    title: "Field Report",
+    lines: [
+      "The dominion has been sighted and the standards raised.",
+      "No assumption has yet been admitted without papers.",
+      "Point me at the breach, Sire, and I shall form the line.",
+    ],
+  },
+  {
+    title: "Captain's Log",
+    lines: [
+      "House Falkensee stands in service, not ceremony.",
+      "Quills sharpened; absent tests remain under suspicion.",
+      "Give the order. I will inspect before I strike.",
+    ],
+  },
+  {
+    title: "Gatehouse Report",
+    lines: [
+      "The gates answer to command and the signal fires are trimmed.",
+      "Entropy has been seen loitering near the dependencies.",
+      "A disciplined engagement should discourage it.",
+    ],
+  },
+  {
+    title: "Falkensee Watch",
+    lines: [
+      "Falcon sight is upon the codefield.",
+      "Speed remains welcome; avoidable ruin remains beneath contempt.",
+      "The line is ordered. The work shall be worthy.",
+    ],
+  },
+];
+
 const WALDEMAR_STATUS_MOODS: StatusMood[] = [
   {
     emoji: "⚔️",
@@ -23,7 +71,7 @@ const WALDEMAR_STATUS_MOODS: StatusMood[] = [
     emoji: "🛡️",
     ready: "Waldemar: Shield raised over the dominion",
     working: "Waldemar: Holding the line against mediocrity",
-    settled: "Waldemar: Perimeter secure, my liege",
+    settled: "Waldemar: Perimeter secure, Sire",
   },
   {
     emoji: "👑",
@@ -61,8 +109,6 @@ const WALDEMAR_STATUS_MOODS: StatusMood[] = [
 export default function startupExtension(pi: ExtensionAPI) {
   pi.on("session_start", async (event, ctx) => {
     if (event.reason !== "startup") return;
-
-    ctx.ui.notify("⚔️ Waldemar reports for duty. At your service, my liege.", "info");
 
     let sessionHistory: SessionInfo[] = [];
     try {
@@ -112,32 +158,52 @@ function randomStatusMood(): StatusMood {
 }
 
 function displayNobleGreeting(ctx: any, sessionHistory: SessionInfo[]) {
-  const greeting = `
-┌─ Waldemar ──────────────────────────────────────────────────────────────────┐
-│                                                                              │
-│  Hi! I'm Waldemar, your AI coding assistant. I can help you:                │
-│                                                                              │
-│  📝  Read and understand your code                                          │
-│  ✏️   Write and edit files                                                   │
-│  🔨  Execute commands and shell scripts                                     │
-│  🔍  Search and grep through projects                                       │
-│  🎯  Solve coding problems                                                  │
-│  💭  Reason about complex architecture                                      │
-│  🧠  Think deeply when needed (Shift+Tab to adjust level)                   │
-│                                                                              │
-│  Just ask me anything about your code or project!                           │
-│  Type /hotkeys to see keyboard shortcuts.                                   │
-│  Type /help or /settings to configure Pi.                                   │
-│                                                                              │
-│  I'm powered by advanced AI models—pick your favorite with Ctrl+L.         │
-│  Switch between models anytime with Ctrl+P.                                │
-│                                                                              │
-│  Recent Campaigns: ${sessionHistory.length} recorded in this domain          │
-│  Commands: /sessions, /waldemar-customize, /waldemar-status                  │
-│            /waldemar-inventory                                               │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
-  `;
+  const report = randomStartupReport();
+  const dominionName = path.basename(ctx.cwd) || ctx.cwd;
+  const campaignWord = sessionHistory.length === 1 ? "campaign" : "campaigns";
+
+  const greeting = formatWaldemarBox(report.title, [
+    "Waldemar of Falkensee reports.",
+    "Captain of the King's Personal Guard. Warden of the Ordered Line.",
+    "",
+    ...report.lines,
+    "",
+    `Dominion: ${dominionName}`,
+    `Chronicle: ${sessionHistory.length} recorded ${campaignWord} in this field`,
+    "Standing orders: /sessions  /waldemar-status  /waldemar-inventory",
+    "Customs and armory: /waldemar-customize",
+  ]);
 
   ctx.ui.notify(greeting, "info");
+}
+
+function randomStartupReport(): StartupReport {
+  return WALDEMAR_STARTUP_REPORTS[Math.floor(Math.random() * WALDEMAR_STARTUP_REPORTS.length)];
+}
+
+function formatWaldemarBox(title: string, lines: string[]) {
+  const width = 78;
+  const innerWidth = width - 4;
+  const heading = ` Waldemar — ${title} `;
+  const leftRule = Math.max(1, Math.floor((innerWidth - heading.length) / 2));
+  const rightRule = Math.max(1, innerWidth - heading.length - leftRule);
+  const top = `┌${"─".repeat(leftRule)}${heading}${"─".repeat(rightRule)}┐`;
+  const body = lines.flatMap((line) => wrapBoxLine(line, innerWidth - 1)).map((line) => `│ ${line.padEnd(innerWidth - 1)}│`);
+  const bottom = `└${"─".repeat(innerWidth)}┘`;
+  return [top, ...body, bottom].join("\n");
+}
+
+function wrapBoxLine(line: string, width: number): string[] {
+  if (line.length <= width) return [line];
+
+  const wrapped: string[] = [];
+  let remaining = line;
+  while (remaining.length > width) {
+    const breakAt = remaining.lastIndexOf(" ", width);
+    const sliceAt = breakAt > 0 ? breakAt : width;
+    wrapped.push(remaining.slice(0, sliceAt));
+    remaining = remaining.slice(sliceAt).trimStart();
+  }
+  wrapped.push(remaining);
+  return wrapped;
 }

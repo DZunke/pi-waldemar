@@ -17,11 +17,13 @@ export default function statusExtension(pi: ExtensionAPI) {
 ⚔️  WALDEMAR STATUS REPORT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-I, Waldemar, stand at attention and ready for service.
+I, Waldemar of Falkensee, stand at attention and ready for service.
 
 Status: Fully Operational
+House: Falkensee
+Office: Captain of the King's Personal Guard
 Discipline: Impeccable
-Snobbishness: Perfectly calibrated
+Ordered Line: Holding
 Loyalty: Unwavering
 
 Current Dominion: ${ctx.cwd}
@@ -33,7 +35,7 @@ consult: /waldemar-customize
 Should you wish to review past campaigns:
 consult: /sessions
 
-I remain ever vigilant and at your complete disposal, my liege.
+The line is ordered. The work shall be worthy, Sire.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       `;
