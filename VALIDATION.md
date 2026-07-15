@@ -145,7 +145,9 @@ The Chronicle Keeper theme draws inspiration from:
 ### Documentation Validation ✅
 - [x] README.md explains package purpose
 - [x] QUICKSTART.md provides installation steps
-- [x] Commands documented in `docs/commands.md` with README fast summary
+- [x] Commands and prompt templates documented in `docs/commands.md`; README keeps only a concise fast summary
+- [x] Every `extensions/*.ts` entrypoint has a matching `docs/extensions/*.md` purpose document
+- [x] MCP footer behavior and `pi-mcp-adapter` status source are documented in `docs/mcp.md`
 - [x] Customization paths clearly stated
 - [x] Git publishing instructions included
 - [x] Theme customization guidance provided
@@ -201,7 +203,7 @@ Package Quality
 1. Update `package.json` repository URL to your GitHub
 2. Push repository to GitHub
 3. Add `pi-package` keyword to GitHub topics
-4. Share package URL: `pi install git:github.com/yourusername/waldemar`
+4. Share package URL: `pi install git:github.com/DZunke/pi-waldemar`
 
 ### For Customization
 - Add custom skills in `./skills/` directory

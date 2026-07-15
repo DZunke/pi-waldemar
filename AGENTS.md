@@ -20,16 +20,31 @@ This repository packages the Waldemar pi agent. Treat it as a portable personal-
 
 ## Documentation policy
 
-- Keep `README.md` useful as a fast entrypoint for installation, usage, structure, and common customization.
-- Put deeper implementation documentation in `docs/`.
-- Each extension should have a short purpose document in `docs/extensions/`.
-- When adding or changing commands, setup behavior, MCP servers, external skills, or extension responsibilities, update docs in the same change.
+- Keep `README.md` useful as a slim fast entrypoint for installation, high-level capabilities, and links to canonical docs. Do not duplicate command manuals or repository maps there.
+- Put durable implementation and workflow documentation in `docs/`.
+- Each extension must have a short purpose document in `docs/extensions/`.
+- Before and after any behavior change, check the full documentation surface for drift:
+  - `README.md`
+  - `QUICKSTART.md`
+  - `VALIDATION.md`
+  - `docs/README.md`
+  - `docs/commands.md`
+  - `docs/customization.md`
+  - `docs/keybindings.md` when shortcuts or TUI controls change
+  - `docs/mcp.md` when MCP setup, adapter behavior, or status output changes
+  - `docs/prompts.md` when prompt templates change
+  - `docs/external-skills.md` when external skills or installers change
+  - `docs/setup-and-portability.md` when `/waldemar-setup` changes
+  - the relevant `docs/extensions/*.md` file for every changed extension
+- When adding, removing, or changing commands, update `docs/commands.md`, `README.md` if it affects the short command list, and the relevant extension docs in the same change.
+- When adding, removing, or changing prompt templates, update `docs/prompts.md` in the same change.
+- When changing readiness behavior, keep `/waldemar-doctor` as the single health-check authority; keep `/waldemar-inventory` factual and `/waldemar-status` lightweight.
 
 ## Skills policy
 
 - `skills/` is reserved for custom handwritten Waldemar skills.
 - Reused third-party skills must be declared in `config/external-skills.json`.
-- `scripts/bootstrap-skills.sh` installs external skills via the Skills CLI (`npx skills add ...`).
+- `scripts/bootstrap-skills.sh` installs external skills through the configured installer. Supported installers are `skills-cli` (`npx skills add ...`) and `gh-skill` (`gh skill install ...`).
 - Do not vendor copied third-party skills into `skills/` unless explicitly requested.
 
 ## Package dependencies

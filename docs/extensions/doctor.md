@@ -13,6 +13,7 @@ Checks include:
 - machine commands used by setup or skills: `codegraph`, `gh`, and `sentry-cli`
 - global theme setting
 - codegraph MCP configuration
+- additional MCP servers configured outside Waldemar defaults
 - installed external skill count
 
 TUI mode renders a compact bordered report. Non-TUI modes print a plain report to stdout and also send a UI notification when available.

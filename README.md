@@ -13,7 +13,7 @@ Waldemar packages persona, focused extensions, themes, prompts, custom skills, e
 ## What this package provides
 
 - The Waldemar of Falkensee persona and operating doctrine grounded in [`HERALDRY.md`](HERALDRY.md)
-- Focused pi extensions for setup, presence, postures, safeguards, sessions, inventory, chronicle, and status
+- Focused pi extensions for setup, presence, postures, safeguards, sessions, inventory, doctor, chronicle, status, and system-prompt inspection
 - A command chamber via `/waldemar`
 - The `falkensee-heraldry` and `chronicle-keeper` themes
 - External skill bootstrap from [`config/external-skills.json`](config/external-skills.json)
@@ -64,21 +64,9 @@ Common direct commands:
 
 Full command reference: [`docs/commands.md`](docs/commands.md).
 
-## Repository map
+## Documentation
 
-```text
-extensions/              pi extension entrypoints
-lib/                     shared constants and helpers
-skills/                  custom handwritten Waldemar skills
-config/external-skills.json
-scripts/bootstrap-skills.sh
-themes/                  packaged pi themes
-prompts/                 prompt templates
-docs/                    package documentation
-HERALDRY.md              character, arms, and house background
-```
-
-See [`docs/README.md`](docs/README.md) for the documentation index.
+Use [`docs/README.md`](docs/README.md) as the documentation index. It covers architecture, setup, commands, prompt templates, keybindings, MCP behavior, external skills, customization, and extension responsibilities.
 
 ## External skills
 

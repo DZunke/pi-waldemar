@@ -77,11 +77,21 @@ export function runDoctorChecks(): DoctorCheck[] {
 
   try {
     const mcp = fs.existsSync(mcpPath) ? JSON.parse(fs.readFileSync(mcpPath, "utf-8")) : {};
-    const codegraph = mcp.mcpServers?.codegraph;
+    const mcpServers = mcp.mcpServers || {};
+    const codegraph = mcpServers.codegraph;
+    const waldemarServerNames = Object.keys(WALDEMAR_MCP_SERVERS);
+    const additionalServers = Object.keys(mcpServers).filter((name) => !waldemarServerNames.includes(name));
     checks.push({
       label: "codegraph MCP config",
       status: codegraph ? "pass" : "warn",
       detail: codegraph ? "configured in ~/.pi/agent/mcp.json" : "run /waldemar-setup to configure MCP",
+    });
+    checks.push({
+      label: "additional MCP servers",
+      status: additionalServers.length === 0 ? "pass" : "warn",
+      detail: additionalServers.length === 0
+        ? "none beyond Waldemar defaults"
+        : `configured outside Waldemar defaults: ${additionalServers.join(", ")}`,
     });
   } catch (error) {
     checks.push({ label: "MCP config", status: "fail", detail: `could not parse ${mcpPath}: ${String(error)}` });

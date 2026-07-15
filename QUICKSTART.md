@@ -135,7 +135,7 @@ sentry-cli login
 ## 📖 Full Documentation
 
 For detailed information, read:
-- `README.md` — Complete guide
+- `README.md` — Fast package entrypoint
 - `HERALDRY.md` — House history and styling
 - `docs/commands.md` — Waldemar command roster
 - `docs/README.md` — Architecture, extensions, setup, MCP, and customization
