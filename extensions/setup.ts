@@ -139,6 +139,8 @@ async function runProcessWithProgress(options: ProcessProgressOptions): Promise<
   let spinnerIndex = 0;
   let currentStep = label;
   let settled = false;
+  let lastNotifyAt = 0;
+  let lastNotifiedStep = "";
 
   const child = spawn(command, args, {
     cwd,
@@ -150,6 +152,19 @@ async function runProcessWithProgress(options: ProcessProgressOptions): Promise<
     },
   });
 
+  const publishProgress = (message: string, forceNotify = false) => {
+    currentStep = message;
+    ctx.ui.setStatus("waldemar-setup", `⚔️ setup: ${currentStep}`);
+
+    const now = Date.now();
+    const shouldNotify = forceNotify || (message !== lastNotifiedStep && now - lastNotifyAt > 8_000);
+    if (shouldNotify) {
+      lastNotifyAt = now;
+      lastNotifiedStep = message;
+      ctx.ui.notify(`📦 ${message}`, "info");
+    }
+  };
+
   const pushOutput = (chunk: Buffer) => {
     for (const rawLine of chunk.toString("utf-8").split(/\r?\n/)) {
       const line = stripAnsi(rawLine).trim();
@@ -159,11 +174,9 @@ async function runProcessWithProgress(options: ProcessProgressOptions): Promise<
       while (tail.length > 8) tail.shift();
 
       if (line.startsWith("==> ")) {
-        currentStep = line.replace(/^==>\s*/, "");
-        ctx.ui.setStatus("waldemar-setup", `⚔️ setup: ${currentStep}`);
+        publishProgress(line.replace(/^==>\s*/, ""), true);
       } else if (line.startsWith("WARN:")) {
-        currentStep = line;
-        ctx.ui.setStatus("waldemar-setup", `⚔️ setup: ${currentStep}`);
+        publishProgress(line, true);
       }
     }
   };
@@ -174,6 +187,13 @@ async function runProcessWithProgress(options: ProcessProgressOptions): Promise<
   const timer = setInterval(() => {
     const elapsed = Math.floor((Date.now() - startedAt) / 1000);
     ctx.ui.setStatus("waldemar-setup", `${spinner[spinnerIndex++ % spinner.length]} ${currentStep} (${elapsed}s)`);
+
+    const now = Date.now();
+    if (now - lastNotifyAt > 30_000) {
+      lastNotifyAt = now;
+      lastNotifiedStep = currentStep;
+      ctx.ui.notify(`📦 Still working: ${currentStep} (${elapsed}s elapsed)`, "info");
+    }
   }, 1_000);
 
   const timeout = setTimeout(() => {
