@@ -58,6 +58,7 @@ You will see:
 Once installed, use these commands:
 
 ```bash
+/waldemar                  # Open the command chamber
 /waldemar-setup             # Apply theme/settings + external skills + MCP config
 /waldemar-inventory         # Inspect packages, MCP servers, and installed skills
 /sessions                   # List all past campaigns

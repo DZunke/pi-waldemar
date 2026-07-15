@@ -78,6 +78,18 @@ You shall be greeted with:
 
 Once Waldemar is activated, the following commands become available:
 
+### `/waldemar`
+Open Waldemar's command chamber: posture, status, inventory, chronicle, arms, compact, theme, customization, and setup orders.
+
+### `/waldemar-arms`
+Display Waldemar of Falkensee's heraldic achievement when the terminal supports images.
+
+### `/falkensee-compact`
+Display the Falkensee Compact.
+
+### `/waldemar-theme [falkensee-heraldry|chronicle-keeper]`
+Switch the current TUI session's Waldemar livery.
+
 ### `/sessions`
 Review all past campaigns recorded in your current dominion.
 
@@ -147,6 +159,7 @@ waldemar/
 │   ├── safeguards.ts       # Loyal-dissent gates for risky operations
 │   ├── sessions.ts         # Campaign/session commands
 │   ├── inventory.ts        # Package/MCP/skill inspection
+│   ├── chamber.ts          # Central TUI command chamber and ceremonial overlays
 │   ├── chronicle.ts        # Durable TUI-only campaign records
 │   ├── customize.ts        # Customization guidance
 │   └── status.ts           # Operational status report
@@ -347,6 +360,7 @@ extensions/
 ├── safeguards.ts               # Loyal-dissent confirmations for risky operations
 ├── sessions.ts                 # Session/campaign commands
 ├── inventory.ts                # Package/MCP/skill inspection
+├── chamber.ts                  # Central TUI command chamber
 ├── chronicle.ts                # Durable TUI-only campaign records
 ├── customize.ts                # Customization guidance
 └── status.ts                   # Operational status report
