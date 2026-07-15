@@ -107,6 +107,12 @@ This displays the complete customization guide, showing you where to:
 ### `/waldemar-status`
 Request a status report. Waldemar shall provide a full operational briefing.
 
+### `/posture [watch|reconnaissance|forge|seal|siege|council]`
+Set Waldemar's guard formation for the current campaign: scouting, implementation, validation, deep debugging, architecture council, or balanced watch.
+
+### `/postures`
+List all available Falkensee guard postures.
+
 ### `/waldemar-inventory`
 Inspect installed Waldemar packages, MCP servers, and installed skills on the current machine.
 
@@ -131,6 +137,7 @@ waldemar/
 │   ├── setup.ts            # Machine bootstrap and settings reconciliation
 │   ├── startup.ts          # Startup rapport and lifecycle status
 │   ├── presence.ts         # Command-chamber header, footer, title, and working indicator
+│   ├── postures.ts         # Tactical guard formations and prompt/tool posture
 │   ├── sessions.ts         # Campaign/session commands
 │   ├── inventory.ts        # Package/MCP/skill inspection
 │   ├── customize.ts        # Customization guidance
@@ -328,6 +335,7 @@ extensions/
 ├── setup.ts                    # Machine setup and bootstrap
 ├── startup.ts                  # Startup rapport and lifecycle status
 ├── presence.ts                 # Header, footer, title, and working indicator
+├── postures.ts                 # Tactical guard formations
 ├── sessions.ts                 # Session/campaign commands
 ├── inventory.ts                # Package/MCP/skill inspection
 ├── customize.ts                # Customization guidance

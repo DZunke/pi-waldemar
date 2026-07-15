@@ -63,6 +63,7 @@ Once installed, use these commands:
 /sessions                   # List all past campaigns
 /waldemar-customize         # Customization guide
 /waldemar-status            # Operational status
+/posture forge              # Set Waldemar's current guard formation
 /reload                     # Refresh after modifications
 ```
 
