@@ -55,7 +55,7 @@ const WALDEMAR_STARTUP_REPORTS: StartupReport[] = [
     lines: [
       "Falcon sight is upon the codefield.",
       "Speed remains welcome; avoidable ruin remains beneath contempt.",
-      "The line is ordered. The work shall be worthy.",
+      "The standards are raised; the field awaits your order.",
     ],
   },
 ];
