@@ -20,6 +20,8 @@ This repository packages the Waldemar pi agent. Treat it as a portable personal-
 
 ## Documentation policy
 
+- Classify the audience before editing any documentation file. Do not mix onboarding, usage, maintenance, and implementation detail in the same surface.
+- `QUICKSTART.md` is for package users only. Keep it short: install, first setup, basic usage steps, a small command reference, and where to read more. Do not include development checkout instructions, package internals, MCP/server transport details, dependency explanations, extension architecture, external-skill implementation details, or defensive notes about what is not configured unless the user must act on it to complete first use.
 - Keep `README.md` useful as a slim fast entrypoint for installation, high-level capabilities, and links to canonical docs. Do not duplicate command manuals or repository maps there.
 - Put durable implementation and workflow documentation in `docs/`.
 - Each extension must have a short purpose document in `docs/extensions/`.
@@ -39,6 +41,12 @@ This repository packages the Waldemar pi agent. Treat it as a portable personal-
 - When adding, removing, or changing commands, update `docs/commands.md`, `README.md` if it affects the short command list, and the relevant extension docs in the same change.
 - When adding, removing, or changing prompt templates, update `docs/prompts.md` in the same change.
 - When changing readiness behavior, keep `/waldemar-doctor` as the single health-check authority; keep `/waldemar-inventory` factual and `/waldemar-status` lightweight.
+- Before committing documentation changes, verify the edited file's level:
+  - user quickstart: action-only, no implementation exposition
+  - README: orientation and links, minimal duplication
+  - `docs/*.md`: canonical durable details
+  - `docs/extensions/*.md`: extension responsibilities and maintainer notes
+  - `VALIDATION.md`: verification evidence and readiness rules
 
 ## Skills policy
 
