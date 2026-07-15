@@ -129,7 +129,8 @@ waldemar/
 ├── extensions/             # Small single-purpose pi extension entrypoints
 │   ├── persona.ts          # System-prompt persona and communication rules
 │   ├── setup.ts            # Machine bootstrap and settings reconciliation
-│   ├── startup.ts          # Greeting and lifecycle status
+│   ├── startup.ts          # Startup rapport and lifecycle status
+│   ├── presence.ts         # Command-chamber header, footer, title, and working indicator
 │   ├── sessions.ts         # Campaign/session commands
 │   ├── inventory.ts        # Package/MCP/skill inspection
 │   ├── customize.ts        # Customization guidance
@@ -161,7 +162,8 @@ Waldemar's behavior, capabilities, and presentation are entirely within your con
 Each extension file should own one clear concern. Shared helpers belong in `lib/`, not in top-level `extensions/` helper files.
 
 Examples:
-- Modify greeting messages in `extensions/startup.ts`
+- Modify startup rapports in `extensions/startup.ts`
+- Adjust the command-chamber header/footer in `extensions/presence.ts`
 - Adjust persona language in `extensions/persona.ts` and `lib/waldemar.ts`
 - Add setup/bootstrap logic in `extensions/setup.ts`
 - Add a new command in its own focused `extensions/<command-name>.ts`
@@ -324,7 +326,8 @@ For complex configurations, you may organize Waldemar's comportment across multi
 extensions/
 ├── persona.ts                  # System prompt/persona rules
 ├── setup.ts                    # Machine setup and bootstrap
-├── startup.ts                  # Greeting and lifecycle status
+├── startup.ts                  # Startup rapport and lifecycle status
+├── presence.ts                 # Header, footer, title, and working indicator
 ├── sessions.ts                 # Session/campaign commands
 ├── inventory.ts                # Package/MCP/skill inspection
 ├── customize.ts                # Customization guidance
