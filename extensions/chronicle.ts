@@ -13,7 +13,7 @@ type ChronicleEntryData = {
 
 type ChronicleEvent = Partial<Omit<ChronicleEntryData, "timestamp">>;
 
-/** Falkensee chronicle cards: durable TUI-only campaign records. */
+/** Falkensee chronicle cards: deliberate TUI-only decision records. */
 export default function chronicleExtension(pi: ExtensionAPI) {
   pi.registerEntryRenderer<ChronicleEntryData>("waldemar-chronicle", (entry, { expanded }, theme) => {
     const data = normalizeChronicleEntry(entry.data);
@@ -40,13 +40,18 @@ export default function chronicleExtension(pi: ExtensionAPI) {
   pi.registerCommand("chronicle", {
     description: "Add a Falkensee chronicle mark to the current campaign",
     handler: async (args, ctx) => {
-      const message = args.trim() || "Campaign mark placed by royal order.";
+      const message = args.trim();
+      if (!message) {
+        ctx.ui.notify("Usage: /chronicle <decision or milestone to preserve>", "warning");
+        return;
+      }
+
       appendChronicle(pi, {
-        title: "Campaign Mark",
+        title: "Decision Recorded",
         message,
         tone: "info",
       });
-      ctx.ui.notify("📜 Chronicle mark recorded.", "info");
+      ctx.ui.notify("📜 Decision recorded in the Falkensee chronicle.", "info");
     },
   });
 
@@ -65,50 +70,27 @@ export default function chronicleExtension(pi: ExtensionAPI) {
       }
 
       const report = entries
-        .map((entry) => `${toneIcon(entry.tone)} ${new Date(entry.timestamp).toLocaleTimeString()} — ${entry.title}: ${entry.message}`)
-        .join("\n");
+        .map((entry) => [
+          `${toneIcon(entry.tone)} ${new Date(entry.timestamp).toLocaleTimeString()} — ${entry.title}`,
+          indent(entry.message),
+        ].join("\n"))
+        .join("\n\n");
       ctx.ui.notify(`Recent Falkensee Chronicle\n\n${report}`, "info");
     },
   });
+}
 
-  pi.on("session_compact", async (event) => {
-    appendChronicle(pi, {
-      title: "Archive Compacted",
-      message: `The chronicle was condensed by ${event.fromExtension ? "extension craft" : "standard archive protocol"}.`,
-      tone: "info",
-      details: {
-        reason: event.reason,
-        willRetry: event.willRetry,
-      },
-    });
-  });
-
-  pi.on("session_tree", async (event) => {
-    appendChronicle(pi, {
-      title: "Campaign Branch Changed",
-      message: "The captain marked a change in the campaign tree.",
-      tone: "info",
-      details: {
-        oldLeafId: event.oldLeafId,
-        newLeafId: event.newLeafId,
-        fromExtension: event.fromExtension,
-      },
-    });
-  });
-
-  pi.on("session_info_changed", async (event) => {
-    appendChronicle(pi, {
-      title: "Campaign Name Updated",
-      message: event.name ? `The campaign now bears the name: ${event.name}` : "The campaign name was cleared.",
-      tone: "info",
-    });
-  });
+function indent(message: string): string {
+  return message
+    .split(/\r?\n/)
+    .map((line) => `  ${line}`)
+    .join("\n");
 }
 
 function appendChronicle(pi: ExtensionAPI, event: ChronicleEvent) {
   pi.appendEntry<ChronicleEntryData>("waldemar-chronicle", {
     title: event.title || "Falkensee Chronicle",
-    message: event.message || "A mark was entered into the campaign record.",
+    message: event.message || "A decision was entered into the campaign record.",
     tone: event.tone || "info",
     timestamp: Date.now(),
     details: event.details,
@@ -118,7 +100,7 @@ function appendChronicle(pi: ExtensionAPI, event: ChronicleEvent) {
 function normalizeChronicleEntry(data: ChronicleEntryData | undefined): ChronicleEntryData {
   return {
     title: data?.title || "Falkensee Chronicle",
-    message: data?.message || "A mark was entered into the campaign record.",
+    message: data?.message || "A decision was entered into the campaign record.",
     tone: data?.tone || "info",
     timestamp: data?.timestamp || Date.now(),
     details: data?.details,

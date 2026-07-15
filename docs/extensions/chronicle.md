@@ -1,18 +1,28 @@
 # chronicle.ts
 
-Purpose: keep a durable Waldemar of Falkensee campaign chronicle inside the TUI without adding noise to the LLM context.
+Purpose: keep a durable Waldemar of Falkensee decision chronicle inside the TUI without adding noise to the LLM context.
 
 ## What chronicles are
 
 Chronicles are custom pi session entries with custom type `waldemar-chronicle`.
 
-They are rendered as styled chronicle cards in the conversation UI and stored in the session history, but they are not intended as instructions to the model. They exist for the human campaign record: milestones, decisions, validation marks, branch changes, compaction events, and safeguard decisions that should remain visible when reviewing the session.
+They are rendered as styled chronicle cards in the conversation UI and stored in the session history, but they are not model instructions. They exist for the human campaign record: decisions, milestones, validation marks, and audit breadcrumbs that should remain visible when reviewing the session.
 
-Think of them as a command-room logbook, not as prompt content.
+Think of them as a command-room decision logbook, not as prompt content and not as an automatic event stream.
+
+## Scope and persistence
+
+Chronicles are scoped to the current pi session and active campaign tree branch.
+
+- A new session starts with an empty chronicle.
+- Resuming a session restores chronicle entries stored in that session file.
+- `/chronicles` shows recent chronicle entries on the current branch path.
+- Chronicle entries are persisted in the session JSONL as custom entries.
+- Chronicle entries are not global memory and are not shared across sessions.
 
 ## Commands
 
-- `/chronicle [message]` — manually add a campaign mark.
+- `/chronicle <decision or milestone>` — manually record a decision or milestone.
 - `/chronicles` — show the most recent chronicle marks in the current branch.
 
 Examples:
@@ -20,17 +30,16 @@ Examples:
 ```text
 /chronicle agreed to remove Sentry MCP and use Sentry CLI instead
 /chronicle validation passed before release tag
+/chronicle decided to keep Doctor as the single readiness authority
 ```
 
-## Automatic chronicle entries
+## Design rule
 
-This extension also records events emitted by other Waldemar extensions, including:
+Chronicles are deliberate by default.
 
-- compaction events
-- campaign tree navigation
-- session-name changes
-- posture changes
-- safeguard confirmations or declined objections
+The package should not automatically record every confirmation dialog, posture change, compaction, or navigation event as a chronicle. Those events can be noisy and often do not represent durable decisions by His Majesty.
+
+If something is important enough to preserve, record it intentionally with `/chronicle`.
 
 ## Why not just write a normal message?
 
@@ -38,23 +47,24 @@ Normal conversation messages can become part of future model context. Chronicle 
 
 Use chronicles for:
 
-- human-visible milestones
 - decisions worth preserving
+- human-visible milestones
 - audit breadcrumbs
 - readiness or validation marks
-- notable session navigation events
+- explicit architecture/product choices
 
 Do not use chronicles for:
 
 - instructions the model must follow
-- requirements that belong in code, docs, or tickets
+- every safeguard prompt or confirmation
+- routine posture changes
+- requirements that belong in tickets, docs, or code
 - detailed long-form notes that should live in a repository file
 
 ## Responsibilities
 
 - registers a `waldemar-chronicle` custom entry renderer
 - records TUI-only chronicle cards via `pi.appendEntry()`
-- listens for `waldemar:chronicle` events from other extensions
-- records selected session lifecycle events
+- listens for explicit `waldemar:chronicle` events from other extensions when they represent deliberate decisions
 
 Chronicle entries are for the command chamber and the human campaign record only.

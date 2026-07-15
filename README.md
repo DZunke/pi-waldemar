@@ -59,7 +59,7 @@ Common direct commands:
 - `/waldemar-doctor` — primary package and machine readiness check
 - `/waldemar-system-prompt` — inspect the captured full system prompt
 - `/posture` — select the current guard posture
-- `/chronicle` — record a TUI-only campaign mark
+- `/chronicle` — record a TUI-only decision or milestone
 - `/waldemar-customize` — pointers for customization
 
 Full command reference: [`docs/commands.md`](docs/commands.md).

@@ -233,13 +233,6 @@ function announcePosture(pi: ExtensionAPI, posture: GuardPosture, persist: boole
     persist,
   });
 
-  if (persist) {
-    pi.events.emit("waldemar:chronicle", {
-      title: "Guard Posture Changed",
-      message: `${posture.label}: ${posture.description}`,
-      tone: "info",
-    });
-  }
 }
 
 function buildPosturePrompt(posture: GuardPosture): string {

@@ -85,7 +85,7 @@ async function chooseChamberAction(ctx: ExtensionContext): Promise<ChamberAction
     { value: "inventory", label: "Inspect arsenal", description: "Packages, MCP servers, and skills" },
     { value: "doctor", label: "Run doctor", description: "Package and machine readiness checks" },
     { value: "systemPrompt", label: "Inspect system prompt", description: "View the first captured system prompt in a scrollable panel" },
-    { value: "chronicles", label: "Review chronicle", description: "Recent Falkensee campaign marks" },
+    { value: "chronicles", label: "Review chronicle", description: "Recent TUI-only decisions and milestones" },
     { value: "arms", label: "Display arms", description: "Waldemar of Falkensee's heraldic achievement" },
     { value: "compact", label: "Recite compact", description: "The Falkensee Compact" },
     { value: "theme", label: "Change livery", description: "Switch between Waldemar themes" },

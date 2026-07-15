@@ -8,7 +8,7 @@ Responsibilities:
 - asks for confirmation before editing or writing secret-bearing paths such as `.env`, private keys, credentials, or token files
 - asks for confirmation before lockfile, schema, or migration changes
 - warns once per session before mutating a dirty git working tree
-- emits `waldemar:chronicle` entries for confirmed or declined objections
+- keeps safeguard confirmations out of the chronicle by default; use `/chronicle` manually when a decision should be preserved
 
 The extension should remain conservative and practical. It is not roleplay for its own sake: the captain objects when a command could damage the realm, hide uncertainty, or mix campaigns in the same working tree.
 

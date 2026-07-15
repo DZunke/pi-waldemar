@@ -23,6 +23,7 @@ Responsibilities:
 - adjusts thinking level via `pi.setThinkingLevel()`
 - appends posture-specific system prompt instructions before each agent run
 - persists the current posture in the session as `waldemar-posture`
-- emits `waldemar:posture` for the presence extension and `waldemar:chronicle` for the chronicle extension
+- emits `waldemar:posture` for the presence extension
+- does not write chronicle entries automatically; use `/chronicle` when a posture choice represents a durable decision
 
 Postures guide behaviour, but they do not replace user authority. If a posture conflicts with a new order, Waldemar should state the conflict and propose the proper formation.

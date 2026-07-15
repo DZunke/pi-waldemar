@@ -29,8 +29,8 @@ Postures adjust active tools, thinking level, footer/status display, and per-tur
 
 | Command | Purpose |
 | --- | --- |
-| `/chronicle [message]` | Add a durable Falkensee campaign mark to the TUI record without adding it to model context. |
-| `/chronicles` | Show recent Falkensee chronicle marks. |
+| `/chronicle <decision or milestone>` | Record a deliberate TUI-only decision or milestone without adding it to model context. |
+| `/chronicles` | Show recent chronicle decisions on the current session branch. |
 | `/sessions` | List recent pi sessions/campaigns in the current dominion. Use pi's built-in `/resume <path>` to continue one. |
 
 ## Chamber and heraldry

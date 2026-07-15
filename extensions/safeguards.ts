@@ -56,17 +56,14 @@ export default function safeguardsExtension(pi: ExtensionAPI) {
 
     if (!ctx.hasUI) {
       if (objection.blockWithoutUi) {
-        emitSafeguardChronicle(pi, objection, false);
         return { block: true, reason: `${objection.title}: ${objection.message}` };
       }
       return;
     }
 
     const proceed = await ctx.ui.confirm(objection.title, `${objection.message}\n\nProceed anyway?`);
-    emitSafeguardChronicle(pi, objection, proceed);
-
     if (!proceed) {
-      return { block: true, reason: `${objection.title}: blocked by user` };
+      return { block: true, reason: `${objection.title}: declined by royal order` };
     }
 
     if (objection.title.includes("Dirty Dominion")) {
@@ -180,10 +177,3 @@ async function getDirtyRepoSummary(pi: ExtensionAPI, cwd: string): Promise<strin
   }
 }
 
-function emitSafeguardChronicle(pi: ExtensionAPI, objection: Objection, proceeded: boolean) {
-  pi.events.emit("waldemar:chronicle", {
-    title: objection.title.replace(/^Captain's Objection: /, "Captain's Objection — "),
-    message: proceeded ? `${objection.message}\n\nUser confirmed the order.` : `${objection.message}\n\nOrder blocked or declined.`,
-    tone: objection.severity,
-  });
-}
