@@ -86,6 +86,10 @@ function buildPlainReport(capture: PromptCapture, choice: PromptChoice): string 
   ].join("\n");
 }
 
+function safeRenderedLine(line: string, width: number): string {
+  return visibleWidth(line) <= width ? line : truncateToWidth(line, width, "…", true);
+}
+
 class SystemPromptViewer {
   private scrollOffset = 0;
   private cachedWidth = 0;
@@ -111,8 +115,9 @@ class SystemPromptViewer {
     this.scrollOffset = Math.max(0, Math.min(this.scrollOffset, maxOffset));
 
     const title = ` ⚔ System Prompt — ${this.choice} capture `;
-    const titleText = this.theme.fg("accent", this.theme.bold(truncateToWidth(title, innerW, "…", true)));
-    const titlePad = Math.max(0, innerW - visibleWidth(title));
+    const titleContent = truncateToWidth(title, innerW, "…");
+    const titleText = this.theme.fg("accent", this.theme.bold(titleContent));
+    const titlePad = Math.max(0, innerW - visibleWidth(titleContent));
     const lines: string[] = [border("╭") + titleText + border(`${"─".repeat(titlePad)}╮`)];
 
     const meta = [
@@ -141,7 +146,7 @@ class SystemPromptViewer {
     const help = " ↑↓ scroll │ PgUp/PgDn page │ Home/End jump │ Enter/Esc close ";
     lines.push(border("│") + pad(this.theme.fg("dim", help)) + border("│"));
     lines.push(border(`╰${"─".repeat(innerW)}╯`));
-    return lines;
+    return lines.map((line) => safeRenderedLine(line, width));
   }
 
   handleInput(data: string): void {
