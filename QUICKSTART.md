@@ -23,7 +23,7 @@ Inside Pi, run:
 /reload
 ```
 
-Setup applies Waldemar's recommended settings, theme, external skills, and Codegraph MCP configuration. It also reports any missing local requirements.
+Setup applies Waldemar's recommended defaults and reports any missing local requirements.
 
 ## Use Waldemar
 
@@ -50,19 +50,17 @@ Inspect what is installed:
 | Command | Use |
 |---------|-----|
 | `/waldemar` | Open the command chamber |
-| `/waldemar-setup` | Apply Waldemar settings, skills, and Codegraph MCP config |
+| `/waldemar-setup` | Apply Waldemar's recommended defaults |
 | `/waldemar-doctor` | Check readiness and missing requirements |
 | `/waldemar-status` | Show lightweight operational status |
-| `/waldemar-inventory` | List packages, MCP servers, and skills |
+| `/waldemar-inventory` | Show what Waldemar can see on this machine |
 | `/sessions` | List past sessions |
 | `/resume <path>` | Resume a saved session |
-| `/posture forge` | Switch to deeper implementation mode |
+| `/posture forge` | Switch to deeper work mode |
 | `/reload` | Reload after setup or package changes |
 
-## Notes
+## More information
 
-- Waldemar configures **Codegraph MCP only**.
-- Sentry support is handled through external Sentry skills and the Sentry CLI, not MCP.
-- Full documentation starts at `README.md` and `docs/README.md`.
+For the full command roster and detailed documentation, start with `README.md` and `docs/README.md`.
 
 The line is ordered. The work shall be worthy.
