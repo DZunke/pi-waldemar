@@ -28,7 +28,7 @@ Chronicles are scoped to the current pi session and active campaign tree branch.
 Examples:
 
 ```text
-/chronicle agreed to remove Sentry MCP and use Sentry CLI instead
+/chronicle agreed to keep Codegraph as the only Waldemar MCP default
 /chronicle validation passed before release tag
 /chronicle decided to keep Doctor as the single readiness authority
 ```
