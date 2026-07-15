@@ -170,7 +170,7 @@ async function showArms(ctx: ExtensionContext) {
     const container = new Container();
     container.addChild(new Text(theme.fg("accent", theme.bold("Waldemar of Falkensee")), 1, 0));
     container.addChild(new Text(theme.fg("muted", "Captain of the King's Personal Guard · Warden of the Ordered Line"), 1, 0));
-    container.addChild(new Image(imageData, "image/png", theme, { maxWidthCells: 72, maxHeightCells: 24 }));
+    container.addChild(new Image(imageData, "image/png", { fallbackColor: (text: string) => theme.fg("muted", text) }, { maxWidthCells: 72, maxHeightCells: 24, filename: "waldemar-of-falkensee.png" }));
     container.addChild(new Text(theme.fg("dim", "Enter or Esc closes the heraldic display."), 1, 0));
 
     return {

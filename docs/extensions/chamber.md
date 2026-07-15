@@ -15,5 +15,6 @@ Responsibilities:
 - routes to posture, status, inventory, chronicle, customization, setup, theme, compact, and arms actions
 - stages `/waldemar-setup` in the editor rather than executing it immediately, because setup changes global configuration
 - keeps ceremonial displays on demand rather than showing large heraldry at every startup
+- passes an `ImageTheme` object (`{ fallbackColor }`) to the TUI `Image` component, not the full coding-agent theme
 
 This extension is the user's command room. Keep it navigable and restrained; it should centralize orders, not become another monolith of behaviour. The complete command roster belongs in `docs/commands.md`, not inside the chamber implementation.
