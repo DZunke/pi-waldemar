@@ -16,7 +16,14 @@ type ChamberAction =
   | "customize"
   | "setup";
 
-const POSTURE_OPTIONS = ["watch", "reconnaissance", "forge", "seal", "siege", "council"];
+const POSTURE_ITEMS: SelectItem[] = [
+  { value: "watch", label: "watch", description: "Balanced default service; restores the prior arsenal after special formations." },
+  { value: "reconnaissance", label: "reconnaissance", description: "Read-first scouting; mutation tools are removed while Waldemar maps the field." },
+  { value: "forge", label: "forge", description: "Focused implementation; editing tools are available for disciplined changes." },
+  { value: "seal", label: "seal", description: "Validation and readiness review; mutation tools are removed unless explicitly ordered." },
+  { value: "siege", label: "siege", description: "Deep debugging; broader tools and higher thinking for patient breach analysis." },
+  { value: "council", label: "council", description: "Architecture and decision discussion; read-only by default." },
+];
 
 const FALKENSEE_COMPACT = `I receive rank as duty, knowledge as trust, and command as burden.
 I shall not conceal uncertainty behind confidence.
@@ -119,7 +126,7 @@ async function chooseChamberAction(ctx: ExtensionContext): Promise<ChamberAction
 async function executeChamberAction(pi: ExtensionAPI, ctx: ExtensionContext, action: ChamberAction) {
   switch (action) {
     case "posture": {
-      const selected = await ctx.ui.select("Choose Falkensee guard posture", POSTURE_OPTIONS);
+      const selected = await choosePosture(ctx);
       if (selected) pi.sendUserMessage(`/posture ${selected}`);
       return;
     }
@@ -149,6 +156,45 @@ async function executeChamberAction(pi: ExtensionAPI, ctx: ExtensionContext, act
       ctx.ui.notify("Setup order staged in the editor for your inspection.", "info");
       return;
   }
+}
+
+async function choosePosture(ctx: ExtensionContext): Promise<string | undefined> {
+  if (ctx.mode !== "tui") {
+    const selected = await ctx.ui.select("Choose Falkensee guard posture", POSTURE_ITEMS.map((item) => String(item.value)));
+    return selected;
+  }
+
+  return ctx.ui.custom<string | undefined>((tui, theme, _keybindings, done) => {
+    const container = new Container();
+    const borderColor = (text: string) => theme.fg("borderAccent", text);
+
+    container.addChild(new DynamicBorder(borderColor));
+    container.addChild(new Text(theme.fg("accent", theme.bold("Choose Falkensee Guard Posture")), 1, 0));
+    container.addChild(new Text(theme.fg("muted", "The formation changes tools, thinking level, and per-turn doctrine."), 1, 0));
+
+    const list = new SelectList(POSTURE_ITEMS, POSTURE_ITEMS.length + 1, {
+      selectedPrefix: (text) => theme.fg("accent", text),
+      selectedText: (text) => theme.fg("accent", text),
+      description: (text) => theme.fg("muted", text),
+      scrollInfo: (text) => theme.fg("dim", text),
+      noMatch: (text) => theme.fg("warning", text),
+    });
+    list.onSelect = (item) => done(String(item.value));
+    list.onCancel = () => done(undefined);
+
+    container.addChild(list);
+    container.addChild(new Text(theme.fg("dim", "↑↓ navigate • enter select • esc cancel"), 1, 0));
+    container.addChild(new DynamicBorder(borderColor));
+
+    return {
+      render: (width: number) => container.render(width),
+      invalidate: () => container.invalidate(),
+      handleInput: (data: string) => {
+        list.handleInput?.(data);
+        tui.requestRender();
+      },
+    };
+  });
 }
 
 async function showArms(ctx: ExtensionContext) {

@@ -13,6 +13,7 @@ Responsibilities:
 
 - uses custom TUI selection UI for the central command menu
 - routes to posture, status, inventory, chronicle, customization, setup, theme, compact, and arms actions
+- renders guard posture choices with descriptions so the user need not memorize formation purposes
 - stages `/waldemar-setup` in the editor rather than executing it immediately, because setup changes global configuration
 - keeps ceremonial displays on demand rather than showing large heraldry at every startup
 - checks `getCapabilities().images` before opening the image overlay, so unsupported terminals do not show a transparent fallback panel
