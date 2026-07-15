@@ -156,7 +156,7 @@ function displayStartupRapport(ctx: any, sessionHistory: SessionInfo[]) {
   const fieldLine = report.lines[Math.floor(Math.random() * report.lines.length)];
 
   ctx.ui.notify(
-    `📜 ${report.title}: ${fieldLine}\nDominion: ${dominionName} · Chronicle: ${sessionHistory.length} recorded ${campaignWord} · Chamber: /waldemar`,
+    `📜 ${report.title}: ${fieldLine}\n🏰 Dominion: ${dominionName} · 📚 Chronicle: ${sessionHistory.length} recorded ${campaignWord} · ⚔️ Chamber: /waldemar`,
     "info"
   );
 }
