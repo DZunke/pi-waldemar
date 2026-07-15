@@ -19,8 +19,10 @@
 - ✅ **File system safety** - Handles missing/corrupted settings.json gracefully
 - ✅ **User interaction** - Uses ctx.ui.notify() for all user-facing messages
 - ✅ **Settings management** - `/waldemar-setup` command applies settings, package dependencies, external skills, and MCP server config safely
-- ✅ **Status indicators** - Footer status with `ctx.ui.setStatus()`
+- ✅ **Status indicators** - Footer status with `ctx.ui.setStatus()` plus a custom Falkensee footer via `ctx.ui.setFooter()`
 - ✅ **Command registration** - Proper `/command` registration with descriptions
+- ✅ **Custom TUI components** - Command chamber, compact display, heraldic image overlay, custom header/footer, and chronicle entry renderer
+- ✅ **Tool/event interception** - Guard postures and loyal-dissent safeguards adjust tools, thinking level, system prompt, and risky tool calls
 
 #### Theme Compliance
 - ✅ **All 51 color tokens defined** - Complete color palette per pi theme spec
@@ -30,7 +32,7 @@
 - ✅ **Variable reuse** - Uses `vars` section for consistency
 - ✅ **Thinking levels** - All 7 thinking level borders (off through max)
 - ✅ **Accessibility** - Good contrast ratios for dark theme
-- ✅ **Consistency** - Follows Chronicle Keeper's fantasy aesthetic
+- ✅ **Consistency** - Includes both Chronicle Keeper's warm chronicle aesthetic and Falkensee Heraldry's blue/crimson/silver command-chamber livery
 
 #### Documentation Quality
 - ✅ **Setup instructions** - Step-by-step installation guide
@@ -161,18 +163,18 @@ The Chronicle Keeper theme draws inspiration from:
 
 ```
 Waldemar Pi Package
-├── Extensions: 7 focused entrypoints (persona, setup, startup, sessions, inventory, customize, status)
+├── Extensions: 12 focused entrypoints (persona, setup, startup, presence, postures, safeguards, chamber, chronicle, sessions, inventory, customize, status)
 ├── Themes: 2 (chronicle-keeper.json, falkensee-heraldry.json)
 ├── Skills: 0 (ready for expansion)
 ├── Prompts: 0 (ready for expansion)
-├── Commands: 5 (/waldemar-setup, /waldemar-inventory, /sessions, /waldemar-customize, /waldemar-status)
-├── Events: 4 (session_start, agent_start, agent_end, lifecycle monitoring)
+├── Commands: 13 (/waldemar, /waldemar-arms, /falkensee-compact, /waldemar-theme, /posture, /postures, /chronicle, /chronicles, /waldemar-setup, /waldemar-inventory, /sessions, /waldemar-customize, /waldemar-status)
+├── Events: lifecycle, model/thinking, tool-call, session-tree, compaction, session-info, and inter-extension Falkensee events
 └── Documentation: README, QUICKSTART, HERALDRY, AGENTS.md, and docs/ guides
 
 Lines of Code
 ├── Extensions: focused TypeScript entrypoints plus shared lib helpers
 ├── Themes: 2 theme files with full color palettes
-└── Documentation: ~400 lines
+└── Documentation: expanded README, QUICKSTART, validation, and focused docs/ extension guides
 
 Package Quality
 ├── TypeScript: ✅ Fully typed with ExtensionAPI
@@ -213,10 +215,11 @@ The Waldemar Pi Package is **production-ready** and follows all pi coding agent 
 
 - ✅ Proper pi package structure and manifest
 - ✅ Well-implemented extension with proper lifecycle management
-- ✅ Complete, accessible theme with Windows Terminal optimization
+- ✅ Complete, accessible themes with Windows Terminal optimization
 - ✅ Comprehensive documentation for users and developers
 - ✅ Fully transportable setup for multi-machine deployments
 - ✅ Safe, robust settings management with user feedback
+- ✅ Falkensee command-chamber experience: posture modes, loyal-dissent safeguards, chronicle cards, ceremonial overlays, and persistent header/footer presence
 - ✅ Ready for sharing via GitHub or npm
 
 **Status: VALIDATED AND RECOMMENDED FOR USE** 🏆
