@@ -1,6 +1,6 @@
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { DynamicBorder } from "@earendil-works/pi-coding-agent";
-import { Container, Image, Key, matchesKey, type SelectItem, SelectList, Text } from "@earendil-works/pi-tui";
+import { Container, getCapabilities, Image, Key, matchesKey, type SelectItem, SelectList, Text } from "@earendil-works/pi-tui";
 import * as fs from "fs";
 import * as path from "path";
 import { WALDEMAR_PACKAGE_ROOT } from "../lib/waldemar";
@@ -161,6 +161,15 @@ async function showArms(ctx: ExtensionContext) {
 
   if (!fs.existsSync(imagePath)) {
     ctx.ui.notify(`Heraldic image not found: ${imagePath}`, "warning");
+    return;
+  }
+
+  const capabilities = getCapabilities();
+  if (!capabilities.images) {
+    ctx.ui.notify(
+      `⚔️ Waldemar's heraldic achievement cannot be rendered in this terminal.\n\nImage protocol support was not detected. Open the image file directly instead:\n${imagePath}`,
+      "info"
+    );
     return;
   }
 
