@@ -31,7 +31,8 @@
     ],
     "themes": [
       "./themes"
-    ]
+    ],
+    "image": "https://raw.githubusercontent.com/DZunke/pi-waldemar/main/waldemar-of-falkensee.png"
   },
   "dependencies": {
     "pi-mcp-adapter": "2.11.0"

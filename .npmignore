@@ -1,0 +1,28 @@
+# Keep npm/git package tarballs deliberate.
+
+# VCS and local editor state
+.git/
+.github/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Local secrets and machine state
+.env
+.env.*
+.DS_Store
+Thumbs.db
+
+# Generated or temporary artifacts
+*.tgz
+npm-debug.log
+yarn-error.log
+.tmp/
+temp/
+dist/
+build/
+
+# Dependencies are installed by pi for git installs; npm still includes bundledDependencies.
+node_modules/
