@@ -1,6 +1,7 @@
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { DynamicBorder } from "@earendil-works/pi-coding-agent";
 import { Container, getCapabilities, Image, Key, matchesKey, type SelectItem, SelectList, Text } from "@earendil-works/pi-tui";
+import { runDoctorChecks, showDoctorReport } from "../lib/doctor";
 import * as fs from "fs";
 import * as path from "path";
 import { WALDEMAR_PACKAGE_ROOT } from "../lib/waldemar";
@@ -136,7 +137,7 @@ async function executeChamberAction(pi: ExtensionAPI, ctx: ExtensionContext, act
       pi.sendUserMessage("/waldemar-inventory");
       return;
     case "doctor":
-      pi.sendUserMessage("/waldemar-doctor");
+      await showDoctorReport(ctx, runDoctorChecks());
       return;
     case "systemPrompt":
       pi.sendUserMessage("/waldemar-system-prompt");

@@ -15,6 +15,8 @@ Checks include:
 - codegraph MCP configuration
 - installed external skill count
 
-TUI mode renders a compact bordered report. Non-TUI modes fall back to a plain notification report.
+TUI mode renders a compact bordered report. Non-TUI modes print a plain report to stdout and also send a UI notification when available.
+
+The shared implementation lives in `lib/doctor.ts` so `/waldemar-doctor` and the `/waldemar` command chamber use the same report path.
 
 Warnings are not always failures. They often mean optional machine-local tooling has not been installed yet or `/waldemar-setup` has not been run on the current machine.
