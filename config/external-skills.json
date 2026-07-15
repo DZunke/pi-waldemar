@@ -18,6 +18,16 @@
       "enabled": true
     },
     {
+      "name": "grill-me",
+      "source": "mattpocock/skills",
+      "enabled": true
+    },
+    {
+      "name": "interview-me",
+      "source": "addyosmani/agent-skills",
+      "enabled": true
+    },
+    {
       "name": "gh-cli",
       "source": "github/awesome-copilot",
       "enabled": false,
