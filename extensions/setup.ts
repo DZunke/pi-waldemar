@@ -8,7 +8,7 @@ import {
   WALDEMAR_MCP_EXTENSION_DIR,
   WALDEMAR_MCP_SERVERS,
   WALDEMAR_PACKAGE_ROOT,
-  WALDEMAR_POSTGRES_MCP_BIN,
+  WALDEMAR_REMOVED_MCP_SERVER_NAMES,
   WALDEMAR_SENTRY_MCP_BIN,
 } from "../lib/waldemar";
 
@@ -76,6 +76,9 @@ export default function setupExtension(pi: ExtensionAPI) {
           ...(mcpConfig.mcpServers || {}),
           ...WALDEMAR_MCP_SERVERS,
         };
+        for (const serverName of WALDEMAR_REMOVED_MCP_SERVER_NAMES) {
+          delete mcpConfig.mcpServers[serverName];
+        }
         fs.writeFileSync(mcpPath, JSON.stringify(mcpConfig, null, 2));
         ctx.ui.setStatus("waldemar-setup", "⚔️ setup: MCP configured");
 
@@ -109,14 +112,8 @@ export default function setupExtension(pi: ExtensionAPI) {
         } catch {
           mcpNotice += "\n  ⚠️ codegraph binary was not found on PATH; install it before using the codegraph MCP server.";
         }
-        if (!fs.existsSync(WALDEMAR_POSTGRES_MCP_BIN)) {
-          mcpNotice += `\n  ⚠️ postgres MCP binary is missing at ${WALDEMAR_POSTGRES_MCP_BIN}; git/npm pi installs should resolve package dependencies automatically.`;
-        }
         if (!fs.existsSync(WALDEMAR_SENTRY_MCP_BIN)) {
           mcpNotice += `\n  ⚠️ sentry MCP binary is missing at ${WALDEMAR_SENTRY_MCP_BIN}; git/npm pi installs should resolve package dependencies automatically.`;
-        }
-        if (!process.env.DATABASE_URL && !process.env.DB_HOST && !process.env.POSTGRES_HOST) {
-          mcpNotice += "\n  ⚠️ postgres MCP is configured but needs DATABASE_URL or DB_HOST/DB_USER/DB_PASSWORD/DB_NAME environment variables.";
         }
         if (!process.env.SENTRY_AUTH_TOKEN) {
           mcpNotice += "\n  ⚠️ SENTRY_AUTH_TOKEN is not set; sentry MCP is configured but may need authentication before use.";
@@ -124,7 +121,7 @@ export default function setupExtension(pi: ExtensionAPI) {
 
         ctx.ui.setStatus("waldemar-setup", "⚔️ setup: complete");
         ctx.ui.notify(
-          `✅ Waldemar's settings have been applied.\n\nUpdated ~/.pi/agent/settings.json:\n  • theme: falkensee-heraldry\n  • quietStartup: true\n  • defaultThinkingLevel: medium\n  • optimized compaction settings\n\nPackage dependencies:\n  • pi-mcp-adapter is declared in Waldemar package.json and should be installed by pi for git/npm package installs${dependencyNotice}\n\nUpdated ~/.pi/agent/mcp.json:\n  • codegraph MCP server via: codegraph serve --mcp\n  • postgres MCP server via bundled mcp-postgres in read-only mode\n  • sentry MCP server via bundled @sentry/mcp-server${mcpNotice}\n\nSkills:${skillsNotice || "\n  • no external skill bootstrap script found"}\n\nNext step: run /reload or restart pi if dependencies were newly installed.`,
+          `✅ Waldemar's settings have been applied.\n\nUpdated ~/.pi/agent/settings.json:\n  • theme: falkensee-heraldry\n  • quietStartup: true\n  • defaultThinkingLevel: medium\n  • optimized compaction settings\n\nPackage dependencies:\n  • pi-mcp-adapter and @sentry/mcp-server are declared in Waldemar package.json and should be installed by pi for git/npm package installs${dependencyNotice}\n\nUpdated ~/.pi/agent/mcp.json:\n  • codegraph MCP server via: codegraph serve --mcp\n  • sentry MCP server via package-installed @sentry/mcp-server\n  • removed legacy postgres MCP server entries${mcpNotice}\n\nSkills:${skillsNotice || "\n  • no external skill bootstrap script found"}\n\nNext step: run /reload or restart pi if dependencies were newly installed.`,
           "info"
         );
       } catch (error) {

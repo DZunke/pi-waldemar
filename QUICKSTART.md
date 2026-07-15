@@ -122,11 +122,10 @@ git push -u origin main
 
 ```bash
 pi install git:github.com/yourusername/waldemar
-pi
-# optional before starting pi if you want these MCP servers active:
-export DATABASE_URL='postgresql://user:password@host:5432/database'
+# Optional: before starting pi, set Sentry auth if you want Sentry MCP active.
 export SENTRY_AUTH_TOKEN='sntrys_...'
 
+pi
 # then run inside pi:
 /waldemar-setup
 /reload

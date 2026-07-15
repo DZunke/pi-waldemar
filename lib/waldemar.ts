@@ -10,20 +10,13 @@ export interface SessionInfo {
 export const WALDEMAR_PACKAGE_ROOT = path.resolve(__dirname, "..");
 export const WALDEMAR_BOOTSTRAP_SKILLS_SCRIPT = path.join(WALDEMAR_PACKAGE_ROOT, "scripts", "bootstrap-skills.sh");
 export const WALDEMAR_MCP_EXTENSION_DIR = path.join(WALDEMAR_PACKAGE_ROOT, "node_modules", "pi-mcp-adapter");
-export const WALDEMAR_POSTGRES_MCP_BIN = path.join(WALDEMAR_PACKAGE_ROOT, "node_modules", ".bin", "mcp-postgres");
 export const WALDEMAR_SENTRY_MCP_BIN = path.join(WALDEMAR_PACKAGE_ROOT, "node_modules", ".bin", "sentry-mcp");
+export const WALDEMAR_REMOVED_MCP_SERVER_NAMES = ["postgres"];
 
 export const WALDEMAR_MCP_SERVERS = {
   codegraph: {
     command: "codegraph",
     args: ["serve", "--mcp"],
-  },
-  postgres: {
-    command: WALDEMAR_POSTGRES_MCP_BIN,
-    args: [],
-    env: {
-      DB_READ_ONLY: "true",
-    },
   },
   sentry: {
     command: WALDEMAR_SENTRY_MCP_BIN,
