@@ -7,7 +7,6 @@ import { WALDEMAR_PACKAGE_ROOT } from "../lib/waldemar";
 
 type ChamberAction =
   | "posture"
-  | "status"
   | "inventory"
   | "doctor"
   | "systemPrompt"
@@ -74,7 +73,7 @@ export default function chamberExtension(pi: ExtensionAPI) {
 async function chooseChamberAction(ctx: ExtensionContext): Promise<ChamberAction | undefined> {
   if (ctx.mode !== "tui") {
     ctx.ui.notify(
-      "Waldemar's command chamber requires the TUI. Available orders: /posture, /waldemar-status, /waldemar-inventory, /chronicles, /waldemar-arms, /falkensee-compact, /waldemar-theme.",
+      "Waldemar's command chamber requires the TUI. Available orders: /posture, /waldemar-inventory, /waldemar-doctor, /waldemar-system-prompt, /chronicles, /waldemar-arms, /falkensee-compact, /waldemar-theme.",
       "info",
     );
     return undefined;
@@ -82,7 +81,6 @@ async function chooseChamberAction(ctx: ExtensionContext): Promise<ChamberAction
 
   const items: SelectItem[] = [
     { value: "posture", label: "Change guard posture", description: "Reconnaissance, Forge, Seal, Siege, Council, or Watch" },
-    { value: "status", label: "Request status report", description: "Operational report from Waldemar" },
     { value: "inventory", label: "Inspect arsenal", description: "Packages, MCP servers, and skills" },
     { value: "doctor", label: "Run doctor", description: "Package and machine readiness checks" },
     { value: "systemPrompt", label: "Inspect system prompt", description: "View the first captured system prompt in a scrollable panel" },
@@ -134,9 +132,6 @@ async function executeChamberAction(pi: ExtensionAPI, ctx: ExtensionContext, act
       if (selected) pi.sendUserMessage(`/posture ${selected}`);
       return;
     }
-    case "status":
-      pi.sendUserMessage("/waldemar-status");
-      return;
     case "inventory":
       pi.sendUserMessage("/waldemar-inventory");
       return;

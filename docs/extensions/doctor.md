@@ -1,6 +1,6 @@
 # doctor.ts
 
-Purpose: register `/waldemar-doctor`, a package and machine readiness report for Waldemar of Falkensee.
+Purpose: register `/waldemar-doctor`, the primary package and machine readiness report for Waldemar of Falkensee.
 
 Checks include:
 

@@ -1,8 +1,5 @@
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { SessionManager } from "@earendil-works/pi-coding-agent";
-import * as fs from "fs";
-import * as os from "os";
-import * as path from "path";
 
 /** Waldemar operational status report. */
 export default function statusExtension(pi: ExtensionAPI) {
@@ -15,8 +12,6 @@ export default function statusExtension(pi: ExtensionAPI) {
       } catch {
         sessionCount = 0;
       }
-
-      const mcpStatus = getMcpStatusReport();
 
       const status = `
 ⚔️  WALDEMAR STATUS REPORT
@@ -34,8 +29,8 @@ Loyalty: Unwavering
 Current Dominion: ${ctx.cwd}
 Available Sessions: ${sessionCount}
 
-MCP Readiness:
-${mcpStatus}
+For package and machine readiness checks:
+consult: /waldemar-doctor
 
 Should you require customization of my comportment or capabilities,
 consult: /waldemar-customize
@@ -50,22 +45,4 @@ The line is ordered. The work shall be worthy, Sire.
       ctx.ui.notify(status, "info");
     },
   });
-}
-
-function getMcpStatusReport(): string {
-  const lines: string[] = [];
-  const mcpPath = path.join(os.homedir(), ".pi/agent/mcp.json");
-
-  let configuredServers: Record<string, unknown> = {};
-  try {
-    if (fs.existsSync(mcpPath)) {
-      configuredServers = JSON.parse(fs.readFileSync(mcpPath, "utf-8")).mcpServers || {};
-    }
-  } catch {
-    lines.push("  ⚠️ ~/.pi/agent/mcp.json could not be parsed");
-  }
-
-  lines.push(configuredServers.codegraph ? "  • codegraph: configured" : "  ⚠️ codegraph: not configured; run /waldemar-setup");
-
-  return lines.join("\n");
 }

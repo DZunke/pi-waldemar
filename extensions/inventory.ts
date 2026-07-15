@@ -24,10 +24,9 @@ export default function inventoryExtension(pi: ExtensionAPI) {
         const skills = skillRoots.flatMap((root) => listSkillNames(root));
 
         const mcpServers = mcp.mcpServers || {};
-        const mcpReadiness = buildMcpReadiness(mcpServers);
 
         ctx.ui.notify(
-          `⚔️ WALDEMAR INVENTORY\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nPackages:\n${((settings.packages || []) as string[]).map((p) => `  • ${p}`).join("\n") || "  none"}\n\nMCP Servers:\n${Object.keys(mcpServers).map((s) => `  • ${s}`).join("\n") || "  none"}\n\nMCP Readiness:\n${mcpReadiness}\n\nInstalled Skills (${skills.length}):\n${skills.map((s) => `  • ${s}`).join("\n") || "  none"}\n\nRun /waldemar-setup to reconcile Waldemar defaults, package dependencies, external skills, and MCP servers.`,
+          `⚔️ WALDEMAR INVENTORY\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nPackages:\n${((settings.packages || []) as string[]).map((p) => `  • ${p}`).join("\n") || "  none"}\n\nMCP Servers:\n${Object.keys(mcpServers).map((s) => `  • ${s}`).join("\n") || "  none"}\n\nInstalled Skills (${skills.length}):\n${skills.map((s) => `  • ${s}`).join("\n") || "  none"}\n\nRun /waldemar-doctor for readiness checks. Run /waldemar-setup to reconcile Waldemar defaults, package dependencies, external skills, and MCP servers.`,
           "info"
         );
       } catch (error) {
@@ -37,10 +36,3 @@ export default function inventoryExtension(pi: ExtensionAPI) {
   });
 }
 
-function buildMcpReadiness(mcpServers: Record<string, unknown>): string {
-  const lines: string[] = [];
-
-  lines.push(mcpServers.codegraph ? "  • codegraph: configured" : "  ⚠️ codegraph: not configured");
-
-  return lines.join("\n");
-}
