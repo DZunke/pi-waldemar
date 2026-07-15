@@ -1,17 +1,20 @@
-```
-╔════════════════════════════════════════════════════════════════════════╗
-║                          QUICK START GUIDE                            ║
-║                For Installing Waldemar of Falkensee                    ║
-╚════════════════════════════════════════════════════════════════════════╝
-```
+# Waldemar Quick Start
 
-# ⚔️ Waldemar Quick Start
+Install and activate **Waldemar of Falkensee**, your personal Pi coding agent package.
 
-## 1️⃣ Installation (Choose One)
+## Prerequisites
 
-### Option A: Install from Local Path
+- Pi coding agent installed and available as `pi`
+- Node/npm available for local development installs
+- Optional: `codegraph` on `PATH` for the codegraph MCP server
 
-Local development installs use the working directory directly. Install package dependencies once so bundled extension dependencies such as `pi-mcp-adapter` are present:
+## Install
+
+Choose one path.
+
+### Local development checkout
+
+Use this when working directly from `~/.pi/waldemar`:
 
 ```bash
 cd ~/.pi/waldemar
@@ -19,151 +22,93 @@ npm install --omit=dev
 pi install ~/.pi/waldemar
 ```
 
-### Option B: Install from GitHub
+### Git package
 
-First, push your package to GitHub, then:
+Use this on another machine or after pushing the package repository:
 
 ```bash
 pi install git:github.com/DZunke/pi-waldemar
 ```
 
-### Option C: Test Without Installing
+### Test without installing
 
 ```bash
 pi -e ~/.pi/waldemar
 ```
 
-This loads Waldemar for one session only—perfect for testing before full installation.
+## First run
 
----
+Start Pi, then run Waldemar setup inside the session:
 
-## 2️⃣ Verify Installation
-
-Start pi and observe Waldemar of Falkensee's formal greeting:
-
-```bash
-pi
-```
-
-You will see:
-- ⚔️ Waldemar's formal salutation
-- 📊 Your session history
-- 🎯 Available commands
-- 🔧 Customization hints
-
----
-
-## 3️⃣ Key Commands
-
-Once installed, use these commands:
-
-```bash
-/waldemar                  # Open the command chamber
-/waldemar-setup             # Apply theme/settings + external skills + MCP config
-/waldemar-inventory         # Inspect packages, MCP servers, and installed skills
-/sessions                   # List all past campaigns
-/waldemar-customize         # Customization guide
-/waldemar-status            # Operational status
-/posture forge              # Set Waldemar's current guard formation
-/chronicle "milestone"      # Mark the campaign record
-/reload                     # Refresh after modifications
-```
-
----
-
-## 4️⃣ Resume a Previous Session
-
-```bash
-# List available sessions
-/sessions
-
-# Resume one
-/resume path/to/session.jsonl
-```
-
----
-
-## 5️⃣ Customize Waldemar
-
-Edit files in `~/.pi/waldemar/`:
-
-| Directory | Purpose |
-|-----------|---------|
-| `extensions/` | Modify comportment, add commands |
-| `skills/` | Add your custom handwritten Waldemar skills only |
-| `config/external-skills.json` | Define reused third-party skills installed by bootstrap |
-| `scripts/bootstrap-skills.sh` | Bootstrap external skills via Skills CLI or `gh skill install` |
-| `docs/` | Understand architecture, extensions, MCP, and customization |
-| `prompts/` | Add strategic guidance templates |
-| `themes/` | Customize visual styling |
-
-After changes:
-```bash
-# In pi:
-/reload
-```
-
----
-
-## 6️⃣ Share Your Waldemar
-
-### Push to GitHub
-
-```bash
-cd ~/.pi/waldemar
-git init
-git add .
-git commit -m "⚔️ Waldemar reports for duty"
-git remote add origin git@github.com:DZunke/pi-waldemar.git
-git push -u origin main
-```
-
-### Install on Another Machine
-
-```bash
-pi install git:github.com/DZunke/pi-waldemar
-pi
-# then run inside pi:
+```text
 /waldemar-setup
 /reload
-# optional, if you want Sentry project auth:
-sentry-cli login
 ```
 
----
+Setup applies the Falkensee theme/settings, reconciles external skills, writes MCP configuration, and removes stale legacy Postgres MCP entries.
 
-## 📖 Full Documentation
+## Optional: authenticate Sentry MCP
 
-For detailed information, read:
-- `README.md` — Fast package entrypoint
-- `HERALDRY.md` — House history and styling
-- `docs/commands.md` — Waldemar command roster
-- `docs/README.md` — Architecture, extensions, setup, MCP, and customization
+Waldemar uses Sentry's remote OAuth MCP server, not a local Node Sentry MCP package.
 
----
+After `/waldemar-setup` and `/reload`, authenticate when you want Sentry tools available:
 
-## 🆘 Quick Troubleshooting
-
-**Problem:** Waldemar doesn't greet me
-- **Solution:** Run `pi install ~/.pi/waldemar`, then restart pi
-
-**Problem:** Commands don't work
-- **Solution:** Make sure you're using `/command` syntax inside pi
-
-**Problem:** My changes didn't take effect
-- **Solution:** Run `/reload` inside pi
-
-**Problem:** I want to see the customization guide
-- **Solution:** Run `/waldemar-customize` inside pi
-
----
-
+```text
+/mcp-auth sentry
 ```
-╔════════════════════════════════════════════════════════════════════════╗
-║                                                                        ║
-║            "The line is ordered. The work shall be worthy."            ║
-║                                                                        ║
-║                         Begin your campaign now.                       ║
-║                                                                        ║
-╚════════════════════════════════════════════════════════════════════════╝
+
+For remote/headless sessions, use the adapter proxy flow instead:
+
+```js
+mcp({ action: "auth-start", server: "sentry" })
 ```
+
+Then complete with the redirected URL:
+
+```js
+mcp({ action: "auth-complete", server: "sentry", args: '{"redirectUrl":"http://localhost:..."}' })
+```
+
+## Core commands
+
+| Command | Purpose |
+|---------|---------|
+| `/waldemar` | Open the command chamber |
+| `/waldemar-setup` | Apply settings, skills, and MCP configuration |
+| `/waldemar-status` | Show lightweight operational status |
+| `/waldemar-inventory` | Inspect packages, MCP servers, and installed skills |
+| `/waldemar-customize` | Show customization guidance |
+| `/sessions` | List past campaign sessions |
+| `/resume <path>` | Resume a saved session |
+| `/posture forge` | Switch to a deeper implementation posture |
+| `/chronicle "note"` | Record a campaign milestone |
+| `/reload` | Reload after package changes |
+
+See `docs/commands.md` for the full command roster.
+
+## Customize
+
+Edit the package files, then run `/reload` in Pi.
+
+| Path | Purpose |
+|------|---------|
+| `extensions/` | Pi extension entrypoints and commands |
+| `lib/` | Shared Waldemar helpers and constants |
+| `skills/` | Custom handwritten Waldemar skills |
+| `config/external-skills.json` | Reused third-party skill declarations |
+| `scripts/bootstrap-skills.sh` | External skill installer |
+| `themes/` | Visual themes |
+| `prompts/` | Prompt templates |
+| `docs/` | Durable package documentation |
+
+## Troubleshooting
+
+| Problem | Fix |
+|---------|-----|
+| Waldemar does not load | Run `pi install ~/.pi/waldemar`, then restart Pi |
+| Changes do not appear | Run `/reload` inside Pi |
+| MCP state looks wrong | Run `/waldemar-setup`, then `/reload` |
+| Sentry tools need login | Run `/mcp-auth sentry` |
+| You need the complete docs | Start with `README.md` and `docs/README.md` |
+
+The line is ordered. The work shall be worthy.
