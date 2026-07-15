@@ -138,6 +138,7 @@ waldemar/
 │   ├── startup.ts          # Startup rapport and lifecycle status
 │   ├── presence.ts         # Command-chamber header, footer, title, and working indicator
 │   ├── postures.ts         # Tactical guard formations and prompt/tool posture
+│   ├── safeguards.ts       # Loyal-dissent gates for risky operations
 │   ├── sessions.ts         # Campaign/session commands
 │   ├── inventory.ts        # Package/MCP/skill inspection
 │   ├── customize.ts        # Customization guidance
@@ -336,6 +337,7 @@ extensions/
 ├── startup.ts                  # Startup rapport and lifecycle status
 ├── presence.ts                 # Header, footer, title, and working indicator
 ├── postures.ts                 # Tactical guard formations
+├── safeguards.ts               # Loyal-dissent confirmations for risky operations
 ├── sessions.ts                 # Session/campaign commands
 ├── inventory.ts                # Package/MCP/skill inspection
 ├── customize.ts                # Customization guidance
