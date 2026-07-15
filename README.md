@@ -257,7 +257,7 @@ Simply install from your repository:
 pi install git:github.com/yourusername/waldemar
 ```
 
-Your core configuration—extensions, skills, prompts, themes, comportment—transfers instantly. After installing on a fresh machine, run `/waldemar-setup` once to reconcile machine-local settings, npm package dependencies, external skills, and MCP servers such as codegraph and sentry. Setup also removes stale postgres MCP entries from older Waldemar installations.
+Your core configuration—extensions, skills, prompts, themes, comportment—transfers instantly. After installing on a fresh machine, run `/waldemar-setup` once to reconcile machine-local settings, npm package dependencies, external skills, and MCP servers such as codegraph and sentry.
 
 For Sentry MCP usage, Waldemar configures Sentry's remote OAuth MCP server. After setup and reload, authenticate through the adapter:
 

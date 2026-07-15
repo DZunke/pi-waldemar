@@ -22,7 +22,6 @@ Then inside pi:
 - preserves existing package entries in global settings
 - writes/merges `~/.pi/agent/mcp.json`
 - configures codegraph and Sentry's remote OAuth MCP server
-- removes stale postgres MCP entries from older Waldemar installations
 - runs `scripts/bootstrap-skills.sh` for external skills
 - reports progress in the footer while long-running skill installation proceeds
 

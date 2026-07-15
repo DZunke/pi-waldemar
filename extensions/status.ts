@@ -68,12 +68,6 @@ function getMcpStatusReport(): string {
 
   lines.push(configuredServers.codegraph ? "  • codegraph: configured" : "  ⚠️ codegraph: not configured; run /waldemar-setup");
 
-  if (configuredServers.postgres) {
-    lines.push("  ⚠️ postgres: stale MCP entry still present; run /waldemar-setup to remove it");
-  } else {
-    lines.push("  • postgres: removed from Waldemar MCP defaults");
-  }
-
   const sentry = configuredServers.sentry as { url?: string; auth?: string } | undefined;
   if (!sentry) {
     lines.push("  ⚠️ sentry: not configured; run /waldemar-setup");

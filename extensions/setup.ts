@@ -8,7 +8,6 @@ import {
   WALDEMAR_MCP_EXTENSION_DIR,
   WALDEMAR_MCP_SERVERS,
   WALDEMAR_PACKAGE_ROOT,
-  WALDEMAR_REMOVED_MCP_SERVER_NAMES,
 } from "../lib/waldemar";
 
 /** Machine bootstrap: settings, MCP config, and external reusable skills. */
@@ -75,9 +74,6 @@ export default function setupExtension(pi: ExtensionAPI) {
           ...(mcpConfig.mcpServers || {}),
           ...WALDEMAR_MCP_SERVERS,
         };
-        for (const serverName of WALDEMAR_REMOVED_MCP_SERVER_NAMES) {
-          delete mcpConfig.mcpServers[serverName];
-        }
         fs.writeFileSync(mcpPath, JSON.stringify(mcpConfig, null, 2));
         ctx.ui.setStatus("waldemar-setup", "⚔️ setup: MCP configured");
 
@@ -115,7 +111,7 @@ export default function setupExtension(pi: ExtensionAPI) {
 
         ctx.ui.setStatus("waldemar-setup", "⚔️ setup: complete");
         ctx.ui.notify(
-          `✅ Waldemar's settings have been applied.\n\nUpdated ~/.pi/agent/settings.json:\n  • theme: falkensee-heraldry\n  • quietStartup: true\n  • defaultThinkingLevel: medium\n  • optimized compaction settings\n\nPackage dependencies:\n  • pi-mcp-adapter is declared in Waldemar package.json and should be installed by pi for git/npm package installs${dependencyNotice}\n\nUpdated ~/.pi/agent/mcp.json:\n  • codegraph MCP server via: codegraph serve --mcp\n  • sentry remote MCP server via https://mcp.sentry.dev/mcp using OAuth\n  • removed legacy postgres MCP server entries${mcpNotice}\n\nSkills:${skillsNotice || "\n  • no external skill bootstrap script found"}\n\nNext step: run /reload or restart pi if dependencies were newly installed.`,
+          `✅ Waldemar's settings have been applied.\n\nUpdated ~/.pi/agent/settings.json:\n  • theme: falkensee-heraldry\n  • quietStartup: true\n  • defaultThinkingLevel: medium\n  • optimized compaction settings\n\nPackage dependencies:\n  • pi-mcp-adapter is declared in Waldemar package.json and should be installed by pi for git/npm package installs${dependencyNotice}\n\nUpdated ~/.pi/agent/mcp.json:\n  • codegraph MCP server via: codegraph serve --mcp\n  • sentry remote MCP server via https://mcp.sentry.dev/mcp using OAuth${mcpNotice}\n\nSkills:${skillsNotice || "\n  • no external skill bootstrap script found"}\n\nNext step: run /reload or restart pi if dependencies were newly installed.`,
           "info"
         );
       } catch (error) {

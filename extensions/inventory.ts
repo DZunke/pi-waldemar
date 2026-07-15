@@ -42,12 +42,6 @@ function buildMcpReadiness(mcpServers: Record<string, unknown>): string {
 
   lines.push(mcpServers.codegraph ? "  • codegraph: configured" : "  ⚠️ codegraph: not configured");
 
-  if (mcpServers.postgres) {
-    lines.push("  ⚠️ postgres: stale MCP entry present; Waldemar no longer configures Postgres MCP");
-  } else {
-    lines.push("  • postgres: removed from Waldemar MCP defaults");
-  }
-
   const sentry = mcpServers.sentry as { url?: string; auth?: string } | undefined;
   if (!sentry) {
     lines.push("  ⚠️ sentry: not configured; run /waldemar-setup");

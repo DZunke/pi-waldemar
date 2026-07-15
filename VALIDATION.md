@@ -47,7 +47,7 @@ The package includes a `/waldemar-setup` command that:
 - ✅ Creates `~/.pi/agent/settings.json` if missing
 - ✅ Applies recommended settings (quietStartup, `falkensee-heraldry` theme, thinking level)
 - ✅ Declares required third-party package dependencies in `package.json` (`pi-mcp-adapter`) for pi-managed installation
-- ✅ Creates/merges `~/.pi/agent/mcp.json` with codegraph and Sentry remote OAuth MCP servers, and removes stale postgres MCP entries
+- ✅ Creates/merges `~/.pi/agent/mcp.json` with codegraph and Sentry remote OAuth MCP servers
 - ✅ Merges intelligently with existing settings
 - ✅ Handles file system errors gracefully
 - ✅ Provides user feedback on success/failure

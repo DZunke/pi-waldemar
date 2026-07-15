@@ -11,7 +11,6 @@ export const WALDEMAR_PACKAGE_ROOT = path.resolve(__dirname, "..");
 export const WALDEMAR_BOOTSTRAP_SKILLS_SCRIPT = path.join(WALDEMAR_PACKAGE_ROOT, "scripts", "bootstrap-skills.sh");
 export const WALDEMAR_MCP_EXTENSION_DIR = path.join(WALDEMAR_PACKAGE_ROOT, "node_modules", "pi-mcp-adapter");
 export const WALDEMAR_SENTRY_REMOTE_MCP_URL = "https://mcp.sentry.dev/mcp";
-export const WALDEMAR_REMOVED_MCP_SERVER_NAMES = ["postgres"];
 
 export const WALDEMAR_MCP_SERVERS = {
   codegraph: {

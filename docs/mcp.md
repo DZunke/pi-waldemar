@@ -48,14 +48,6 @@ mcp({ action: "auth-complete", server: "sentry", args: '{"redirectUrl":"http://l
 
 Waldemar reports whether Sentry is configured as the remote OAuth MCP in both `/waldemar-status` and `/waldemar-inventory`.
 
-## Removed servers
-
-### postgres
-
-Waldemar no longer configures a Postgres MCP server. `/waldemar-setup` removes stale `postgres` entries from `~/.pi/agent/mcp.json` if they were written by an older version of the package.
-
-The external Postgres skill in `config/external-skills.json` is separate from MCP and remains available unless disabled there.
-
 ## Changing MCP servers
 
 Edit `WALDEMAR_MCP_SERVERS` in `lib/waldemar.ts`, then run:
