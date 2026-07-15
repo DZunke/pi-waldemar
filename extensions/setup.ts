@@ -42,10 +42,36 @@ export default function setupExtension(pi: ExtensionAPI) {
           theme: "falkensee-heraldry",
           editorPaddingX: 1,
           outputPad: 1,
+          autocompleteMaxVisible: 8,
+          doubleEscapeAction: "tree",
+          treeFilterMode: "default",
+          collapseChangelog: true,
+          enableSkillCommands: true,
           compaction: {
             enabled: true,
             reserveTokens: 16384,
             keepRecentTokens: 20000,
+          },
+          branchSummary: {
+            reserveTokens: 16384,
+            skipPrompt: false,
+          },
+          retry: {
+            enabled: true,
+            maxRetries: 3,
+            baseDelayMs: 2000,
+            provider: {
+              maxRetries: 0,
+              maxRetryDelayMs: 60000,
+            },
+          },
+          terminal: {
+            showImages: true,
+            imageWidthCells: 60,
+          },
+          images: {
+            autoResize: true,
+            blockImages: false,
           },
         };
 
@@ -55,6 +81,26 @@ export default function setupExtension(pi: ExtensionAPI) {
           compaction: {
             ...(settings.compaction || {}),
             ...waldemarDefaults.compaction,
+          },
+          branchSummary: {
+            ...(settings.branchSummary || {}),
+            ...waldemarDefaults.branchSummary,
+          },
+          retry: {
+            ...(settings.retry || {}),
+            ...waldemarDefaults.retry,
+            provider: {
+              ...(settings.retry?.provider || {}),
+              ...waldemarDefaults.retry.provider,
+            },
+          },
+          terminal: {
+            ...(settings.terminal || {}),
+            ...waldemarDefaults.terminal,
+          },
+          images: {
+            ...(settings.images || {}),
+            ...waldemarDefaults.images,
           },
         };
 
@@ -111,7 +157,7 @@ export default function setupExtension(pi: ExtensionAPI) {
 
         setSetupStatus(pi, ctx, "⚔️ setup: complete");
         ctx.ui.notify(
-          `✅ Waldemar's settings have been applied.\n\nUpdated ~/.pi/agent/settings.json:\n  • theme: falkensee-heraldry\n  • quietStartup: true\n  • defaultThinkingLevel: medium\n  • optimized compaction settings\n\nPackage dependencies:\n  • pi-mcp-adapter is declared in Waldemar package.json and should be installed by pi for git/npm package installs${dependencyNotice}\n\nUpdated ~/.pi/agent/mcp.json:\n  • codegraph MCP server via: codegraph serve --mcp${mcpNotice}\n\nSkills:${skillsNotice || "\n  • no external skill bootstrap script found"}\n\nNext step: run /reload or restart pi if dependencies were newly installed.`,
+          `✅ Waldemar's settings have been applied.\n\nUpdated ~/.pi/agent/settings.json:\n  • theme: falkensee-heraldry\n  • quietStartup: true\n  • defaultThinkingLevel: medium\n  • command-chamber display defaults\n  • compaction, retry, image, and branch-summary defaults\n\nPackage dependencies:\n  • pi-mcp-adapter is declared in Waldemar package.json and should be installed by pi for git/npm package installs${dependencyNotice}\n\nUpdated ~/.pi/agent/mcp.json:\n  • codegraph MCP server via: codegraph serve --mcp${mcpNotice}\n\nSkills:${skillsNotice || "\n  • no external skill bootstrap script found"}\n\nNext step: run /reload or restart pi if dependencies were newly installed.`,
           "info"
         );
       } catch (error) {

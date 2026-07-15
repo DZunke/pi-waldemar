@@ -45,7 +45,7 @@
 
 The package includes a `/waldemar-setup` command that:
 - ✅ Creates `~/.pi/agent/settings.json` if missing
-- ✅ Applies recommended settings (quietStartup, `falkensee-heraldry` theme, thinking level)
+- ✅ Applies recommended settings (`falkensee-heraldry` theme, quiet startup, medium thinking, display polish, compaction, retry, branch-summary, image, and skill-command defaults)
 - ✅ Declares required third-party package dependencies in `package.json` (`pi-mcp-adapter`) for pi-managed installation
 - ✅ Creates/merges `~/.pi/agent/mcp.json` with the codegraph MCP server
 - ✅ Merges intelligently with existing settings

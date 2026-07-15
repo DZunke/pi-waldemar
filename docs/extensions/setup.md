@@ -4,7 +4,7 @@ Purpose: register `/waldemar-setup` and reconcile the machine with Waldemar defa
 
 Responsibilities:
 
-- global pi settings, including the `falkensee-heraldry` default theme
+- global pi settings, including the `falkensee-heraldry` theme, medium thinking, display polish, compaction, retry, branch-summary, image, and skill-command defaults
 - MCP server configuration
 - external skills bootstrap
 - setup progress status
