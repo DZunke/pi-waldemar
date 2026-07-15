@@ -64,6 +64,7 @@ Once installed, use these commands:
 /waldemar-customize         # Customization guide
 /waldemar-status            # Operational status
 /posture forge              # Set Waldemar's current guard formation
+/chronicle "milestone"      # Mark the campaign record
 /reload                     # Refresh after modifications
 ```
 

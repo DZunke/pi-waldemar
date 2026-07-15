@@ -113,6 +113,12 @@ Set Waldemar's guard formation for the current campaign: scouting, implementatio
 ### `/postures`
 List all available Falkensee guard postures.
 
+### `/chronicle [message]`
+Record a durable Falkensee campaign mark in the TUI chronicle without adding it to model context.
+
+### `/chronicles`
+Review recent Falkensee chronicle marks.
+
 ### `/waldemar-inventory`
 Inspect installed Waldemar packages, MCP servers, and installed skills on the current machine.
 
@@ -141,6 +147,7 @@ waldemar/
 │   ├── safeguards.ts       # Loyal-dissent gates for risky operations
 │   ├── sessions.ts         # Campaign/session commands
 │   ├── inventory.ts        # Package/MCP/skill inspection
+│   ├── chronicle.ts        # Durable TUI-only campaign records
 │   ├── customize.ts        # Customization guidance
 │   └── status.ts           # Operational status report
 ├── lib/
@@ -340,6 +347,7 @@ extensions/
 ├── safeguards.ts               # Loyal-dissent confirmations for risky operations
 ├── sessions.ts                 # Session/campaign commands
 ├── inventory.ts                # Package/MCP/skill inspection
+├── chronicle.ts                # Durable TUI-only campaign records
 ├── customize.ts                # Customization guidance
 └── status.ts                   # Operational status report
 ```

@@ -10,5 +10,6 @@ Each top-level file in `extensions/` is loaded by pi. Keep each file focused.
 - [safeguards](safeguards.md) — loyal-dissent confirmations for risky commands, sensitive paths, and dirty working trees
 - [sessions](sessions.md) — session/campaign command
 - [inventory](inventory.md) — package/MCP/skill inspection
+- [chronicle](chronicle.md) — durable TUI-only campaign records and chronicle marks
 - [customize](customize.md) — customization guide command
 - [status](status.md) — operational status command
