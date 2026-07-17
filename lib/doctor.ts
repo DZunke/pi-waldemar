@@ -11,6 +11,7 @@ import {
   WALDEMAR_MCP_SERVERS,
   WALDEMAR_PACKAGE_ROOT,
 } from "./waldemar";
+import { getCliRequirements, isCliRequirementAvailable } from "./tooling";
 
 export type DoctorStatus = "pass" | "warn" | "fail";
 
@@ -18,6 +19,13 @@ export type DoctorCheck = {
   label: string;
   status: DoctorStatus;
   detail: string;
+};
+
+type DoctorGroup = {
+  label: string;
+  status: DoctorStatus;
+  detail: string;
+  checks: DoctorCheck[];
 };
 
 export function runDoctorChecks(): DoctorCheck[] {
@@ -61,8 +69,16 @@ export function runDoctorChecks(): DoctorCheck[] {
   }
 
   checks.push(commandCheck("codegraph", ["--version"], "needed for the native CodeGraph extension and optional MCP compatibility"));
-  checks.push(commandCheck("gh", ["skill", "install", "--help"], "needed for github/awesome-copilot external skills"));
-  checks.push(commandCheck("sentry-cli", ["--version"], "installed by sentry-cli skill post-install"));
+
+  for (const tool of getCliRequirements()) {
+    checks.push({
+      label: `command: ${tool.command}`,
+      status: isCliRequirementAvailable(tool) ? "pass" : "warn",
+      detail: isCliRequirementAvailable(tool)
+        ? tool.summary
+        : `${tool.summary} Missing now; run /waldemar-tooling ${tool.key} for install and setup orders.`,
+    });
+  }
 
   try {
     const settings = fs.existsSync(settingsPath) ? JSON.parse(fs.readFileSync(settingsPath, "utf-8")) : {};
@@ -119,12 +135,13 @@ export function runDoctorChecks(): DoctorCheck[] {
 }
 
 export async function showDoctorReport(ctx: ExtensionContext, checks: DoctorCheck[]) {
-  const pass = checks.filter((check) => check.status === "pass").length;
-  const warn = checks.filter((check) => check.status === "warn").length;
-  const fail = checks.filter((check) => check.status === "fail").length;
+  const groups = buildDoctorGroups(checks);
+  const pass = groups.filter((group) => group.status === "pass").length;
+  const warn = groups.filter((group) => group.status === "warn").length;
+  const fail = groups.filter((group) => group.status === "fail").length;
 
   if (ctx.mode !== "tui") {
-    const report = buildPlainDoctorReport(checks, pass, warn, fail);
+    const report = buildPlainDoctorReport(groups, pass, warn, fail);
     console.log(report);
     ctx.ui.notify(report, fail ? "error" : warn ? "warning" : "info");
     return;
@@ -132,17 +149,93 @@ export async function showDoctorReport(ctx: ExtensionContext, checks: DoctorChec
 
   await ctx.ui.custom<void>((_tui, theme, _keybindings, done) => {
     const borderColor = (text: string) => theme.fg("borderAccent", text);
-    return new DoctorPanel(checks, { pass, warn, fail }, theme, borderColor, done);
+    return new DoctorPanel(groups, { pass, warn, fail }, theme, borderColor, done);
   });
 }
 
-export function buildPlainDoctorReport(checks: DoctorCheck[], pass: number, warn: number, fail: number): string {
+export function buildPlainDoctorReport(groups: DoctorGroup[], pass: number, warn: number, fail: number): string {
   return [
     "⚔️ Waldemar Doctor",
-    `pass: ${pass} | warn: ${warn} | fail: ${fail}`,
+    `areas ready: ${pass} | warn: ${warn} | fail: ${fail}`,
     "",
-    ...checks.map((check) => `${statusIcon(check.status)} ${check.label}: ${check.detail}`),
+    ...groups.map((group) => `${statusIcon(group.status)} ${group.label}: ${group.detail}`),
   ].join("\n");
+}
+
+function buildDoctorGroups(checks: DoctorCheck[]): DoctorGroup[] {
+  const definitions = [
+    {
+      label: "Package integrity",
+      match: (check: DoctorCheck) => [
+        "package.json",
+        "README.md",
+        "LICENSE",
+        "bootstrap skills script",
+        "pi-mcp-adapter dependency",
+        "pi package manifest",
+        "package metadata",
+        "repository metadata",
+        "theme:",
+        "local skill:",
+        "prompt template:",
+        "Waldemar MCP defaults",
+      ].some((prefix) => check.label.startsWith(prefix)),
+    },
+    {
+      label: "Machine tooling",
+      match: (check: DoctorCheck) => check.label.startsWith("command:"),
+    },
+    {
+      label: "Local configuration",
+      match: (check: DoctorCheck) => [
+        "global theme setting",
+        "global settings",
+        "codegraph MCP compatibility",
+        "additional MCP servers",
+      ].includes(check.label),
+    },
+    {
+      label: "External skills",
+      match: (check: DoctorCheck) => check.label === "installed external skills",
+    },
+  ];
+
+  return definitions.map((definition) => {
+    const groupedChecks = checks.filter((check) => definition.match(check));
+    return {
+      label: definition.label,
+      status: groupStatus(groupedChecks),
+      detail: summarizeGroup(groupedChecks),
+      checks: groupedChecks,
+    };
+  }).filter((group) => group.checks.length > 0);
+}
+
+function groupStatus(checks: DoctorCheck[]): DoctorStatus {
+  if (checks.some((check) => check.status === "fail")) return "fail";
+  if (checks.some((check) => check.status === "warn")) return "warn";
+  return "pass";
+}
+
+function summarizeGroup(checks: DoctorCheck[]): string {
+  const failing = checks.filter((check) => check.status === "fail");
+  if (failing.length > 0) {
+    return summarizeExceptions("out of sync", failing);
+  }
+
+  const warnings = checks.filter((check) => check.status === "warn");
+  if (warnings.length > 0) {
+    return summarizeExceptions("needs attention", warnings);
+  }
+
+  return `ready; ${checks.length} checks in line`;
+}
+
+function summarizeExceptions(prefix: string, checks: DoctorCheck[]): string {
+  const labels = checks.slice(0, 3).map((check) => check.label);
+  const remainder = checks.length - labels.length;
+  const suffix = remainder > 0 ? `, +${remainder} more` : "";
+  return `${prefix}: ${labels.join(", ")}${suffix}`;
 }
 
 function fileCheck(label: string, targetPath: string): DoctorCheck {
@@ -170,7 +263,7 @@ function statusIcon(status: DoctorStatus): string {
 
 class DoctorPanel {
   constructor(
-    private readonly checks: DoctorCheck[],
+    private readonly groups: DoctorGroup[],
     private readonly summary: { pass: number; warn: number; fail: number },
     private readonly theme: any,
     private readonly borderColor: (text: string) => string,
@@ -188,18 +281,18 @@ class DoctorPanel {
     const titlePad = Math.max(0, innerW - visibleWidth(titleContent));
     lines.push(border("╭") + this.theme.fg("accent", this.theme.bold(titleContent)) + border(`${"─".repeat(titlePad)}╮`));
 
-    const summary = ` ✓ ${this.summary.pass}   ⚠ ${this.summary.warn}   ✗ ${this.summary.fail} `;
+    const summary = ` areas ready ${this.summary.pass}   warn ${this.summary.warn}   fail ${this.summary.fail} `;
     lines.push(border("│") + pad(this.theme.fg(this.summary.fail ? "error" : this.summary.warn ? "warning" : "success", summary)) + border("│"));
 
-    for (const check of this.checks) {
-      const color = check.status === "pass" ? "success" : check.status === "warn" ? "warning" : "error";
-      const left = `${statusIcon(check.status)} ${check.label}`;
+    for (const group of this.groups) {
+      const color = group.status === "pass" ? "success" : group.status === "warn" ? "warning" : "error";
+      const left = `${statusIcon(group.status)} ${group.label}`;
       const detailWidth = Math.max(10, innerW - visibleWidth(left) - 5);
-      const detail = truncateToWidth(check.detail, detailWidth, "…");
+      const detail = truncateToWidth(group.detail, detailWidth, "…");
       lines.push(border("│") + pad(` ${this.theme.fg(color, left)} ${this.theme.fg("dim", detail)}`) + border("│"));
     }
 
-    lines.push(border("│") + pad(this.theme.fg("dim", " Enter/Esc close │ warnings usually mean optional machine tooling is missing ")) + border("│"));
+    lines.push(border("│") + pad(this.theme.fg("dim", " Enter/Esc close │ use /waldemar-tooling or /waldemar-setup when an area needs attention ")) + border("│"));
     lines.push(border(`╰${"─".repeat(innerW)}╯`));
     return lines.map((line) => visibleWidth(line) <= width ? line : truncateToWidth(line, width, "…", true));
   }

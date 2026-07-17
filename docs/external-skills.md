@@ -45,3 +45,12 @@ gh skill install <source> <name> --agent pi --scope user --force
 The bootstrap continues when an individual third-party skill fails. This protects `/waldemar-setup` from upstream repository churn.
 
 `gh-skill` entries require the GitHub CLI with the `skill` command available. If `gh` is missing, the bootstrap records a warning and continues.
+
+## CLI prerequisites
+
+Some external skills depend on machine local CLI tools beyond the skill files themselves.
+
+- `gh-cli` depends on GitHub CLI with `gh skill install` available.
+- `sentry-cli` depends on the Sentry CLI binary plus local authentication.
+
+Use `/waldemar-tooling` for explicit install, verification, and follow up setup orders for each supported CLI tool. The doctor report now points there when a required command is missing.

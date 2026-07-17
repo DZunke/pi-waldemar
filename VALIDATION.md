@@ -166,11 +166,11 @@ The Chronicle Keeper theme draws inspiration from:
 
 ```
 Waldemar Pi Package
-├── Extensions: 15 focused entrypoints (chamber, chronicle, codegraph, customize, doctor, inventory, persona, postures, presence, safeguards, sessions, setup, startup, status, system-prompt)
+├── Extensions: 16 focused entrypoints (chamber, chronicle, codegraph, customize, doctor, inventory, persona, postures, presence, safeguards, sessions, setup, startup, status, system-prompt, tooling)
 ├── Themes: 2 (chronicle-keeper.json, falkensee-heraldry.json)
 ├── Skills: 4 packaged skills (epic-writer, ticket-validator, ticket-writer, write-documentation)
 ├── Prompts: 2 packaged prompts (write-epic, write-ticket)
-├── Commands: 13 (/waldemar, /waldemar-arms, /falkensee-compact, /waldemar-theme, /posture, /postures, /chronicle, /chronicles, /waldemar-setup, /waldemar-inventory, /sessions, /waldemar-customize, /waldemar-status)
+├── Commands: 14 (/waldemar, /waldemar-arms, /falkensee-compact, /waldemar-theme, /posture, /postures, /chronicle, /chronicles, /waldemar-setup, /waldemar-tooling, /waldemar-inventory, /sessions, /waldemar-customize, /waldemar-status)
 ├── Events: lifecycle, model/thinking, tool-call, session-tree, compaction, session-info, and inter-extension Falkensee events
 └── Documentation: README, HERALDRY, AGENTS.md, and docs/ guides
 

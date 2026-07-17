@@ -10,6 +10,7 @@ type ChamberAction =
   | "posture"
   | "inventory"
   | "doctor"
+  | "tooling"
   | "systemPrompt"
   | "chronicles"
   | "arms"
@@ -74,7 +75,7 @@ export default function chamberExtension(pi: ExtensionAPI) {
 async function chooseChamberAction(ctx: ExtensionContext): Promise<ChamberAction | undefined> {
   if (ctx.mode !== "tui") {
     ctx.ui.notify(
-      "Waldemar's command chamber requires the TUI. Available orders: /posture, /waldemar-inventory, /waldemar-doctor, /waldemar-system-prompt, /chronicles, /waldemar-arms, /falkensee-compact, /waldemar-theme.",
+      "Waldemar's command chamber requires the TUI. Available orders: /posture, /waldemar-inventory, /waldemar-doctor, /waldemar-tooling, /waldemar-system-prompt, /chronicles, /waldemar-arms, /falkensee-compact, /waldemar-theme.",
       "info",
     );
     return undefined;
@@ -84,6 +85,7 @@ async function chooseChamberAction(ctx: ExtensionContext): Promise<ChamberAction
     { value: "posture", label: "Change guard posture", description: "Reconnaissance, Forge, Seal, Siege, Council, or Watch" },
     { value: "inventory", label: "Inspect arsenal", description: "Packages, MCP servers, and skills" },
     { value: "doctor", label: "Run doctor", description: "Package and machine readiness checks" },
+    { value: "tooling", label: "Tooling guidance", description: "Install and authenticate machine local CLIs used by skills" },
     { value: "systemPrompt", label: "Inspect system prompt", description: "View the first captured system prompt in a scrollable panel" },
     { value: "chronicles", label: "Review chronicle", description: "Recent TUI-only decisions and milestones" },
     { value: "arms", label: "Display arms", description: "Waldemar of Falkensee's heraldic achievement" },
@@ -138,6 +140,9 @@ async function executeChamberAction(pi: ExtensionAPI, ctx: ExtensionContext, act
       return;
     case "doctor":
       await showDoctorReport(ctx, runDoctorChecks());
+      return;
+    case "tooling":
+      pi.sendUserMessage("/waldemar-tooling");
       return;
     case "systemPrompt":
       pi.sendUserMessage("/waldemar-system-prompt");

@@ -55,6 +55,7 @@ Start with:
 Common direct commands:
 
 - `/waldemar-setup` — reconcile global settings, external skills, and MCP config
+- `/waldemar-tooling [gh|sentry-cli]` — explicit Debian or Ubuntu install and authentication guide for missing machine local CLI tools used by skills
 - `/waldemar-status` — lightweight operational/session status report
 - `/waldemar-inventory` — installed packages, MCP servers, and skills
 - `/waldemar-doctor` — primary package and machine readiness check
@@ -72,6 +73,8 @@ Use [`docs/README.md`](docs/README.md) as the documentation index. It covers arc
 ## External skills
 
 Reused third-party skills are declared in [`config/external-skills.json`](config/external-skills.json), not vendored into `skills/`. The bootstrap supports both the Skills CLI and `gh skill install` for GitHub-hosted skills.
+
+When a skill depends on a machine local CLI such as GitHub CLI or Sentry CLI, use `/waldemar-tooling` for the exact Debian or Ubuntu install and setup orders for missing tools before rerunning `/waldemar-setup`.
 
 Details: [`docs/external-skills.md`](docs/external-skills.md).
 

@@ -12,6 +12,7 @@ Each top-level file in `extensions/` is loaded by pi. Keep each file focused.
 - [sessions](sessions.md) — session/campaign command
 - [inventory](inventory.md) — package/MCP/skill inspection
 - [doctor](doctor.md) — package and machine readiness checks
+- [tooling](tooling.md) — explicit machine local CLI install and setup guidance for skills
 - [chamber](chamber.md) — central TUI command chamber, arms, compact, and theme controls
 - [chronicle](chronicle.md) — durable TUI-only campaign records and chronicle marks
 - [customize](customize.md) — customization guide command

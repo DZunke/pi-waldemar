@@ -48,6 +48,7 @@ Postures adjust active tools, thinking level, footer/status display, and per-tur
 | `/waldemar-status` | Show a lightweight Waldemar operational/session status report. Not a health check. |
 | `/waldemar-inventory` | List installed packages, configured MCP servers, and installed skills. Facts only, no readiness judgement. |
 | `/waldemar-doctor` | Run package and machine readiness checks. Use this as the primary health check. |
+| `/waldemar-tooling [gh\|sentry-cli]` | Show explicit Debian or Ubuntu install, verification, and authentication/setup guidance for missing CLI tools used by Waldemar skills. |
 | `/waldemar-system-prompt [first\|latest]` | Inspect the captured full system prompt in a scrollable TUI viewer. |
 | `/waldemar-setup` | Reconcile global settings, theme, MCP config, external skills, and package dependency expectations. |
 | `/waldemar-customize` | Show a concise customization map and point to the durable documentation. |
