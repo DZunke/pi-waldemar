@@ -41,7 +41,7 @@ Then start pi and run:
 /reload
 ```
 
-For local development and fresh-machine notes, see [`QUICKSTART.md`](QUICKSTART.md) and [`docs/setup-and-portability.md`](docs/setup-and-portability.md).
+For local development and fresh-machine notes, see [`docs/setup-and-portability.md`](docs/setup-and-portability.md).
 
 ## Main commands
 
@@ -73,12 +73,6 @@ Use [`docs/README.md`](docs/README.md) as the documentation index. It covers arc
 Reused third-party skills are declared in [`config/external-skills.json`](config/external-skills.json), not vendored into `skills/`. The bootstrap supports both the Skills CLI and `gh skill install` for GitHub-hosted skills.
 
 Details: [`docs/external-skills.md`](docs/external-skills.md).
-
-## MCP
-
-Waldemar configures Codegraph MCP only. Sentry usage is handled through external Sentry skills and the Sentry CLI, not MCP.
-
-Details: [`docs/mcp.md`](docs/mcp.md).
 
 ## Development rules
 

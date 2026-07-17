@@ -8,7 +8,7 @@
 - ✅ **themes/** - Contains chronicle-keeper.json and falkensee-heraldry.json theme files
 - ✅ **skills/** - Ready for custom skill additions (empty by default)
 - ✅ **prompts/** - Ready for custom prompt templates (empty by default)
-- ✅ **Documentation** - Comprehensive README.md, QUICKSTART.md, HERALDRY.md, and focused docs/ guides
+- ✅ **Documentation** - Comprehensive README.md, HERALDRY.md, and focused docs/ guides
 
 ### Pi Coding Agent Compliance ✅
 
@@ -144,7 +144,6 @@ The Chronicle Keeper theme draws inspiration from:
 
 ### Documentation Validation ✅
 - [x] README.md explains package purpose
-- [x] QUICKSTART.md provides installation steps
 - [x] Commands and prompt templates documented in `docs/commands.md`; README keeps only a concise fast summary
 - [x] Every `extensions/*.ts` entrypoint has a matching `docs/extensions/*.md` purpose document
 - [x] MCP footer behavior and `pi-mcp-adapter` status source are documented in `docs/mcp.md`
@@ -173,12 +172,12 @@ Waldemar Pi Package
 ├── Prompts: 0 (ready for expansion)
 ├── Commands: 13 (/waldemar, /waldemar-arms, /falkensee-compact, /waldemar-theme, /posture, /postures, /chronicle, /chronicles, /waldemar-setup, /waldemar-inventory, /sessions, /waldemar-customize, /waldemar-status)
 ├── Events: lifecycle, model/thinking, tool-call, session-tree, compaction, session-info, and inter-extension Falkensee events
-└── Documentation: README, QUICKSTART, HERALDRY, AGENTS.md, and docs/ guides
+└── Documentation: README, HERALDRY, AGENTS.md, and docs/ guides
 
 Lines of Code
 ├── Extensions: focused TypeScript entrypoints plus shared lib helpers
 ├── Themes: 2 theme files with full color palettes
-└── Documentation: expanded README, QUICKSTART, validation, and focused docs/ extension guides
+└── Documentation: expanded README, validation, and focused docs/ extension guides
 
 Package Quality
 ├── TypeScript: ✅ Fully typed with ExtensionAPI
