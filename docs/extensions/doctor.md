@@ -7,12 +7,13 @@ Checks include:
 - package metadata and pi manifest
 - required repository files such as `README.md` and `LICENSE`
 - `pi-mcp-adapter` dependency presence
+- native CodeGraph extension availability when the `codegraph` command is installed
 - packaged themes
 - local ticket-writing skills
 - prompt workflow templates
 - machine commands used by setup or skills: `codegraph`, `gh`, and `sentry-cli`
 - global theme setting
-- codegraph MCP configuration
+- codegraph MCP compatibility configuration
 - additional MCP servers configured outside Waldemar defaults
 - installed external skill count
 

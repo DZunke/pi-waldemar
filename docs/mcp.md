@@ -1,8 +1,19 @@
 # MCP Servers
 
-Waldemar configures MCP through `pi-mcp-adapter`. The setup command writes Waldemar's MCP defaults into `~/.pi/agent/mcp.json`.
+Waldemar uses CodeGraph natively when the current workspace contains a `.codegraph` index. The package still carries `pi-mcp-adapter` for general MCP compatibility, and `/waldemar-setup` writes a CodeGraph MCP entry into `~/.pi/agent/mcp.json` for users who still rely on `/mcp` flows.
 
-## Waldemar default
+## Primary path: native CodeGraph extension
+
+When `.codegraph` exists in the workspace root, `extensions/codegraph.ts`:
+
+- starts a local `codegraph serve --mcp` subprocess directly
+- registers the discovered `codegraph_*` tools with pi
+- appends CodeGraph usage guidance into the agent system prompt
+- tears the subprocess down on session shutdown
+
+This means Waldemar is no longer CodeGraph through MCP only. The agent can use CodeGraph even if no global MCP config is present.
+
+## Compatibility path: Waldemar MCP default
 
 ### codegraph
 
@@ -43,7 +54,7 @@ MCP servers are lazy by default, so `0/Y` can be normal before you use an MCP to
 
 If the footer shows more servers than Waldemar documents, inspect those files. `/waldemar-doctor` reports when additional MCP servers are configured outside Waldemar defaults.
 
-Useful commands:
+Useful commands when you are using MCP compatibility flows:
 
 ```text
 /mcp

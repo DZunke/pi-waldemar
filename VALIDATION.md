@@ -18,7 +18,7 @@
 - ✅ **Error handling** - Try-catch blocks with user-friendly error messages
 - ✅ **File system safety** - Handles missing/corrupted settings.json gracefully
 - ✅ **User interaction** - Uses ctx.ui.notify() for all user-facing messages
-- ✅ **Settings management** - `/waldemar-setup` command applies settings, package dependencies, external skills, and MCP server config safely
+- ✅ **Settings management** - `/waldemar-setup` command applies settings, package dependencies, external skills, native CodeGraph readiness checks, and MCP compatibility config safely
 - ✅ **Status indicators** - Footer status with `ctx.ui.setStatus()` plus a custom Falkensee footer via `ctx.ui.setFooter()`
 - ✅ **Command registration** - Proper `/command` registration with descriptions; core commands exercised in print mode for runtime load faults
 - ✅ **Custom TUI components** - Command chamber, compact display, heraldic image overlay, custom header/footer, and chronicle entry renderer
@@ -47,7 +47,7 @@ The package includes a `/waldemar-setup` command that:
 - ✅ Creates `~/.pi/agent/settings.json` if missing
 - ✅ Applies recommended settings (`falkensee-heraldry` theme, quiet startup, medium thinking, display polish, compaction, retry, branch-summary, image, and skill-command defaults)
 - ✅ Declares required third-party package dependencies in `package.json` (`pi-mcp-adapter`) for pi-managed installation
-- ✅ Creates/merges `~/.pi/agent/mcp.json` with the codegraph MCP server
+- ✅ Creates/merges `~/.pi/agent/mcp.json` with the codegraph MCP compatibility server entry
 - ✅ Merges intelligently with existing settings
 - ✅ Handles file system errors gracefully
 - ✅ Provides user feedback on success/failure
@@ -146,7 +146,7 @@ The Chronicle Keeper theme draws inspiration from:
 - [x] README.md explains package purpose
 - [x] Commands and prompt templates documented in `docs/commands.md`; README keeps only a concise fast summary
 - [x] Every `extensions/*.ts` entrypoint has a matching `docs/extensions/*.md` purpose document
-- [x] MCP footer behavior and `pi-mcp-adapter` status source are documented in `docs/mcp.md`
+- [x] Native CodeGraph behavior and MCP compatibility details are documented in `docs/mcp.md`
 - [x] Customization paths clearly stated
 - [x] Git publishing instructions included
 - [x] Theme customization guidance provided
@@ -166,10 +166,10 @@ The Chronicle Keeper theme draws inspiration from:
 
 ```
 Waldemar Pi Package
-├── Extensions: 12 focused entrypoints (persona, setup, startup, presence, postures, safeguards, chamber, chronicle, sessions, inventory, customize, status)
+├── Extensions: 15 focused entrypoints (chamber, chronicle, codegraph, customize, doctor, inventory, persona, postures, presence, safeguards, sessions, setup, startup, status, system-prompt)
 ├── Themes: 2 (chronicle-keeper.json, falkensee-heraldry.json)
-├── Skills: 0 (ready for expansion)
-├── Prompts: 0 (ready for expansion)
+├── Skills: 4 packaged skills (epic-writer, ticket-validator, ticket-writer, write-documentation)
+├── Prompts: 2 packaged prompts (write-epic, write-ticket)
 ├── Commands: 13 (/waldemar, /waldemar-arms, /falkensee-compact, /waldemar-theme, /posture, /postures, /chronicle, /chronicles, /waldemar-setup, /waldemar-inventory, /sessions, /waldemar-customize, /waldemar-status)
 ├── Events: lifecycle, model/thinking, tool-call, session-tree, compaction, session-info, and inter-extension Falkensee events
 └── Documentation: README, HERALDRY, AGENTS.md, and docs/ guides

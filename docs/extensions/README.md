@@ -3,6 +3,7 @@
 Each top-level file in `extensions/` is loaded by pi. Keep each file focused.
 
 - [persona](persona.md) — system prompt persona and communication rules
+- [codegraph](codegraph.md) — native CodeGraph tool registration and prompt guidance
 - [setup](setup.md) — machine bootstrap and settings reconciliation
 - [startup](startup.md) — startup rapport and lifecycle footer status
 - [presence](presence.md) — command-chamber header, footer, title, and working indicator

@@ -8,7 +8,7 @@ A portable [pi](https://pi.dev/) coding-agent package for a disciplined personal
 
 > Excellence is not negotiable. It is inevitable.
 
-Waldemar packages persona, focused extensions, themes, prompts, custom skills, external skill bootstrap, and MCP configuration into one reusable agent distribution.
+Waldemar packages persona, focused extensions, themes, prompts, custom skills, external skill bootstrap, and CodeGraph integration into one reusable agent distribution.
 
 ## What this package provides
 
@@ -17,7 +17,8 @@ Waldemar packages persona, focused extensions, themes, prompts, custom skills, e
 - A command chamber via `/waldemar`
 - The `falkensee-heraldry` and `chronicle-keeper` themes
 - External skill bootstrap from [`config/external-skills.json`](config/external-skills.json)
-- Codegraph MCP setup through `pi-mcp-adapter`
+- Native CodeGraph tools when the workspace has a `.codegraph` index
+- Optional CodeGraph MCP compatibility through `pi-mcp-adapter`
 
 ## Install
 

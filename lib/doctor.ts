@@ -60,7 +60,7 @@ export function runDoctorChecks(): DoctorCheck[] {
     checks.push(fileCheck(`prompt template: ${prompt}`, path.join(WALDEMAR_PACKAGE_ROOT, "prompts", `${prompt}.md`)));
   }
 
-  checks.push(commandCheck("codegraph", ["--version"], "needed for codegraph MCP"));
+  checks.push(commandCheck("codegraph", ["--version"], "needed for the native CodeGraph extension and optional MCP compatibility"));
   checks.push(commandCheck("gh", ["skill", "install", "--help"], "needed for github/awesome-copilot external skills"));
   checks.push(commandCheck("sentry-cli", ["--version"], "installed by sentry-cli skill post-install"));
 
@@ -82,9 +82,11 @@ export function runDoctorChecks(): DoctorCheck[] {
     const waldemarServerNames = Object.keys(WALDEMAR_MCP_SERVERS);
     const additionalServers = Object.keys(mcpServers).filter((name) => !waldemarServerNames.includes(name));
     checks.push({
-      label: "codegraph MCP config",
-      status: codegraph ? "pass" : "warn",
-      detail: codegraph ? "configured in ~/.pi/agent/mcp.json" : "run /waldemar-setup to configure MCP",
+      label: "codegraph MCP compatibility",
+      status: "pass",
+      detail: codegraph
+        ? "configured in ~/.pi/agent/mcp.json"
+        : "not configured; native CodeGraph extension still works when .codegraph exists",
     });
     checks.push({
       label: "additional MCP servers",
@@ -110,7 +112,7 @@ export function runDoctorChecks(): DoctorCheck[] {
   checks.push({
     label: "Waldemar MCP defaults",
     status: WALDEMAR_MCP_SERVERS.codegraph ? "pass" : "fail",
-    detail: "codegraph is the only configured Waldemar MCP default",
+    detail: "codegraph remains the only optional Waldemar MCP compatibility default",
   });
 
   return checks;

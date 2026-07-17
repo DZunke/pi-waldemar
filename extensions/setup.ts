@@ -10,7 +10,7 @@ import {
   WALDEMAR_PACKAGE_ROOT,
 } from "../lib/waldemar";
 
-/** Machine bootstrap: settings, MCP config, and external reusable skills. */
+/** Machine bootstrap: settings, CodeGraph readiness, optional MCP compatibility, and external reusable skills. */
 export default function setupExtension(pi: ExtensionAPI) {
   pi.registerCommand("waldemar-setup", {
     description: "Apply Waldemar's recommended settings to your global configuration",
@@ -147,17 +147,17 @@ export default function setupExtension(pi: ExtensionAPI) {
           }
         }
 
-        setSetupStatus(pi, ctx, "⚔️ setup: checking MCP prerequisites");
-        let mcpNotice = "";
+        setSetupStatus(pi, ctx, "⚔️ setup: checking CodeGraph readiness");
+        let codegraphNotice = "";
         try {
           execFileSync("codegraph", ["--version"], { stdio: "ignore" });
         } catch {
-          mcpNotice += "\n  ⚠️ codegraph binary was not found on PATH; install it before using the codegraph MCP server.";
+          codegraphNotice += "\n  ⚠️ codegraph binary was not found on PATH; install it before using the native CodeGraph extension or the MCP compatibility server.";
         }
 
         setSetupStatus(pi, ctx, "⚔️ setup: complete");
         ctx.ui.notify(
-          `✅ Waldemar's settings have been applied.\n\nUpdated ~/.pi/agent/settings.json:\n  • theme: falkensee-heraldry\n  • quietStartup: true\n  • defaultThinkingLevel: medium\n  • command-chamber display defaults\n  • compaction, retry, image, and branch-summary defaults\n\nPackage dependencies:\n  • pi-mcp-adapter is declared in Waldemar package.json and should be installed by pi for git/npm package installs${dependencyNotice}\n\nUpdated ~/.pi/agent/mcp.json:\n  • codegraph MCP server via: codegraph serve --mcp${mcpNotice}\n\nSkills:${skillsNotice || "\n  • no external skill bootstrap script found"}\n\nNext step: run /reload or restart pi if dependencies were newly installed.`,
+          `✅ Waldemar's settings have been applied.\n\nUpdated ~/.pi/agent/settings.json:\n  • theme: falkensee-heraldry\n  • quietStartup: true\n  • defaultThinkingLevel: medium\n  • command-chamber display defaults\n  • compaction, retry, image, and branch-summary defaults\n\nCodeGraph:\n  • native CodeGraph tools activate automatically when this workspace has a .codegraph index\n  • codegraph binary checked on PATH${codegraphNotice}\n\nPackage dependencies:\n  • pi-mcp-adapter is still declared for general MCP compatibility in pi installs${dependencyNotice}\n\nUpdated ~/.pi/agent/mcp.json:\n  • codegraph MCP compatibility entry via: codegraph serve --mcp\n\nSkills:${skillsNotice || "\n  • no external skill bootstrap script found"}\n\nNext step: run /reload or restart pi if dependencies were newly installed.`,
           "info"
         );
       } catch (error) {

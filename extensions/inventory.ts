@@ -26,7 +26,7 @@ export default function inventoryExtension(pi: ExtensionAPI) {
         const mcpServers = mcp.mcpServers || {};
 
         ctx.ui.notify(
-          `⚔️ WALDEMAR INVENTORY\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nPackages:\n${((settings.packages || []) as string[]).map((p) => `  • ${p}`).join("\n") || "  none"}\n\nMCP Servers:\n${Object.keys(mcpServers).map((s) => `  • ${s}`).join("\n") || "  none"}\n\nInstalled Skills (${skills.length}):\n${skills.map((s) => `  • ${s}`).join("\n") || "  none"}\n\nRun /waldemar-doctor for readiness checks. Run /waldemar-setup to reconcile Waldemar defaults, package dependencies, external skills, and MCP servers.`,
+          `⚔️ WALDEMAR INVENTORY\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nPackages:\n${((settings.packages || []) as string[]).map((p) => `  • ${p}`).join("\n") || "  none"}\n\nMCP Servers:\n${Object.keys(mcpServers).map((s) => `  • ${s}`).join("\n") || "  none"}\n\nInstalled Skills (${skills.length}):\n${skills.map((s) => `  • ${s}`).join("\n") || "  none"}\n\nCodeGraph:\n  • native CodeGraph tools activate automatically when this workspace has a .codegraph index\n\nRun /waldemar-doctor for readiness checks. Run /waldemar-setup to reconcile Waldemar defaults, package dependencies, external skills, and MCP compatibility.`,
           "info"
         );
       } catch (error) {
