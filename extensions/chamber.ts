@@ -7,6 +7,7 @@ import { showWaldemarInventory } from "../lib/inventory";
 import { applyWaldemarPosture, isPostureName } from "../lib/postures";
 import { buildCliToolingReport } from "../lib/tooling";
 import { showRecentChronicles } from "./chronicle";
+import { showNotificationStatus } from "./notifications";
 import { showCapturedSystemPrompt } from "./system-prompt";
 import * as fs from "fs";
 import * as path from "path";
@@ -18,6 +19,7 @@ type ChamberAction =
   | "doctor"
   | "tooling"
   | "systemPrompt"
+  | "notifications"
   | "chronicles"
   | "arms"
   | "compact"
@@ -81,7 +83,7 @@ export default function chamberExtension(pi: ExtensionAPI) {
 async function chooseChamberAction(ctx: ExtensionContext): Promise<ChamberAction | undefined> {
   if (ctx.mode !== "tui") {
     ctx.ui.notify(
-      "Waldemar's command chamber requires the TUI. Available orders: /posture, /waldemar-inventory, /waldemar-doctor, /waldemar-tooling, /waldemar-system-prompt, /chronicles, /waldemar-arms, /falkensee-compact, /waldemar-theme, /waldemar-customize, /waldemar-setup.",
+      "Waldemar's command chamber requires the TUI. Available orders: /posture, /waldemar-inventory, /waldemar-doctor, /waldemar-tooling, /waldemar-system-prompt, /waldemar-notifications, /chronicles, /waldemar-arms, /falkensee-compact, /waldemar-theme, /waldemar-customize, /waldemar-setup.",
       "info",
     );
     return undefined;
@@ -93,6 +95,7 @@ async function chooseChamberAction(ctx: ExtensionContext): Promise<ChamberAction
     { value: "doctor", label: "Run doctor", description: "Package and machine readiness checks" },
     { value: "tooling", label: "Tooling guidance", description: "Install and authenticate machine local CLIs used by skills" },
     { value: "systemPrompt", label: "Inspect system prompt", description: "View the first captured system prompt in a scrollable panel" },
+    { value: "notifications", label: "Desktop notifications", description: "Configure question and completion notifications" },
     { value: "chronicles", label: "Review chronicle", description: "Recent TUI-only decisions and milestones" },
     { value: "arms", label: "Display arms", description: "Waldemar of Falkensee's heraldic achievement" },
     { value: "compact", label: "Recite compact", description: "The Falkensee Compact" },
@@ -152,6 +155,9 @@ async function executeChamberAction(pi: ExtensionAPI, ctx: ExtensionContext, act
       return;
     case "systemPrompt":
       await showCapturedSystemPrompt(ctx);
+      return;
+    case "notifications":
+      await showNotificationStatus(ctx);
       return;
     case "chronicles":
       showRecentChronicles(ctx);

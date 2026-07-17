@@ -22,6 +22,8 @@ Then inside pi:
 ## What `/waldemar-setup` does
 
 - writes recommended global pi settings, including the `falkensee-heraldry` theme, medium thinking, command-chamber display polish, compaction, retry, branch-summary, image, and skill-command defaults
+- on WSL hosts, enables Waldemar desktop notifications for questions and settled completions by writing `~/.pi/agent/waldemar-notifications.json`
+- when the Windows-side BurntToast PowerShell module is missing, notification test and status surfaces report explicit installation guidance instead of failing silently
 - preserves existing package entries in global settings
 - checks whether the `codegraph` binary is available for the native CodeGraph extension
 - writes/merges `~/.pi/agent/mcp.json`

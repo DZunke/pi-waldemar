@@ -18,7 +18,7 @@ Waldemar of Falkensee is a portable [pi](https://pi.dev/) coding-agent package f
 ## What this package provides
 
 - Waldemar's persona and operating doctrine, grounded in [`HERALDRY.md`](HERALDRY.md)
-- Focused pi extensions for setup, posture control, status, inventory, doctor, command chamber, system-prompt inspection, and related workflow support
+- Focused pi extensions for setup, posture control, status, inventory, doctor, desktop notifications, command chamber, system-prompt inspection, and related workflow support
 - Packaged themes: `falkensee-heraldry` and `chronicle-keeper`
 - Prompt workflows in [`prompts/`](prompts/)
 - Custom local skills in [`skills/`](skills/)
@@ -60,12 +60,13 @@ Begin with:
 
 Common direct commands:
 
-- `/waldemar-setup` — reconcile settings, MCP compatibility config, and external skills
+- `/waldemar-setup` — reconcile settings, MCP compatibility config, external skills, and WSL notification defaults
 - `/waldemar-doctor` — primary package and machine readiness check
 - `/waldemar-status` — lightweight operational status report
 - `/waldemar-inventory` — installed packages, MCP servers, and skills
 - `/waldemar-tooling [gh|sentry-cli]` — explicit Debian or Ubuntu guidance for required local CLI tools
 - `/waldemar-system-prompt` — inspect the captured full system prompt
+- `/waldemar-notifications [all|questions|settled|off|test]` — control desktop notifications for questions and completion
 - `/posture` — choose the active guard posture
 - `/chronicle` — record a TUI-only decision or milestone
 - `/waldemar-customize` — quick customization map

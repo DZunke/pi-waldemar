@@ -17,6 +17,7 @@ If you are changing behavior, read the matching page first, then open the implem
 - [persona](persona.md) — Waldemar's persona and communication doctrine
 - [presence](presence.md) — title, header, footer, and working indicator surfaces
 - [startup](startup.md) — startup rapport and lifecycle status behavior
+- [notifications](notifications.md) — desktop notifications for settled turns and assistant questions
 - [reasoning](reasoning.md) — provider reasoning-summary policy
 - [system-prompt](system-prompt.md) — captured system-prompt inspection
 

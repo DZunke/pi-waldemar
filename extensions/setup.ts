@@ -9,6 +9,7 @@ import {
   WALDEMAR_MCP_SERVERS,
   WALDEMAR_PACKAGE_ROOT,
 } from "../lib/waldemar";
+import { saveNotificationSettings } from "../lib/notifications";
 import { buildMissingCliRequirementsSummary } from "../lib/tooling";
 
 /** Machine bootstrap: settings, CodeGraph readiness, optional MCP compatibility, and external reusable skills. */
@@ -108,6 +109,16 @@ export default function setupExtension(pi: ExtensionAPI) {
         fs.writeFileSync(settingsPath, JSON.stringify(merged, null, 2));
         setSetupStatus(pi, ctx, "⚔️ setup: settings written");
 
+        let notificationNotice = "\n  • desktop notifications left unchanged";
+        if (isWslHost()) {
+          saveNotificationSettings({
+            enabled: true,
+            onQuestions: true,
+            onSettled: true,
+          });
+          notificationNotice = "\n  • desktop notifications enabled for questions and settled completions on WSL hosts";
+        }
+
         const mcpPath = path.join(os.homedir(), ".pi/agent/mcp.json");
         let mcpConfig: any = {};
         if (fs.existsSync(mcpPath)) {
@@ -160,7 +171,7 @@ export default function setupExtension(pi: ExtensionAPI) {
 
         setSetupStatus(pi, ctx, "⚔️ setup: complete");
         ctx.ui.notify(
-          `✅ Waldemar's settings have been applied.\n\nUpdated ~/.pi/agent/settings.json:\n  • theme: falkensee-heraldry\n  • quietStartup: true\n  • defaultThinkingLevel: medium\n  • command-chamber display defaults\n  • compaction, retry, image, and branch-summary defaults\n\nCodeGraph:\n  • native CodeGraph tools activate automatically when this workspace has a .codegraph index\n  • codegraph binary checked on PATH${codegraphNotice}\n\nPackage dependencies:\n  • pi-mcp-adapter is still declared for general MCP compatibility in pi installs${dependencyNotice}\n\nUpdated ~/.pi/agent/mcp.json:\n  • codegraph MCP compatibility entry via: codegraph serve --mcp\n\nCLI tooling:\n${toolingNotice}\n\nSkills:${skillsNotice || "\n  • no external skill bootstrap script found"}\n\nNext step: run /reload or restart pi if dependencies were newly installed.`,
+          `✅ Waldemar's settings have been applied.\n\nUpdated ~/.pi/agent/settings.json:\n  • theme: falkensee-heraldry\n  • quietStartup: true\n  • defaultThinkingLevel: medium\n  • command-chamber display defaults\n  • compaction, retry, image, and branch-summary defaults\n\nNotifications:${notificationNotice}\n\nCodeGraph:\n  • native CodeGraph tools activate automatically when this workspace has a .codegraph index\n  • codegraph binary checked on PATH${codegraphNotice}\n\nPackage dependencies:\n  • pi-mcp-adapter is still declared for general MCP compatibility in pi installs${dependencyNotice}\n\nUpdated ~/.pi/agent/mcp.json:\n  • codegraph MCP compatibility entry via: codegraph serve --mcp\n\nCLI tooling:\n${toolingNotice}\n\nSkills:${skillsNotice || "\n  • no external skill bootstrap script found"}\n\nNext step: run /reload or restart pi if dependencies were newly installed.`,
           "info"
         );
       } catch (error) {
@@ -288,4 +299,8 @@ async function runProcessWithProgress(options: ProcessProgressOptions): Promise<
 
 function stripAnsi(value: string): string {
   return value.replace(/\u001b\[[0-?]*[ -/]*[@-~]/g, "");
+}
+
+function isWslHost(): boolean {
+  return Boolean(process.env.WSL_DISTRO_NAME || process.env.WSL_INTEROP);
 }

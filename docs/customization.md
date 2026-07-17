@@ -15,6 +15,16 @@ Keep technical clarity and safety above theatrical flavour. `HERALDRY.md` is the
 
 Edit `WALDEMAR_STATUS_MOODS` in `extensions/startup.ts`.
 
+## Change desktop notification behaviour
+
+- Command surface: `extensions/notifications.ts`
+- Transport and persistence helpers: `lib/notifications.ts`
+- User preference file: `~/.pi/agent/waldemar-notifications.json`
+
+Use `/waldemar-notifications` to switch between `all`, `questions`, `settled`, `off`, and `test` without editing files.
+
+On WSL, Waldemar prefers Windows toast notifications through the BurntToast PowerShell module. If `/waldemar-notifications test` reports that BurntToast is missing, install it in Windows PowerShell with `Install-Module -Name BurntToast -Scope AllUsers` or `-Scope CurrentUser`.
+
 ## Add or change a command
 
 Create a focused file in `extensions/`, for example:

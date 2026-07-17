@@ -7,6 +7,7 @@ This directory is the documentation hub for the Waldemar pi package. Start here 
 - **One package, many focused surfaces** — Waldemar keeps persona, setup, commands, prompts, themes, and skills in one reusable distribution, but the behavior is deliberately split across focused extensions and docs pages.
 - **Operational clarity first** — `/waldemar-doctor` judges readiness, `/waldemar-inventory` reports facts, and the docs follow the same separation so reference pages stay honest.
 - **Portable customization** — machine-local setup is explicit, third-party dependencies stay declared, and customization points are documented instead of hidden in prompt folklore.
+- **Operator feedback beyond the terminal** — optional desktop notifications can call you back when Waldemar is done or waiting on your answer.
 - **Compact defaults with on-demand depth** — active tools, skills, and docs stay small by default, then expand through indexes when you need specialist detail.
 
 ## Why this documentation is split the way it is
