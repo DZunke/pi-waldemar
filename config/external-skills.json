@@ -58,11 +58,6 @@
       "enabled": true
     },
     {
-      "name": "sentry-feature-setup",
-      "source": "getsentry/sentry-for-ai",
-      "enabled": true
-    },
-    {
       "name": "sentry-php-sdk",
       "source": "getsentry/sentry-for-ai",
       "enabled": true
