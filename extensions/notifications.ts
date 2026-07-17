@@ -13,37 +13,55 @@ import {
   type NotificationSettings,
 } from "../lib/notifications";
 
-const NOTIFICATION_MODES = ["status", "off", "questions", "settled", "all", "test"] as const;
+const NOTIFICATION_MODES = ["status", "off", "questions", "settled", "all", "test", "idle"] as const;
 
 type NotificationMode = (typeof NOTIFICATION_MODES)[number];
 
 /** Desktop notifications for settled turns and assistant questions. */
 export default function notificationsExtension(pi: ExtensionAPI) {
   let lastAssistantText = "";
+  let sawAssistantReply = false;
+  let lastUserActivityAt = Date.now();
 
   pi.registerCommand("waldemar-notifications", {
     description: "Configure Waldemar desktop notifications for questions and settled work",
-    getArgumentCompletions: (prefix: string) => NOTIFICATION_MODES
-      .filter((mode) => mode.startsWith(prefix.trim().toLowerCase()))
-      .map((mode) => ({ value: mode, label: mode })),
+    getArgumentCompletions: (prefix: string) => {
+      const raw = prefix.trim().toLowerCase();
+      if (raw.startsWith("idle ")) {
+        return ["5", "10", "15", "30", "60"]
+          .filter((value) => value.startsWith(raw.slice(5)))
+          .map((value) => ({ value: `idle ${value}`, label: `idle ${value}`, description: `${value}s idle threshold` }));
+      }
+
+      return NOTIFICATION_MODES
+        .filter((mode) => mode.startsWith(raw))
+        .map((mode) => ({ value: mode, label: mode }));
+    },
     handler: async (args, ctx) => {
-      const mode = normalizeMode(args);
-      if (!mode) {
+      const command = parseNotificationCommand(args);
+      if (!command) {
         await showNotificationStatus(ctx);
         return;
       }
 
-      await applyNotificationMode(ctx, mode);
+      await applyNotificationCommand(ctx, command);
     },
+  });
+
+  pi.on("input", async () => {
+    lastUserActivityAt = Date.now();
+    return { action: "continue" as const };
   });
 
   pi.on("agent_start", async () => {
     lastAssistantText = "";
+    sawAssistantReply = false;
   });
 
   pi.on("message_end", async (event) => {
     if (event.message.role !== "assistant") return;
     lastAssistantText = extractAssistantText(event.message);
+    sawAssistantReply = true;
   });
 
   pi.on("agent_settled", async (_event, ctx) => {
@@ -51,6 +69,8 @@ export default function notificationsExtension(pi: ExtensionAPI) {
 
     const settings = loadNotificationSettings();
     if (!settings.enabled) return;
+    if (!sawAssistantReply || !lastAssistantText.trim()) return;
+    if (Date.now() - lastUserActivityAt < settings.idleThresholdMs) return;
 
     const body = summarizeNotificationBody(lastAssistantText);
     if (looksLikeQuestion(lastAssistantText)) {
@@ -68,21 +88,39 @@ export default function notificationsExtension(pi: ExtensionAPI) {
   });
 }
 
-function normalizeMode(args: string): NotificationMode | undefined {
+type NotificationCommand =
+  | { kind: "mode"; mode: NotificationMode }
+  | { kind: "idle"; seconds: number };
+
+function parseNotificationCommand(args: string): NotificationCommand | undefined {
   const raw = args.trim().toLowerCase();
   if (!raw) return undefined;
 
-  if (["disable", "disabled", "off", "no"].includes(raw)) return "off";
-  if (["enable", "enabled", "on", "all"].includes(raw)) return "all";
-  if (["done", "complete", "completion", "settled"].includes(raw)) return "settled";
-  if (["question", "questions", "ask"].includes(raw)) return "questions";
-  if (["test", "ping"].includes(raw)) return "test";
-  if (["status", "show"].includes(raw)) return "status";
+  const idleMatch = raw.match(/^idle\s+(\d+)$/);
+  if (idleMatch) {
+    return { kind: "idle", seconds: Number(idleMatch[1]) };
+  }
+
+  if (["disable", "disabled", "off", "no"].includes(raw)) return { kind: "mode", mode: "off" };
+  if (["enable", "enabled", "on", "all"].includes(raw)) return { kind: "mode", mode: "all" };
+  if (["done", "complete", "completion", "settled"].includes(raw)) return { kind: "mode", mode: "settled" };
+  if (["question", "questions", "ask"].includes(raw)) return { kind: "mode", mode: "questions" };
+  if (["test", "ping"].includes(raw)) return { kind: "mode", mode: "test" };
+  if (["status", "show"].includes(raw)) return { kind: "mode", mode: "status" };
+  if (["idle"].includes(raw)) return { kind: "mode", mode: "idle" };
 
   return undefined;
 }
 
-async function applyNotificationMode(ctx: ExtensionContext, mode: NotificationMode) {
+async function applyNotificationCommand(ctx: ExtensionContext, command: NotificationCommand) {
+  if (command.kind === "idle") {
+    const settings = loadNotificationSettings();
+    const seconds = Math.max(0, Math.min(600, Math.round(command.seconds)));
+    saveAndReport(ctx, { ...settings, idleThresholdMs: seconds * 1000 }, `Idle threshold set to ${seconds}s.`);
+    return;
+  }
+
+  const mode = command.mode;
   switch (mode) {
     case "status":
       await showNotificationStatus(ctx);
@@ -103,17 +141,28 @@ async function applyNotificationMode(ctx: ExtensionContext, mode: NotificationMo
       ctx.ui.notify(`Desktop notification test failed. ${result.detail}\n\n${result.guidance || burntToastInstallGuidance()}`, "warning");
       return;
     }
-    case "off":
-      saveAndReport(ctx, { enabled: false, onQuestions: true, onSettled: true });
+    case "off": {
+      const settings = loadNotificationSettings();
+      saveAndReport(ctx, { ...settings, enabled: false, onQuestions: true, onSettled: true });
       return;
-    case "questions":
-      saveAndReport(ctx, { enabled: true, onQuestions: true, onSettled: false });
+    }
+    case "questions": {
+      const settings = loadNotificationSettings();
+      saveAndReport(ctx, { ...settings, enabled: true, onQuestions: true, onSettled: false });
       return;
-    case "settled":
-      saveAndReport(ctx, { enabled: true, onQuestions: false, onSettled: true });
+    }
+    case "settled": {
+      const settings = loadNotificationSettings();
+      saveAndReport(ctx, { ...settings, enabled: true, onQuestions: false, onSettled: true });
       return;
-    case "all":
-      saveAndReport(ctx, { enabled: true, onQuestions: true, onSettled: true });
+    }
+    case "all": {
+      const settings = loadNotificationSettings();
+      saveAndReport(ctx, { ...settings, enabled: true, onQuestions: true, onSettled: true });
+      return;
+    }
+    case "idle":
+      ctx.ui.notify("Usage: /waldemar-notifications idle <seconds>", "info");
       return;
   }
 }
@@ -129,25 +178,25 @@ export async function showNotificationStatus(ctx: ExtensionContext) {
   if (ctx.mode === "tui") {
     const selected = await ctx.ui.select(
       `Desktop notifications are currently ${summary}. Choose a mode:`,
-      ["all", "questions", "settled", "off", "test"],
+      ["all", "questions", "settled", "off", "test", "idle 5", "idle 15", "idle 30", "idle 60"],
       { timeout: 15000 },
     );
 
     if (selected) {
-      await applyNotificationMode(ctx, selected as NotificationMode);
+      await applyNotificationCommand(ctx, parseNotificationCommand(selected) ?? { kind: "mode", mode: "status" });
       return;
     }
   }
 
   ctx.ui.notify(
-    `Desktop notifications: ${summary}\n${transportLine}\n\nOrders:\n  /waldemar-notifications all\n  /waldemar-notifications questions\n  /waldemar-notifications settled\n  /waldemar-notifications off\n  /waldemar-notifications test${burntToast ? "" : `\n\n${burntToastInstallGuidance()}`}`,
+    `Desktop notifications: ${summary}\n${transportLine}\n\nOrders:\n  /waldemar-notifications all\n  /waldemar-notifications questions\n  /waldemar-notifications settled\n  /waldemar-notifications off\n  /waldemar-notifications test\n  /waldemar-notifications idle <seconds>${burntToast ? "" : `\n\n${burntToastInstallGuidance()}`}`,
     burntToast ? "info" : "warning",
   );
 }
 
-function saveAndReport(ctx: ExtensionContext, settings: NotificationSettings) {
+function saveAndReport(ctx: ExtensionContext, settings: NotificationSettings, message?: string) {
   saveNotificationSettings(settings);
-  ctx.ui.notify(`Desktop notifications ${describeNotificationSettings(settings)}.`, "info");
+  ctx.ui.notify(message ?? `Desktop notifications ${describeNotificationSettings(settings)}.`, "info");
 }
 
 function prefersWindowsToast(): boolean {

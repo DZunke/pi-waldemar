@@ -9,6 +9,7 @@ export type NotificationSettings = {
   enabled: boolean;
   onQuestions: boolean;
   onSettled: boolean;
+  idleThresholdMs: number;
 };
 
 export type NotificationDeliveryResult = {
@@ -22,6 +23,7 @@ export const DEFAULT_NOTIFICATION_SETTINGS: NotificationSettings = {
   enabled: false,
   onQuestions: true,
   onSettled: true,
+  idleThresholdMs: 15_000,
 };
 
 export const WALDEMAR_NOTIFICATION_SETTINGS_PATH = path.join(os.homedir(), ".pi", "agent", "waldemar-notifications.json");
@@ -37,6 +39,7 @@ export function loadNotificationSettings(): NotificationSettings {
       enabled: parsed.enabled ?? DEFAULT_NOTIFICATION_SETTINGS.enabled,
       onQuestions: parsed.onQuestions ?? DEFAULT_NOTIFICATION_SETTINGS.onQuestions,
       onSettled: parsed.onSettled ?? DEFAULT_NOTIFICATION_SETTINGS.onSettled,
+      idleThresholdMs: normalizeIdleThreshold(parsed.idleThresholdMs),
     };
   } catch {
     return { ...DEFAULT_NOTIFICATION_SETTINGS };
@@ -50,11 +53,12 @@ export function saveNotificationSettings(settings: NotificationSettings) {
 }
 
 export function describeNotificationSettings(settings: NotificationSettings): string {
-  if (!settings.enabled) return "disabled";
-  if (settings.onQuestions && settings.onSettled) return "enabled for questions and settled completions";
-  if (settings.onQuestions) return "enabled for questions only";
-  if (settings.onSettled) return "enabled for settled completions only";
-  return "enabled, but no notification triggers are selected";
+  const idleSeconds = Math.round(settings.idleThresholdMs / 1000);
+  if (!settings.enabled) return `disabled (idle threshold ${idleSeconds}s)`;
+  if (settings.onQuestions && settings.onSettled) return `enabled for questions and settled completions (idle threshold ${idleSeconds}s)`;
+  if (settings.onQuestions) return `enabled for questions only (idle threshold ${idleSeconds}s)`;
+  if (settings.onSettled) return `enabled for settled completions only (idle threshold ${idleSeconds}s)`;
+  return `enabled, but no notification triggers are selected (idle threshold ${idleSeconds}s)`;
 }
 
 export function extractAssistantText(message: any): string {
@@ -264,4 +268,9 @@ function isWsl(): boolean {
 
 function isWindowsNotificationPreferred(): boolean {
   return Boolean(isWsl() || process.env.WT_SESSION);
+}
+
+function normalizeIdleThreshold(value: unknown): number {
+  if (typeof value !== "number" || !Number.isFinite(value)) return DEFAULT_NOTIFICATION_SETTINGS.idleThresholdMs;
+  return Math.max(0, Math.round(value));
 }

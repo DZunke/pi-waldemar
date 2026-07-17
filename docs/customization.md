@@ -21,7 +21,7 @@ Edit `WALDEMAR_STATUS_MOODS` in `extensions/startup.ts`.
 - Transport and persistence helpers: `lib/notifications.ts`
 - User preference file: `~/.pi/agent/waldemar-notifications.json`
 
-Use `/waldemar-notifications` to switch between `all`, `questions`, `settled`, `off`, and `test` without editing files.
+Use `/waldemar-notifications` to switch between `all`, `questions`, `settled`, `off`, and `test` without editing files. You can also tune the idle gate with `/waldemar-notifications idle <seconds>`, for example `/waldemar-notifications idle 30`.
 
 On WSL, Waldemar prefers Windows toast notifications through the BurntToast PowerShell module. If `/waldemar-notifications test` reports that BurntToast is missing, install it in Windows PowerShell with `Install-Module -Name BurntToast -Scope AllUsers` or `-Scope CurrentUser`.
 

@@ -53,7 +53,7 @@ Postures adjust active tools, thinking level, footer/status display, and per-tur
 | `/waldemar-doctor` | Run package and machine readiness checks. Use this as the primary health check. |
 | `/waldemar-tooling [gh\|sentry-cli]` | Show explicit Debian or Ubuntu install, verification, and authentication/setup guidance for missing CLI tools used by Waldemar skills. |
 | `/waldemar-system-prompt [first\|latest]` | Inspect the captured full system prompt in a scrollable TUI viewer. |
-| `/waldemar-notifications [status\|all\|questions\|settled\|off\|test]` | Configure desktop notifications for assistant questions and settled work; on WSL, status and test also report BurntToast installation guidance when Windows toast support is missing. |
+| `/waldemar-notifications [status\|all\|questions\|settled\|off\|test\|idle <seconds>]` | Configure desktop notifications for assistant questions and settled work; on WSL, status and test also report BurntToast installation guidance when Windows toast support is missing. Routine notifications are quieted unless Waldemar actually replied and the terminal has been idle briefly. |
 | `/waldemar-setup` | Reconcile global settings, theme, MCP config, external skills, and package dependency expectations. |
 | `/waldemar-customize` | Show a concise customization map and point to the durable documentation. |
 | `/usage` | Open the bundled usage statistics dashboard from `pi-extensions/usage-extension`. |

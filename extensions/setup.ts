@@ -9,7 +9,7 @@ import {
   WALDEMAR_MCP_SERVERS,
   WALDEMAR_PACKAGE_ROOT,
 } from "../lib/waldemar";
-import { saveNotificationSettings } from "../lib/notifications";
+import { loadNotificationSettings, saveNotificationSettings } from "../lib/notifications";
 import { buildMissingCliRequirementsSummary } from "../lib/tooling";
 
 /** Machine bootstrap: settings, CodeGraph readiness, optional MCP compatibility, and external reusable skills. */
@@ -111,12 +111,14 @@ export default function setupExtension(pi: ExtensionAPI) {
 
         let notificationNotice = "\n  • desktop notifications left unchanged";
         if (isWslHost()) {
+          const existingNotificationSettings = loadNotificationSettings();
           saveNotificationSettings({
+            ...existingNotificationSettings,
             enabled: true,
             onQuestions: true,
             onSettled: true,
           });
-          notificationNotice = "\n  • desktop notifications enabled for questions and settled completions on WSL hosts";
+          notificationNotice = `\n  • desktop notifications enabled for questions and settled completions on WSL hosts (idle threshold ${Math.round(existingNotificationSettings.idleThresholdMs / 1000)}s)`;
         }
 
         const mcpPath = path.join(os.homedir(), ".pi/agent/mcp.json");
