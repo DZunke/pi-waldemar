@@ -1,5 +1,8 @@
 # Architecture
 
+[Back to docs index](README.md)
+
+
 Waldemar is a portable personal pi-agent package. It bundles persona, commands, themes, reusable setup automation, and documented extension points.
 
 ## Layout

@@ -1,5 +1,8 @@
 # postures.ts
 
+[Back to extension index](README.md) · [Back to docs index](../README.md)
+
+
 Purpose: provide Waldemar's tactical guard formations for different kinds of work.
 
 Commands:

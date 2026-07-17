@@ -1,5 +1,8 @@
 # safeguards.ts
 
+[Back to extension index](README.md) · [Back to docs index](../README.md)
+
+
 Purpose: encode Waldemar's loyal dissent around commands and file mutations that carry real risk.
 
 Responsibilities:

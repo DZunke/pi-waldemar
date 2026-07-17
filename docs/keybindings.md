@@ -1,5 +1,8 @@
 # Waldemar Keybindings
 
+[Back to docs index](README.md)
+
+
 Waldemar keeps custom keybindings restrained. Global shortcuts should be memorable, avoid pi built-in conflicts, and point to high-value inspection or command-room actions.
 
 ## Active Waldemar shortcuts

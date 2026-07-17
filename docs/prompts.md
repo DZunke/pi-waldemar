@@ -1,5 +1,8 @@
 # Prompt Templates
 
+[Back to docs index](README.md)
+
+
 Prompt templates are lightweight, explicit workflow entrypoints. They live in `prompts/` and are loaded by pi through the package manifest.
 
 Use them when a workflow should be invoked on demand without changing Waldemar of Falkensee's always-on persona.

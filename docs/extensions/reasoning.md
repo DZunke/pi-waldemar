@@ -1,5 +1,8 @@
 # reasoning extension
 
+[Back to extension index](README.md) · [Back to docs index](../README.md)
+
+
 Purpose: improve Waldemar's visible reasoning display without pretending to expose private model chain-of-thought.
 
 ## Responsibilities

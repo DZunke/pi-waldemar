@@ -1,5 +1,8 @@
 # chronicle.ts
 
+[Back to extension index](README.md) · [Back to docs index](../README.md)
+
+
 Purpose: keep a durable Waldemar of Falkensee decision chronicle inside the TUI without adding noise to the LLM context.
 
 ## What chronicles are

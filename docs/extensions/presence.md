@@ -1,5 +1,8 @@
 # presence.ts
 
+[Back to extension index](README.md) · [Back to docs index](../README.md)
+
+
 Purpose: make the TUI feel like Waldemar's command chamber without adding noise to every assistant response.
 
 Responsibilities:

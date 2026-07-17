@@ -1,5 +1,8 @@
 # Setup and Portability
 
+[Back to docs index](README.md)
+
+
 Waldemar is intended to make a fresh machine operational quickly.
 
 ## Fresh machine flow

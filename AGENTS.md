@@ -21,6 +21,7 @@ This repository packages the Waldemar pi agent. Treat it as a portable personal-
 ## Documentation policy
 
 - Classify the audience before editing any documentation file. Do not mix onboarding, usage, maintenance, and implementation detail in the same surface.
+- When working on documentation, load and follow the `write-documentation` skill before drafting or restructuring pages.
 - Keep `README.md` useful as a slim fast entrypoint for installation, high-level capabilities, and links to canonical docs. Do not duplicate command manuals or repository maps there.
 - Put durable implementation and workflow documentation in `docs/`.
 - Each extension must have a short purpose document in `docs/extensions/`.

@@ -1,5 +1,8 @@
 # skill-catalog.ts
 
+[Back to extension index](README.md) · [Back to docs index](../README.md)
+
+
 Purpose: keep the system prompt from carrying the full installed skill roster while preserving model access to skill workflows.
 
 Responsibilities:

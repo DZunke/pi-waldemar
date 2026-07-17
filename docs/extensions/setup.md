@@ -1,5 +1,8 @@
 # setup.ts
 
+[Back to extension index](README.md) · [Back to docs index](../README.md)
+
+
 Purpose: register `/waldemar-setup` and reconcile the machine with Waldemar defaults.
 
 Responsibilities:

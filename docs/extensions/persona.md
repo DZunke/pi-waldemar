@@ -1,5 +1,8 @@
 # persona.ts
 
+[Back to extension index](README.md) · [Back to docs index](../README.md)
+
+
 Purpose: append Waldemar's persona and communication rules to the system prompt before every agent run.
 
 - Entry point: `extensions/persona.ts`

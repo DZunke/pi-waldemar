@@ -4,22 +4,26 @@
   <img src="waldemar-of-falkensee.png" alt="Heraldic portrait of Waldemar of Falkensee" width="360">
 </p>
 
-A portable [pi](https://pi.dev/) coding-agent package for a disciplined personal codewright: Waldemar of Falkensee, Captain of the King's Personal Guard and Warden of the Ordered Line.
+Waldemar of Falkensee is a portable [pi](https://pi.dev/) coding-agent package for a disciplined personal codewright. It delivers one opinionated bundle: persona, focused extensions, themes, prompts, custom skills, external-skill bootstrap, and CodeGraph integration.
 
 > Excellence is not negotiable. It is inevitable.
 
-Waldemar packages persona, focused extensions, themes, prompts, custom skills, external skill bootstrap, and CodeGraph integration into one reusable agent distribution.
+## Key concepts
+
+- **Portable package** — install Waldemar into pi and carry the same working style across machines.
+- **Focused extensions** — commands and behavior stay split into small `extensions/*.ts` entrypoints instead of one monolith.
+- **Compact default surface** — specialist tools and skills stay searchable on demand instead of bloating the always-on prompt.
+- **Doctor before guesswork** — `/waldemar-doctor` is the authoritative readiness check; `/waldemar-inventory` stays factual.
 
 ## What this package provides
 
-- The Waldemar of Falkensee persona and operating doctrine grounded in [`HERALDRY.md`](HERALDRY.md)
-- Focused pi extensions for setup, presence, postures, safeguards, sessions, inventory, doctor, chronicle, status, and system-prompt inspection
-- A command chamber via `/waldemar`
-- The `falkensee-heraldry` and `chronicle-keeper` themes
-- External skill bootstrap from [`config/external-skills.json`](config/external-skills.json)
-- Native CodeGraph tools when the workspace has a `.codegraph` index
-- A compact active tool and skill surface with searchable on-demand specialist activation
-- Optional CodeGraph MCP compatibility through `pi-mcp-adapter`
+- Waldemar's persona and operating doctrine, grounded in [`HERALDRY.md`](HERALDRY.md)
+- Focused pi extensions for setup, posture control, status, inventory, doctor, command chamber, system-prompt inspection, and related workflow support
+- Packaged themes: `falkensee-heraldry` and `chronicle-keeper`
+- Prompt workflows in [`prompts/`](prompts/)
+- Custom local skills in [`skills/`](skills/)
+- Reused third-party skill bootstrap from [`config/external-skills.json`](config/external-skills.json)
+- Native CodeGraph integration plus optional MCP compatibility through `pi-mcp-adapter`
 
 ## Install
 
@@ -43,11 +47,11 @@ Then start pi and run:
 /reload
 ```
 
-For local development and fresh-machine notes, see [`docs/setup-and-portability.md`](docs/setup-and-portability.md).
+If you are preparing a fresh machine, start with [`docs/setup-and-portability.md`](docs/setup-and-portability.md).
 
 ## Main commands
 
-Start with:
+Begin with:
 
 ```text
 /waldemar
@@ -55,35 +59,38 @@ Start with:
 
 Common direct commands:
 
-- `/waldemar-setup` — reconcile global settings, external skills, and MCP config
-- `/waldemar-tooling [gh|sentry-cli]` — explicit Debian or Ubuntu install and authentication guide for missing machine local CLI tools used by skills
-- `/waldemar-status` — lightweight operational/session status report
-- `/waldemar-inventory` — installed packages, MCP servers, and skills
+- `/waldemar-setup` — reconcile settings, MCP compatibility config, and external skills
 - `/waldemar-doctor` — primary package and machine readiness check
+- `/waldemar-status` — lightweight operational status report
+- `/waldemar-inventory` — installed packages, MCP servers, and skills
+- `/waldemar-tooling [gh|sentry-cli]` — explicit Debian or Ubuntu guidance for required local CLI tools
 - `/waldemar-system-prompt` — inspect the captured full system prompt
-- `/posture` — select the current guard posture
+- `/posture` — choose the active guard posture
 - `/chronicle` — record a TUI-only decision or milestone
-- `/waldemar-customize` — pointers for customization
+- `/waldemar-customize` — quick customization map
 
-Full command reference: [`docs/commands.md`](docs/commands.md).
+The canonical command roster lives in [`docs/commands.md`](docs/commands.md).
 
-## Documentation
+## When should you reach for Waldemar?
 
-Use [`docs/README.md`](docs/README.md) as the documentation index. It covers architecture, setup, commands, prompt templates, keybindings, MCP behavior, external skills, customization, and extension responsibilities.
+Choose Waldemar when you want a personal pi package with strong defaults, visible operating doctrine, durable setup orders, and a maintainable extension layout. If you only need a one-off pi configuration with no shared package structure, plain pi settings may be the simpler path.
 
-## External skills
+## Documentation map
 
-Reused third-party skills are declared in [`config/external-skills.json`](config/external-skills.json), not vendored into `skills/`. The bootstrap supports both the Skills CLI and `gh skill install` for GitHub-hosted skills.
-
-When a skill depends on a machine local CLI such as GitHub CLI or Sentry CLI, use `/waldemar-tooling` for the exact Debian or Ubuntu install and setup orders for missing tools before rerunning `/waldemar-setup`.
-
-Details: [`docs/external-skills.md`](docs/external-skills.md).
+- [`docs/README.md`](docs/README.md) — documentation hub
+- [`docs/architecture.md`](docs/architecture.md) — repository layout and design rules
+- [`docs/setup-and-portability.md`](docs/setup-and-portability.md) — fresh-machine bootstrap and portability expectations
+- [`docs/mcp.md`](docs/mcp.md) — native CodeGraph and MCP compatibility behavior
+- [`docs/external-skills.md`](docs/external-skills.md) — third-party skill bootstrap model
+- [`docs/customization.md`](docs/customization.md) — where to change tone, setup, skills, prompts, and themes
+- [`docs/extensions/README.md`](docs/extensions/README.md) — purpose of each focused extension
 
 ## Development rules
 
-This repository should remain a clean portable agent package. Keep extensions small and single-purpose, put shared helpers in `lib/`, and update docs with behavior changes.
+This repository is a portable agent package, not a dumping ground. Keep extensions small, keep shared helpers in `lib/`, and update the documentation surface when behavior changes.
 
-Project rules: [`AGENTS.md`](AGENTS.md).
+- Project rules: [`AGENTS.md`](AGENTS.md)
+- Validation guidance: [`VALIDATION.md`](VALIDATION.md)
 
 Recommended validation:
 
@@ -92,8 +99,6 @@ pi --offline --list-models
 bash -n scripts/bootstrap-skills.sh
 node -e "JSON.parse(require('fs').readFileSync('package.json','utf8'))"
 ```
-
-More validation notes: [`VALIDATION.md`](VALIDATION.md).
 
 ## License
 

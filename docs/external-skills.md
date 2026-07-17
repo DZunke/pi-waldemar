@@ -1,5 +1,8 @@
 # External Skills
 
+[Back to docs index](README.md)
+
+
 External skills are reused third-party skills installed by Waldemar's bootstrap script. They do not live in `skills/`.
 
 ## Source of truth

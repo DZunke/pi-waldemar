@@ -1,5 +1,8 @@
 # startup.ts
 
+[Back to extension index](README.md) · [Back to docs index](../README.md)
+
+
 Purpose: handle the compact startup rapport and lifecycle footer status.
 
 Responsibilities:

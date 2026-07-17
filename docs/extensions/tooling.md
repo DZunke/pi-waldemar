@@ -1,5 +1,8 @@
 # tooling.ts
 
+[Back to extension index](README.md) · [Back to docs index](../README.md)
+
+
 Purpose: register `/waldemar-tooling`, the explicit setup guide for machine local CLI tools used by Waldemar skills.
 
 Responsibilities:

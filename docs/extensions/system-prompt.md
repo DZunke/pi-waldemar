@@ -1,5 +1,8 @@
 # system-prompt.ts
 
+[Back to extension index](README.md) · [Back to docs index](../README.md)
+
+
 Purpose: capture and inspect the effective system prompt that Waldemar of Falkensee sends into an agent turn.
 
 Commands and shortcuts:

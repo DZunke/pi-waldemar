@@ -1,5 +1,8 @@
 # codegraph.ts
 
+[Back to extension index](README.md) · [Back to docs index](../README.md)
+
+
 Purpose: register native CodeGraph tools when the current workspace already has a `.codegraph` index.
 
 Responsibilities:

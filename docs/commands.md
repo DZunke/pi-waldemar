@@ -1,5 +1,8 @@
 # Waldemar Command Reference
 
+[Back to docs index](README.md)
+
+
 This is the canonical reference for commands added by the Waldemar package. Pi built-ins such as `/reload`, `/resume`, `/settings`, `/help`, `/tree`, `/mcp`, and `/mcp-auth` remain available separately.
 
 ## Primary command

@@ -1,5 +1,8 @@
 # tool-catalog.ts
 
+[Back to extension index](README.md) · [Back to docs index](../README.md)
+
+
 Purpose: keep Waldemar's active tool surface compact while preserving access to installed specialist tools.
 
 Responsibilities:

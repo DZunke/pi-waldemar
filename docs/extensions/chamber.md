@@ -1,5 +1,8 @@
 # chamber.ts
 
+[Back to extension index](README.md) · [Back to docs index](../README.md)
+
+
 Purpose: provide Waldemar's central TUI command chamber.
 
 Commands:

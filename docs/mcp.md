@@ -1,5 +1,8 @@
 # MCP Servers
 
+[Back to docs index](README.md)
+
+
 Waldemar uses CodeGraph natively when the current workspace contains a `.codegraph` index. The package still carries `pi-mcp-adapter` for general MCP compatibility, and `/waldemar-setup` writes a CodeGraph MCP entry into `~/.pi/agent/mcp.json` for users who still rely on `/mcp` flows.
 
 ## Primary path: native CodeGraph extension

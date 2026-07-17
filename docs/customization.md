@@ -1,5 +1,8 @@
 # Customization
 
+[Back to docs index](README.md)
+
+
 ## Change Waldemar's tone
 
 - Persona system prompt: `lib/waldemar.ts`

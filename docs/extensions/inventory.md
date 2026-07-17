@@ -1,5 +1,8 @@
 # inventory.ts
 
+[Back to extension index](README.md) · [Back to docs index](../README.md)
+
+
 Purpose: register `/waldemar-inventory`.
 
 Reports:
