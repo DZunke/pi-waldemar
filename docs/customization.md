@@ -45,6 +45,8 @@ This cannot expose raw private chain-of-thought that the provider does not retur
 
 Keep the default active set small. Add specialist tools through the searchable catalog instead of listing every installed tool in the system prompt.
 
+Bundled third-party command surfaces should usually be added through `package.json` dependencies plus `pi.extensions` paths, not copied into `extensions/`.
+
 ## Change setup behaviour
 
 - Setup command: `extensions/setup.ts`

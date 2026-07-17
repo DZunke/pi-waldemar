@@ -46,7 +46,7 @@
 The package includes a `/waldemar-setup` command that:
 - ✅ Creates `~/.pi/agent/settings.json` if missing
 - ✅ Applies recommended settings (`falkensee-heraldry` theme, quiet startup, medium thinking, display polish, compaction, retry, branch-summary, image, and skill-command defaults)
-- ✅ Declares required third-party package dependencies in `package.json` (`pi-mcp-adapter`) for pi-managed installation
+- ✅ Declares required third-party package dependencies in `package.json` (`pi-mcp-adapter`, `pi-extensions`) for pi-managed installation
 - ✅ Creates/merges `~/.pi/agent/mcp.json` with the codegraph MCP compatibility server entry
 - ✅ Merges intelligently with existing settings
 - ✅ Handles file system errors gracefully
@@ -170,7 +170,7 @@ Waldemar Pi Package
 ├── Themes: 2 (chronicle-keeper.json, falkensee-heraldry.json)
 ├── Skills: 4 packaged skills (epic-writer, ticket-validator, ticket-writer, write-documentation)
 ├── Prompts: 2 packaged prompts (write-epic, write-ticket)
-├── Commands: 16 (/waldemar, /waldemar-arms, /falkensee-compact, /waldemar-theme, /posture, /postures, /chronicle, /chronicles, /waldemar-setup, /waldemar-tooling, /waldemar-inventory, /waldemar-doctor, /waldemar-system-prompt, /sessions, /waldemar-customize, /waldemar-status)
+├── Commands: 17 (/waldemar, /waldemar-arms, /falkensee-compact, /waldemar-theme, /posture, /postures, /chronicle, /chronicles, /waldemar-setup, /waldemar-tooling, /waldemar-inventory, /waldemar-doctor, /waldemar-system-prompt, /sessions, /waldemar-customize, /waldemar-status, /usage)
 ├── Events: lifecycle, model/thinking, provider-request, tool-call, session-tree, compaction, session-info, and inter-extension Falkensee events
 └── Documentation: README, HERALDRY, AGENTS.md, and docs/ guides
 

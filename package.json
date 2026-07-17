@@ -21,7 +21,8 @@
   "pi": {
     "extensions": [
       "./extensions",
-      "./node_modules/pi-mcp-adapter"
+      "./node_modules/pi-mcp-adapter",
+      "./node_modules/pi-extensions/usage-extension/index.ts"
     ],
     "skills": [
       "./skills"
@@ -35,10 +36,12 @@
     "image": "https://raw.githubusercontent.com/DZunke/pi-waldemar/main/waldemar-of-falkensee.png"
   },
   "dependencies": {
-    "pi-mcp-adapter": "2.11.0"
+    "pi-mcp-adapter": "2.11.0",
+    "pi-extensions": "git+https://github.com/tmustier/pi-extensions.git#c42103a5734c11f75cb5b046c56b4784de0e1c54"
   },
   "bundledDependencies": [
-    "pi-mcp-adapter"
+    "pi-mcp-adapter",
+    "pi-extensions"
   ],
   "peerDependencies": {
     "@earendil-works/pi-ai": "*",

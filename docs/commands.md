@@ -55,6 +55,7 @@ Postures adjust active tools, thinking level, footer/status display, and per-tur
 | `/waldemar-system-prompt [first\|latest]` | Inspect the captured full system prompt in a scrollable TUI viewer. |
 | `/waldemar-setup` | Reconcile global settings, theme, MCP config, external skills, and package dependency expectations. |
 | `/waldemar-customize` | Show a concise customization map and point to the durable documentation. |
+| `/usage` | Open the bundled usage statistics dashboard from `pi-extensions/usage-extension`. |
 
 ## Prompt templates
 
@@ -82,5 +83,6 @@ See [`keybindings.md`](keybindings.md) for shortcut policy and conflicts to avoi
 - Keep readiness checks in `/waldemar-doctor`.
 - Keep inventory factual and status lightweight.
 - Keep command behaviour in focused extension files, not in one monolithic extension.
+- When bundled third-party commands are exposed, document their origin and activation surface here.
 - Keep chamber menu actions local. Do not route them through `sendUserMessage`, because that can create an unintended agent turn and cost.
 - Update this file, `README.md`, and the relevant `docs/extensions/*.md` file whenever commands are added, removed, or materially changed.

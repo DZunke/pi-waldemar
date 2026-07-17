@@ -4,7 +4,7 @@
   <img src="waldemar-of-falkensee.png" alt="Heraldic portrait of Waldemar of Falkensee" width="360">
 </p>
 
-Waldemar of Falkensee is a portable [pi](https://pi.dev/) coding-agent package for a disciplined personal codewright. It delivers one opinionated bundle: persona, focused extensions, themes, prompts, custom skills, external-skill bootstrap, and CodeGraph integration.
+Waldemar of Falkensee is a portable [pi](https://pi.dev/) coding-agent package for a disciplined personal codewright. It delivers one opinionated bundle: persona, focused extensions, themes, prompts, custom skills, external-skill bootstrap, CodeGraph integration, and a bundled usage dashboard.
 
 > Excellence is not negotiable. It is inevitable.
 
@@ -24,6 +24,7 @@ Waldemar of Falkensee is a portable [pi](https://pi.dev/) coding-agent package f
 - Custom local skills in [`skills/`](skills/)
 - Reused third-party skill bootstrap from [`config/external-skills.json`](config/external-skills.json)
 - Native CodeGraph integration plus optional MCP compatibility through `pi-mcp-adapter`
+- Bundled third-party `/usage` dashboard from `pi-extensions/usage-extension`
 
 ## Install
 
@@ -68,6 +69,7 @@ Common direct commands:
 - `/posture` — choose the active guard posture
 - `/chronicle` — record a TUI-only decision or milestone
 - `/waldemar-customize` — quick customization map
+- `/usage` — interactive usage statistics dashboard bundled from `pi-extensions`
 
 The canonical command roster lives in [`docs/commands.md`](docs/commands.md).
 
