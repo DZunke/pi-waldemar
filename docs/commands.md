@@ -8,7 +8,7 @@ This is the canonical reference for commands added by the Waldemar package. Pi b
 | --- | --- |
 | `/waldemar` | Open Waldemar's command chamber: posture, inventory, doctor, system prompt, chronicle, arms, compact, theme, customization, and setup orders. |
 
-Use `/waldemar` first when you do not remember the exact order. It is the command-room door.
+Use `/waldemar` first when you do not remember the exact order. It is the command-room door. Chamber selections run local extension handlers; they should not submit an agent prompt or create model cost.
 
 ## Guard posture
 
@@ -79,4 +79,5 @@ See [`keybindings.md`](keybindings.md) for shortcut policy and conflicts to avoi
 - Keep readiness checks in `/waldemar-doctor`.
 - Keep inventory factual and status lightweight.
 - Keep command behaviour in focused extension files, not in one monolithic extension.
+- Keep chamber menu actions local. Do not route them through `sendUserMessage`, because that can create an unintended agent turn and cost.
 - Update this file, `README.md`, and the relevant `docs/extensions/*.md` file whenever commands are added, removed, or materially changed.

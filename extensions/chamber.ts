@@ -2,6 +2,12 @@ import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-a
 import { DynamicBorder } from "@earendil-works/pi-coding-agent";
 import { Container, getCapabilities, Image, Key, matchesKey, type SelectItem, SelectList, Text } from "@earendil-works/pi-tui";
 import { runDoctorChecks, showDoctorReport } from "../lib/doctor";
+import { showCustomizationMap } from "../lib/customize";
+import { showWaldemarInventory } from "../lib/inventory";
+import { applyWaldemarPosture, isPostureName } from "../lib/postures";
+import { buildCliToolingReport } from "../lib/tooling";
+import { showRecentChronicles } from "./chronicle";
+import { showCapturedSystemPrompt } from "./system-prompt";
 import * as fs from "fs";
 import * as path from "path";
 import { WALDEMAR_PACKAGE_ROOT } from "../lib/waldemar";
@@ -75,7 +81,7 @@ export default function chamberExtension(pi: ExtensionAPI) {
 async function chooseChamberAction(ctx: ExtensionContext): Promise<ChamberAction | undefined> {
   if (ctx.mode !== "tui") {
     ctx.ui.notify(
-      "Waldemar's command chamber requires the TUI. Available orders: /posture, /waldemar-inventory, /waldemar-doctor, /waldemar-tooling, /waldemar-system-prompt, /chronicles, /waldemar-arms, /falkensee-compact, /waldemar-theme.",
+      "Waldemar's command chamber requires the TUI. Available orders: /posture, /waldemar-inventory, /waldemar-doctor, /waldemar-tooling, /waldemar-system-prompt, /chronicles, /waldemar-arms, /falkensee-compact, /waldemar-theme, /waldemar-customize, /waldemar-setup.",
       "info",
     );
     return undefined;
@@ -132,23 +138,23 @@ async function executeChamberAction(pi: ExtensionAPI, ctx: ExtensionContext, act
   switch (action) {
     case "posture": {
       const selected = await choosePosture(ctx);
-      if (selected) pi.sendUserMessage(`/posture ${selected}`);
+      if (isPostureName(selected)) applyWaldemarPosture(pi, ctx, selected, true);
       return;
     }
     case "inventory":
-      pi.sendUserMessage("/waldemar-inventory");
+      showWaldemarInventory(ctx);
       return;
     case "doctor":
       await showDoctorReport(ctx, runDoctorChecks());
       return;
     case "tooling":
-      pi.sendUserMessage("/waldemar-tooling");
+      ctx.ui.notify(buildCliToolingReport(), "info");
       return;
     case "systemPrompt":
-      pi.sendUserMessage("/waldemar-system-prompt");
+      await showCapturedSystemPrompt(ctx);
       return;
     case "chronicles":
-      pi.sendUserMessage("/chronicles");
+      showRecentChronicles(ctx);
       return;
     case "arms":
       await showArms(ctx);
@@ -160,7 +166,7 @@ async function executeChamberAction(pi: ExtensionAPI, ctx: ExtensionContext, act
       await chooseTheme(ctx);
       return;
     case "customize":
-      pi.sendUserMessage("/waldemar-customize");
+      showCustomizationMap(ctx);
       return;
     case "setup":
       ctx.ui.setEditorText("/waldemar-setup");

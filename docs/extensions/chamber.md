@@ -12,10 +12,10 @@ Commands:
 Responsibilities:
 
 - uses custom TUI selection UI for the central command menu
-- routes to posture, inventory, doctor, system prompt inspection, chronicle, customization, setup, theme, compact, and arms actions
-- routes to posture, inventory, doctor, tooling guidance, system prompt inspection, chronicle, customization, setup, theme, compact, and arms actions
+- routes to posture, inventory, doctor, tooling guidance, system prompt inspection, chronicle, customization, setup, theme, compact, and arms actions through local handlers, not staged agent prompts
 - renders guard posture choices with descriptions so the user need not memorize formation purposes
 - stages `/waldemar-setup` in the editor rather than executing it immediately, because setup changes global configuration
+- must not call `sendUserMessage` for chamber menu actions; selecting an action must not create an agent turn or model cost
 - keeps ceremonial displays on demand rather than showing large heraldry at every startup
 - checks `getCapabilities().images` before opening the image overlay, so unsupported terminals do not show a transparent fallback panel
 - passes an `ImageTheme` object (`{ fallbackColor }`) to the TUI `Image` component, not the full coding-agent theme

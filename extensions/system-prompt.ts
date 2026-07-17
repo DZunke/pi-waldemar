@@ -9,12 +9,13 @@ type PromptCapture = {
   thinkingLevel: string;
 };
 
-type PromptChoice = "first" | "latest";
+export type PromptChoice = "first" | "latest";
+
+let firstCapture: PromptCapture | undefined;
+let latestCapture: PromptCapture | undefined;
 
 /** Capture and inspect the effective system prompt sent into the agent turn. */
 export default function systemPromptExtension(pi: ExtensionAPI) {
-  let firstCapture: PromptCapture | undefined;
-  let latestCapture: PromptCapture | undefined;
 
   pi.on("before_agent_start", async (event, ctx) => {
     const capture: PromptCapture = {
@@ -35,7 +36,7 @@ export default function systemPromptExtension(pi: ExtensionAPI) {
       .filter((value) => value.startsWith(prefix.trim()))
       .map((value) => ({ value, label: value })),
     handler: async (args, ctx) => {
-      const choice = parseChoice(args);
+      const choice = parseSystemPromptChoice(args);
       const capture = choice === "latest" ? latestCapture : firstCapture;
       await showSystemPrompt(ctx, capture, choice);
     },
@@ -49,9 +50,14 @@ export default function systemPromptExtension(pi: ExtensionAPI) {
   });
 }
 
-function parseChoice(args: string): PromptChoice {
+export function parseSystemPromptChoice(args: string): PromptChoice {
   const normalized = args.trim().toLowerCase();
   return normalized === "latest" ? "latest" : "first";
+}
+
+export async function showCapturedSystemPrompt(ctx: ExtensionContext, choice: PromptChoice = "first") {
+  const capture = choice === "latest" ? latestCapture : firstCapture;
+  await showSystemPrompt(ctx, capture, choice);
 }
 
 async function showSystemPrompt(ctx: ExtensionContext, capture: PromptCapture | undefined, choice: PromptChoice) {

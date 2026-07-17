@@ -1,4 +1,4 @@
-import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { Box, Text } from "@earendil-works/pi-tui";
 
 type ChronicleTone = "info" | "success" | "warning" | "error";
@@ -58,26 +58,30 @@ export default function chronicleExtension(pi: ExtensionAPI) {
   pi.registerCommand("chronicles", {
     description: "Summarize recent Falkensee chronicle marks",
     handler: async (_args, ctx) => {
-      const entries = ctx.sessionManager
-        .getBranch()
-        .filter((entry) => entry.type === "custom" && entry.customType === "waldemar-chronicle")
-        .slice(-8)
-        .map((entry) => normalizeChronicleEntry(entry.data as ChronicleEntryData | undefined));
-
-      if (entries.length === 0) {
-        ctx.ui.notify("The Falkensee chronicle is clean parchment in this campaign.", "info");
-        return;
-      }
-
-      const report = entries
-        .map((entry) => [
-          `${toneIcon(entry.tone)} ${new Date(entry.timestamp).toLocaleTimeString()} — ${entry.title}`,
-          indent(entry.message),
-        ].join("\n"))
-        .join("\n\n");
-      ctx.ui.notify(`Recent Falkensee Chronicle\n\n${report}`, "info");
+      showRecentChronicles(ctx);
     },
   });
+}
+
+export function showRecentChronicles(ctx: ExtensionContext) {
+  const entries = ctx.sessionManager
+    .getBranch()
+    .filter((entry) => entry.type === "custom" && entry.customType === "waldemar-chronicle")
+    .slice(-8)
+    .map((entry) => normalizeChronicleEntry(entry.data as ChronicleEntryData | undefined));
+
+  if (entries.length === 0) {
+    ctx.ui.notify("The Falkensee chronicle is clean parchment in this campaign.", "info");
+    return;
+  }
+
+  const report = entries
+    .map((entry) => [
+      `${toneIcon(entry.tone)} ${new Date(entry.timestamp).toLocaleTimeString()} — ${entry.title}`,
+      indent(entry.message),
+    ].join("\n"))
+    .join("\n\n");
+  ctx.ui.notify(`Recent Falkensee Chronicle\n\n${report}`, "info");
 }
 
 function indent(message: string): string {
