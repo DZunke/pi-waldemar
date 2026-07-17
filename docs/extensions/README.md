@@ -9,10 +9,12 @@ Each top-level file in `extensions/` is loaded by pi. Keep each file focused.
 - [presence](presence.md) — command-chamber header, footer, title, and working indicator
 - [postures](postures.md) — tactical guard formations for planning, implementation, validation, debugging, and council work
 - [safeguards](safeguards.md) — loyal-dissent confirmations for risky commands, sensitive paths, and dirty working trees
+- [skill-catalog](skill-catalog.md) — compact skill prompt exposure and on-demand skill loading
 - [sessions](sessions.md) — session/campaign command
 - [inventory](inventory.md) — package/MCP/skill inspection
 - [doctor](doctor.md) — package and machine readiness checks
 - [tooling](tooling.md) — explicit machine local CLI install and setup guidance for skills
+- [tool-catalog](tool-catalog.md) — compact active tool surface and on-demand specialist tool discovery
 - [chamber](chamber.md) — central TUI command chamber, arms, compact, and theme controls
 - [chronicle](chronicle.md) — durable TUI-only campaign records and chronicle marks
 - [customize](customize.md) — customization guide command

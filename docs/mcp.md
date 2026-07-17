@@ -13,6 +13,8 @@ When `.codegraph` exists in the workspace root, `extensions/codegraph.ts`:
 
 This means Waldemar is no longer CodeGraph through MCP only. The agent can use CodeGraph even if no global MCP config is present.
 
+Waldemar keeps specialist tools behind `waldemar_tool_catalog` by default. Native CodeGraph or MCP tools can be installed and registered without forcing every tool name into the system prompt; the agent searches and enables specialist tools when the task calls for them.
+
 ## Compatibility path: Waldemar MCP default
 
 ### codegraph

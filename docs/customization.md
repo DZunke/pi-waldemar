@@ -3,6 +3,7 @@
 ## Change Waldemar's tone
 
 - Persona system prompt: `lib/waldemar.ts`
+- Prompt section formatting: `lib/system-prompt.ts`
 - Persona extension hook: `extensions/persona.ts`
 
 Keep technical clarity and safety above theatrical flavour. `HERALDRY.md` is the authoritative RPG background for Waldemar himself; if the user says "you" in that context, it means the coding agent persona.
@@ -26,6 +27,13 @@ When commands are added, removed, or materially changed, update:
 - `docs/commands.md` — canonical command roster
 - `README.md` — fast user-facing command summary
 - `docs/extensions/<extension>.md` — implementation responsibility
+
+## Change active tool exposure
+
+- Compact tool policy and search behavior: `lib/tool-catalog.ts`
+- Catalog tool registration: `extensions/tool-catalog.ts`
+
+Keep the default active set small. Add specialist tools through the searchable catalog instead of listing every installed tool in the system prompt.
 
 ## Change setup behaviour
 
@@ -55,6 +63,8 @@ skills/my-skill/SKILL.md
 ```
 
 Do not copy third-party skills into this directory unless explicitly choosing to fork and maintain them.
+
+Skill prompt exposure is compacted by `extensions/skill-catalog.ts` and `lib/skill-catalog.ts`. Keep skill descriptions accurate for search, but put detailed workflows in `SKILL.md`; the agent loads them through `waldemar_skill_catalog` only when needed.
 
 ## Change the theme
 

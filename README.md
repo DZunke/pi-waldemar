@@ -18,6 +18,7 @@ Waldemar packages persona, focused extensions, themes, prompts, custom skills, e
 - The `falkensee-heraldry` and `chronicle-keeper` themes
 - External skill bootstrap from [`config/external-skills.json`](config/external-skills.json)
 - Native CodeGraph tools when the workspace has a `.codegraph` index
+- A compact active tool and skill surface with searchable on-demand specialist activation
 - Optional CodeGraph MCP compatibility through `pi-mcp-adapter`
 
 ## Install

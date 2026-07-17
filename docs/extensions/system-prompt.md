@@ -15,6 +15,9 @@ Implementation notes:
 - The latest capture is updated every turn for debugging current posture, persona, tool, skill, and context effects.
 - TUI mode uses a scrollable bordered viewer with line and character counts.
 - Non-TUI modes fall back to a plain notification report.
+- Viewer rendering lives in `lib/system-prompt-viewer.ts`; the extension remains a small capture and command entrypoint.
+- Waldemar-owned prompt sections use the shared section renderer in `lib/system-prompt.ts` so persona and posture additions remain consistently structured.
+- Verbose installed skill listings are compacted by `extensions/skill-catalog.ts`; inspect `waldemar_skill_catalog` behavior there rather than adding skill lists to this viewer extension.
 
 Limitations:
 

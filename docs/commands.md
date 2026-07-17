@@ -12,7 +12,7 @@ Use `/waldemar` first when you do not remember the exact order. It is the comman
 
 ## Guard posture
 
-Postures adjust active tools, thinking level, footer/status display, and per-turn system prompt instructions.
+Postures adjust active tools, thinking level, footer/status display, and per-turn system prompt instructions. Waldemar also keeps non-core specialist tools behind `waldemar_tool_catalog` and skill workflows behind `waldemar_skill_catalog` so the prompt does not list every installed tool or skill by default. Full overviews are available through `waldemar_list_tools` and `waldemar_list_skills`.
 
 | Command | Thinking | Tool behavior | Purpose |
 | --- | --- | --- | --- |
