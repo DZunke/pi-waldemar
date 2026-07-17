@@ -22,7 +22,7 @@
 - ✅ **Status indicators** - Footer status with `ctx.ui.setStatus()` plus a custom Falkensee footer via `ctx.ui.setFooter()`
 - ✅ **Command registration** - Proper `/command` registration with descriptions; core commands exercised in print mode for runtime load faults
 - ✅ **Custom TUI components** - Command chamber, compact display, heraldic image overlay, custom header/footer, and chronicle entry renderer
-- ✅ **Tool/event interception** - Guard postures and loyal-dissent safeguards adjust tools, thinking level, system prompt, and risky tool calls
+- ✅ **Tool/event interception** - Guard postures, reasoning summary policy, and loyal-dissent safeguards adjust tools, thinking level, provider payloads, system prompt, and risky tool calls
 
 #### Theme Compliance
 - ✅ **All 51 color tokens defined** - Complete color palette per pi theme spec
@@ -166,12 +166,12 @@ The Chronicle Keeper theme draws inspiration from:
 
 ```
 Waldemar Pi Package
-├── Extensions: 18 focused entrypoints (chamber, chronicle, codegraph, customize, doctor, inventory, persona, postures, presence, safeguards, sessions, setup, skill-catalog, startup, status, system-prompt, tool-catalog, tooling)
+├── Extensions: 19 focused entrypoints (chamber, chronicle, codegraph, customize, doctor, inventory, persona, postures, presence, reasoning, safeguards, sessions, setup, skill-catalog, startup, status, system-prompt, tool-catalog, tooling)
 ├── Themes: 2 (chronicle-keeper.json, falkensee-heraldry.json)
 ├── Skills: 4 packaged skills (epic-writer, ticket-validator, ticket-writer, write-documentation)
 ├── Prompts: 2 packaged prompts (write-epic, write-ticket)
 ├── Commands: 16 (/waldemar, /waldemar-arms, /falkensee-compact, /waldemar-theme, /posture, /postures, /chronicle, /chronicles, /waldemar-setup, /waldemar-tooling, /waldemar-inventory, /waldemar-doctor, /waldemar-system-prompt, /sessions, /waldemar-customize, /waldemar-status)
-├── Events: lifecycle, model/thinking, tool-call, session-tree, compaction, session-info, and inter-extension Falkensee events
+├── Events: lifecycle, model/thinking, provider-request, tool-call, session-tree, compaction, session-info, and inter-extension Falkensee events
 └── Documentation: README, HERALDRY, AGENTS.md, and docs/ guides
 
 Lines of Code

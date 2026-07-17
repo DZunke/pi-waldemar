@@ -28,6 +28,13 @@ When commands are added, removed, or materially changed, update:
 - `README.md` — fast user-facing command summary
 - `docs/extensions/<extension>.md` — implementation responsibility
 
+## Change visible reasoning summaries
+
+- Provider reasoning policy: `extensions/reasoning.ts`
+- Detailed OpenAI Responses-style summaries are requested by default.
+
+This cannot expose raw private chain-of-thought that the provider does not return.
+
 ## Change active tool exposure
 
 - Compact tool policy and search behavior: `lib/tool-catalog.ts`
