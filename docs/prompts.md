@@ -3,7 +3,7 @@
 [Back to docs index](README.md)
 
 
-Prompt templates are lightweight, explicit workflow entrypoints. They live in `prompts/` and are loaded by pi through the package manifest.
+Prompt templates are lightweight, explicit workflow entrypoints. Waldemar's templates live in `prompts/` and are loaded by Pi through the package manifest.
 
 Use them when a workflow should be invoked on demand without changing Waldemar of Falkensee's always-on persona.
 
@@ -39,7 +39,7 @@ Flow:
 
 If required context is missing, the templates tell Waldemar to ask concise clarification questions instead of inventing details.
 
-## Decision flow: prompt, skill, posture, or extension?
+## Decision flow: prompt, skill, or extension?
 
 Use this rule of thumb:
 
@@ -47,7 +47,6 @@ Use this rule of thumb:
 | --- | --- |
 | One-shot or on-demand workflow | `prompts/*.md` |
 | Larger reusable method with examples, rules, and quality criteria | `skills/<name>/SKILL.md` |
-| Persistent behavioral stance across turns | `extensions/postures.ts` |
 | Hard automation, UI, multi-step command logic, or enforced loops | focused `extensions/*.ts` command |
 | Always-on Waldemar identity and communication doctrine | `extensions/persona.ts` and `lib/waldemar.ts` |
 
@@ -60,4 +59,4 @@ Start small:
 3. If the workflow needs more reusable detail, promote it to a skill.
 4. If the workflow needs enforced control flow, dialogs, or actual model-call loops, promote it to an extension command.
 
-This keeps the command chamber useful without turning Waldemar's global system prompt into a crowded barracks.
+This keeps workflows explicit without turning Waldemar's global system prompt into a collection of unrelated instructions.

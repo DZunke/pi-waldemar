@@ -7,10 +7,10 @@ import { matchesKey, truncateToWidth, visibleWidth } from "@earendil-works/pi-tu
 import {
   listSkillNames,
   WALDEMAR_BOOTSTRAP_SKILLS_SCRIPT,
-  WALDEMAR_MCP_EXTENSION_DIR,
-  WALDEMAR_MCP_SERVERS,
   WALDEMAR_PACKAGE_ROOT,
 } from "./waldemar";
+import { hasCodegraphIndex } from "./codegraph";
+import type { RegisteredMcpServerSummary } from "./mcp";
 import { getCliRequirements, isCliRequirementAvailable } from "./tooling";
 
 export type DoctorStatus = "pass" | "warn" | "fail";
@@ -28,17 +28,15 @@ type DoctorGroup = {
   checks: DoctorCheck[];
 };
 
-export function runDoctorChecks(): DoctorCheck[] {
+export function runDoctorChecks(cwd = process.cwd(), mcpServers: RegisteredMcpServerSummary[] = []): DoctorCheck[] {
   const checks: DoctorCheck[] = [];
   const packageJsonPath = path.join(WALDEMAR_PACKAGE_ROOT, "package.json");
   const settingsPath = path.join(os.homedir(), ".pi/agent/settings.json");
-  const mcpPath = path.join(os.homedir(), ".pi/agent/mcp.json");
 
   checks.push(fileCheck("package.json", packageJsonPath));
   checks.push(fileCheck("README.md", path.join(WALDEMAR_PACKAGE_ROOT, "README.md")));
   checks.push(fileCheck("LICENSE", path.join(WALDEMAR_PACKAGE_ROOT, "LICENSE")));
   checks.push(fileCheck("bootstrap skills script", WALDEMAR_BOOTSTRAP_SKILLS_SCRIPT));
-  checks.push(fileCheck("pi-mcp-adapter dependency", WALDEMAR_MCP_EXTENSION_DIR));
 
   try {
     const pkg = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
@@ -56,7 +54,7 @@ export function runDoctorChecks(): DoctorCheck[] {
     checks.push({ label: "package metadata", status: "fail", detail: String(error) });
   }
 
-  for (const theme of ["falkensee-heraldry", "chronicle-keeper"]) {
+  for (const theme of ["falkensee-heraldry", "falkensee-heraldry-light", "atlavium"]) {
     checks.push(fileCheck(`theme: ${theme}`, path.join(WALDEMAR_PACKAGE_ROOT, "themes", `${theme}.json`)));
   }
 
@@ -68,7 +66,20 @@ export function runDoctorChecks(): DoctorCheck[] {
     checks.push(fileCheck(`prompt template: ${prompt}`, path.join(WALDEMAR_PACKAGE_ROOT, "prompts", `${prompt}.md`)));
   }
 
-  checks.push(commandCheck("codegraph", ["--version"], "needed for the native CodeGraph extension and optional MCP compatibility"));
+  const codegraphIndexed = hasCodegraphIndex(cwd);
+  const codegraphServer = mcpServers.find((server) => server.name === "codegraph");
+  checks.push({
+    label: "CodeGraph MCP registration",
+    status: codegraphServer ? "pass" : "fail",
+    detail: !codegraphServer
+      ? "not registered; reload pi with the Waldemar extension enabled"
+      : codegraphServer.config.enabled === false
+        ? "registered with pi; disabled until this workspace has a .codegraph index"
+        : "registered and enabled through pi's built-in MCP support",
+  });
+  checks.push(codegraphIndexed
+    ? commandCheck("codegraph", ["--version"], "required for this workspace's .codegraph MCP server")
+    : { label: "command: codegraph", status: "pass", detail: "not required until this workspace has a .codegraph index" });
 
   for (const tool of getCliRequirements()) {
     checks.push({
@@ -76,7 +87,7 @@ export function runDoctorChecks(): DoctorCheck[] {
       status: isCliRequirementAvailable(tool) ? "pass" : "warn",
       detail: isCliRequirementAvailable(tool)
         ? tool.summary
-        : `${tool.summary} Missing now; run /waldemar-tooling ${tool.key} for install and setup orders.`,
+        : `${tool.summary} Missing now; run /waldemar-tooling ${tool.key} for installation and setup guidance.`,
     });
   }
 
@@ -84,35 +95,11 @@ export function runDoctorChecks(): DoctorCheck[] {
     const settings = fs.existsSync(settingsPath) ? JSON.parse(fs.readFileSync(settingsPath, "utf-8")) : {};
     checks.push({
       label: "global theme setting",
-      status: settings.theme === "falkensee-heraldry" ? "pass" : "warn",
+      status: ["falkensee-heraldry", "falkensee-heraldry-light", "atlavium", "falkensee-heraldry-light/falkensee-heraldry"].includes(settings.theme) ? "pass" : "warn",
       detail: settings.theme ? `current: ${settings.theme}` : "run /waldemar-setup to apply defaults",
     });
   } catch (error) {
     checks.push({ label: "global settings", status: "fail", detail: `could not parse ${settingsPath}: ${String(error)}` });
-  }
-
-  try {
-    const mcp = fs.existsSync(mcpPath) ? JSON.parse(fs.readFileSync(mcpPath, "utf-8")) : {};
-    const mcpServers = mcp.mcpServers || {};
-    const codegraph = mcpServers.codegraph;
-    const waldemarServerNames = Object.keys(WALDEMAR_MCP_SERVERS);
-    const additionalServers = Object.keys(mcpServers).filter((name) => !waldemarServerNames.includes(name));
-    checks.push({
-      label: "codegraph MCP compatibility",
-      status: "pass",
-      detail: codegraph
-        ? "configured in ~/.pi/agent/mcp.json"
-        : "not configured; native CodeGraph extension still works when .codegraph exists",
-    });
-    checks.push({
-      label: "additional MCP servers",
-      status: additionalServers.length === 0 ? "pass" : "warn",
-      detail: additionalServers.length === 0
-        ? "none beyond Waldemar defaults"
-        : `configured outside Waldemar defaults: ${additionalServers.join(", ")}`,
-    });
-  } catch (error) {
-    checks.push({ label: "MCP config", status: "fail", detail: `could not parse ${mcpPath}: ${String(error)}` });
   }
 
   const installedSkills = [
@@ -125,11 +112,6 @@ export function runDoctorChecks(): DoctorCheck[] {
     detail: installedSkills.length > 0 ? `${installedSkills.length} skills detected` : "run /waldemar-setup to bootstrap external skills",
   });
 
-  checks.push({
-    label: "Waldemar MCP defaults",
-    status: WALDEMAR_MCP_SERVERS.codegraph ? "pass" : "fail",
-    detail: "codegraph remains the only optional Waldemar MCP compatibility default",
-  });
 
   return checks;
 }
@@ -171,14 +153,12 @@ function buildDoctorGroups(checks: DoctorCheck[]): DoctorGroup[] {
         "README.md",
         "LICENSE",
         "bootstrap skills script",
-        "pi-mcp-adapter dependency",
         "pi package manifest",
         "package metadata",
         "repository metadata",
         "theme:",
         "local skill:",
         "prompt template:",
-        "Waldemar MCP defaults",
       ].some((prefix) => check.label.startsWith(prefix)),
     },
     {
@@ -190,8 +170,7 @@ function buildDoctorGroups(checks: DoctorCheck[]): DoctorGroup[] {
       match: (check: DoctorCheck) => [
         "global theme setting",
         "global settings",
-        "codegraph MCP compatibility",
-        "additional MCP servers",
+        "CodeGraph MCP registration",
       ].includes(check.label),
     },
     {

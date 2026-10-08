@@ -9,15 +9,15 @@
 - Prompt section formatting: `lib/system-prompt.ts`
 - Persona extension hook: `extensions/persona.ts`
 
-Keep technical clarity and safety above theatrical flavour. `HERALDRY.md` is the authoritative RPG background for Waldemar himself; if the user says "you" in that context, it means the coding agent persona.
+Keep technical clarity and safety above character flavor. `HERALDRY.md` remains the background for Waldemar's identity, while command and extension names should describe their function.
 
-## Change footer status moods
+## Change startup and lifecycle status
 
-Edit `WALDEMAR_STATUS_MOODS` in `extensions/startup.ts`.
+Edit the concise startup message and lifecycle labels in `extensions/startup-status.ts`.
 
 ## Change desktop notification behaviour
 
-- Command surface: `extensions/notifications.ts`
+- Command surface: `extensions/desktop-notifications.ts`
 - Transport and persistence helpers: `lib/notifications.ts`
 - User preference file: `~/.pi/agent/waldemar-notifications.json`
 
@@ -41,26 +41,24 @@ When commands are added, removed, or materially changed, update:
 - `README.md` — fast user-facing command summary
 - `docs/extensions/<extension>.md` — implementation responsibility
 
-## Change visible reasoning summaries
+## Change tool discovery defaults
 
-- Provider reasoning policy: `extensions/reasoning.ts`
-- Detailed OpenAI Responses-style summaries are requested by default.
+- Pi-native default-tool merge: `lib/setup.ts`
+- Setup integration: `extensions/machine-setup.ts`
 
-This cannot expose raw private chain-of-thought that the provider does not return.
+Pi's `tool_search` and `codemode` handle specialist tool discovery and use. Waldemar does not reset active tools to a fixed list; preserve explicit user choices when changing `defaultTools`. There is no Waldemar-owned tool catalog; use Pi's focused discovery tools and package-native surfaces.
 
-## Change active tool exposure
+Bundled third-party command surfaces should be added through `package.json` dependencies and `pi.extensions` paths, not copied into `extensions/`.
 
-- Compact tool policy and search behavior: `lib/tool-catalog.ts`
-- Catalog tool registration: `extensions/tool-catalog.ts`
+## Add or change a subagent persona
 
-Keep the default active set small. Add specialist tools through the searchable catalog instead of listing every installed tool in the system prompt.
-
-Bundled third-party command surfaces should usually be added through `package.json` dependencies plus `pi.extensions` paths, not copied into `extensions/`.
+Create or edit a Markdown definition under `agents/` and keep its responsibility, prompt, context inheritance, and tool allowlist explicit. The package exposes that directory through `pi.subagents.agents`; user- and project-scoped definitions can override a packaged role. See [Personas and Subagents](personas-and-subagents.md) before changing role boundaries or model routing.
 
 ## Change setup behaviour
 
-- Setup command: `extensions/setup.ts`
-- Shared setup constants: `lib/waldemar.ts`
+- Setup command: `extensions/machine-setup.ts`
+- Setup defaults and legacy MCP migration: `lib/setup.ts`
+- Shared package paths and persona text: `lib/waldemar.ts`
 - External skills list: `config/external-skills.json`
 - External skills installer: `scripts/bootstrap-skills.sh`
 
@@ -86,13 +84,14 @@ skills/my-skill/SKILL.md
 
 Do not copy third-party skills into this directory unless explicitly choosing to fork and maintain them.
 
-Skill prompt exposure is compacted by `extensions/skill-catalog.ts` and `lib/skill-catalog.ts`. Keep skill descriptions accurate for search, but put detailed workflows in `SKILL.md`; the agent loads them through `waldemar_skill_catalog` only when needed.
+Pi discovers skills from the package and configured skill directories and exposes them through its native skill workflow, including `/skill:<name>`. Keep skill metadata accurate and put detailed workflows in `SKILL.md`; do not duplicate native skill discovery with a Waldemar catalog extension.
 
 ## Change the theme
 
 Edit or add files in `themes/`. Packaged themes are:
 
-- `chronicle-keeper` — warm parchment, leather, and gold.
-- `falkensee-heraldry` — dark lake blue, crimson-forward accents, restrained earned gold, and clear silver from Waldemar's heraldic achievement.
+- `atlavium` — dark leather-toned surfaces, warm parchment text, and gold accents.
+- `falkensee-heraldry-light` — a light variant with lake blue, crimson, silver, and restrained gold.
+- `falkensee-heraldry` — a dark lake-blue variant with crimson-forward accents, restrained gold, and clear silver.
 
-The default theme selected by `/waldemar-setup` is `falkensee-heraldry`. To choose another livery manually, set `"theme": "chronicle-keeper"` or another theme name in `~/.pi/agent/settings.json`, use `/waldemar-theme`, or select it through `/settings`.
+The default selected by `/waldemar-setup` is `falkensee-heraldry-light/falkensee-heraldry`, allowing Pi to choose the light or dark variant from terminal appearance. To choose a theme manually, set its name in `~/.pi/agent/settings.json` or select it through Pi's `/settings`. If your settings still name the former `chronicle-keeper` theme, select `atlavium` instead.

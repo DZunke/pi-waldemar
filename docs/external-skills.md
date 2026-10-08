@@ -32,7 +32,7 @@ gh skill install <source> <name> --agent pi --scope user --force
 - Put your own handwritten skills in `skills/`.
 - Put reused third-party skills in `config/external-skills.json`.
 - Disable an external skill by setting `"enabled": false`.
-- Keep skill descriptions concise and searchable; detailed workflows belong in `SKILL.md` and are loaded on demand through `waldemar_skill_catalog` instead of being fully listed in every system prompt.
+- Keep skill metadata concise and accurate; detailed workflows belong in `SKILL.md` and are loaded through Pi's native skill discovery, including `/skill:<name>`, rather than a Waldemar-maintained catalog.
 
 ## Notable enabled skills
 

@@ -21,8 +21,8 @@
   "pi": {
     "extensions": [
       "./extensions",
-      "./node_modules/pi-mcp-adapter",
-      "./node_modules/pi-extensions/usage-extension/index.ts"
+      "./node_modules/pi-extensions/usage-extension/index.ts",
+      "./node_modules/pi-subagents/index.js"
     ],
     "skills": [
       "./skills"
@@ -30,18 +30,23 @@
     "prompts": [
       "./prompts"
     ],
+    "subagents": {
+      "agents": [
+        "./agents"
+      ]
+    },
     "themes": [
       "./themes"
     ],
     "image": "https://raw.githubusercontent.com/DZunke/pi-waldemar/main/waldemar-of-falkensee.png"
   },
   "dependencies": {
-    "pi-mcp-adapter": "2.11.0",
-    "pi-extensions": "git+https://github.com/tmustier/pi-extensions.git#c42103a5734c11f75cb5b046c56b4784de0e1c54"
+    "pi-extensions": "git+https://github.com/tmustier/pi-extensions.git#c42103a5734c11f75cb5b046c56b4784de0e1c54",
+    "pi-subagents": "0.76.1"
   },
   "bundledDependencies": [
-    "pi-mcp-adapter",
-    "pi-extensions"
+    "pi-extensions",
+    "pi-subagents"
   ],
   "peerDependencies": {
     "@earendil-works/pi-ai": "*",
@@ -50,7 +55,8 @@
     "typebox": "*"
   },
   "scripts": {
-    "bootstrap:skills": "./scripts/bootstrap-skills.sh"
+    "bootstrap:skills": "./scripts/bootstrap-skills.sh",
+    "test": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types --test tests/*.test.mjs"
   },
   "homepage": "https://github.com/DZunke/pi-waldemar#readme",
   "bugs": {

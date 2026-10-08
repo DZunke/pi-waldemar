@@ -3,7 +3,7 @@
 [Back to docs index](README.md)
 
 
-Waldemar keeps custom keybindings restrained. Global shortcuts should be memorable, avoid pi built-in conflicts, and point to high-value inspection or command-room actions.
+Waldemar keeps custom keybindings restrained. Global shortcuts should be memorable, avoid Pi built-in conflicts, and point to high-value inspection actions.
 
 ## Active Waldemar shortcuts
 
@@ -31,9 +31,7 @@ These are ideas, not active bindings:
 
 | Candidate | Possible action | Recommendation |
 | --- | --- | --- |
-| `Ctrl+Shift+W` | Open `/waldemar` command chamber | Useful, but may conflict with terminal or desktop window conventions. Test before binding. |
 | `Ctrl+Shift+D` | Run `/waldemar-doctor` | Useful for readiness checks, but may conflict with debugger conventions in terminal-hosted editors. |
-| `Ctrl+Shift+P` | Open posture picker | Avoid for now; this is commonly a command-palette shortcut in surrounding tools. |
 
 ## Display guidance
 

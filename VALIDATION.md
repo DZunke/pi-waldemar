@@ -1,228 +1,46 @@
-# 🏰 Waldemar Package Validation Report
+# Validation and Readiness
 
-## Package Integrity ✅
+This page records repeatable package checks and the evidence they provide. It is not a claim that every machine-local prerequisite is installed; `/waldemar-doctor` is the single runtime readiness authority.
 
-### Structure & Organization
-- ✅ **package.json** - Proper pi manifest with all required fields
-- ✅ **extensions/** - Contains focused single-purpose ExtensionAPI entrypoints
-- ✅ **themes/** - Contains chronicle-keeper.json and falkensee-heraldry.json theme files
-- ✅ **skills/** - Ready for custom skill additions (empty by default)
-- ✅ **prompts/** - Ready for custom prompt templates (empty by default)
-- ✅ **Documentation** - Comprehensive README.md, HERALDRY.md, and focused docs/ guides
+## Supported Pi API
 
-### Pi Coding Agent Compliance ✅
+Waldemar's current defaults and cancellation-aware status use Pi 1.1.0 or newer. Pi's built-in MCP registration API first appeared in 0.99.0; Pi 1.1.0 adds the `+name`/`-name` `defaultTools` syntax used by setup and `agent_settled.aborted` used by presence reporting. Validate against the Pi host that will load the package; a local development copy of the Pi type package may not match the active CLI version.
 
-#### Extension Best Practices
-- ✅ **Proper imports** - Uses @earendil-works/pi-coding-agent types correctly
-- ✅ **Event lifecycle** - Implements `session_start` for initialization
-- ✅ **Error handling** - Try-catch blocks with user-friendly error messages
-- ✅ **File system safety** - Handles missing/corrupted settings.json gracefully
-- ✅ **User interaction** - Uses ctx.ui.notify() for all user-facing messages
-- ✅ **Settings management** - `/waldemar-setup` command applies settings, package dependencies, external skills, native CodeGraph readiness checks, and MCP compatibility config safely
-- ✅ **Status indicators** - Footer status with `ctx.ui.setStatus()` plus a custom Falkensee footer via `ctx.ui.setFooter()`
-- ✅ **Command registration** - Proper `/command` registration with descriptions; core commands exercised in print mode for runtime load faults
-- ✅ **Custom TUI components** - Command chamber, compact display, heraldic image overlay, custom header/footer, and chronicle entry renderer
-- ✅ **Tool/event interception** - Guard postures, reasoning summary policy, and loyal-dissent safeguards adjust tools, thinking level, provider payloads, system prompt, and risky tool calls
+## Repeatable checks
 
-#### Theme Compliance
-- ✅ **All 51 color tokens defined** - Complete color palette per pi theme spec
-- ✅ **Windows Terminal optimized** - Colors tested for terminal compatibility
-- ✅ **Semantic naming** - Clear purpose for each token
-- ✅ **Export section** - Includes optional HTML export colors
-- ✅ **Variable reuse** - Uses `vars` section for consistency
-- ✅ **Thinking levels** - All 7 thinking level borders (off through max)
-- ✅ **Accessibility** - Good contrast ratios for dark theme
-- ✅ **Consistency** - Includes both Chronicle Keeper's warm chronicle aesthetic and Falkensee Heraldry's blue/crimson/silver command-chamber livery
+Run from the repository root:
 
-#### Documentation Quality
-- ✅ **Setup instructions** - Step-by-step installation guide
-- ✅ **Command reference** - `docs/commands.md` is the canonical Waldemar command roster; README keeps a concise fast summary
-- ✅ **Customization guide** - Clear paths for extending functionality
-- ✅ **Structure explanation** - Directory organization well documented
-- ✅ **Git support** - Instructions for publishing to GitHub
-
-### Package Settings Integration ✅
-
-The package includes a `/waldemar-setup` command that:
-- ✅ Creates `~/.pi/agent/settings.json` if missing
-- ✅ Applies recommended settings (`falkensee-heraldry` theme, quiet startup, medium thinking, display polish, compaction, retry, branch-summary, image, and skill-command defaults)
-- ✅ Declares required third-party package dependencies in `package.json` (`pi-mcp-adapter`, `pi-extensions`) for pi-managed installation
-- ✅ Creates/merges `~/.pi/agent/mcp.json` with the codegraph MCP compatibility server entry
-- ✅ Merges intelligently with existing settings
-- ✅ Handles file system errors gracefully
-- ✅ Provides user feedback on success/failure
-
-### Fully Transportable Setup ✅
-
-This package is designed for complete portability:
-- ✅ Single `pi install` command brings Waldemar extensions, custom skills, prompts, and themes
-- ✅ Third-party pi extensions are declared as npm dependencies in `package.json`
-- ✅ External reused skills are defined in `config/external-skills.json` and installed by `scripts/bootstrap-skills.sh`
-- ✅ `/waldemar-setup` applies all optimized settings to the global config
-- ✅ No manual setup required beyond two commands
-- ✅ Can be published to GitHub and installed on any machine
-- ✅ Settings are stored globally, not in the package directory (pi best practice)
-
----
-
-## 🎨 Chronicle Keeper Theme Details
-
-### Color Palette (Windows Terminal Optimized)
-
-#### Primary Colors
-| Color | Hex Code | Usage | Purpose |
-|-------|----------|-------|---------|
-| Gold | #D4A574 | Primary accent, borders, keywords | Warm, noble, fantasy theme |
-| Light Cream | #F8F2E6 | Link accent, thinking max | High contrast, readable |
-| Warm Gray | #8B8680 | Muted text, subtle borders | Secondary text, context |
-
-#### Background Palette
-| Color | Hex Code | Usage | Purpose |
-|-------|----------|-------|---------|
-| Dark Leather | #1a1410 | Terminal background | Deep, parchment-like |
-| Dark Parchment | #242018 | User messages, code blocks | Slightly lighter for contrast |
-| Dark Gray | #3a3530 | Selected elements, dim text | Selection highlight |
-
-#### Semantic Colors
-| Category | Color | Hex Code | Reason |
-|----------|-------|----------|--------|
-| Success | #7fb69f | Emerald-toned | Fantasy-appropriate green |
-| Error | #d47e7e | Rose-toned | Warm error indication |
-| Warning | #e5c96f | Amber-toned | Golden warning, fits theme |
-| Syntax String | #7fb69f | Emerald | Good readability on dark |
-| Syntax Type | Gold | #D4A574 | Consistent with theme |
-
-#### Thinking Level Progression
-- Off: Warm Gray (muted, inactive)
-- Minimal: Gold (subtle indication)
-- Low: #c5a572 (light gold)
-- Medium: #D4A574 (full gold)
-- High: #e5c96f (amber, prominent)
-- Xhigh: #f8f2e6 (cream, very prominent)
-- Max: Light Cream (maximum visibility)
-
-### Design Philosophy
-
-The Chronicle Keeper theme draws inspiration from:
-- **House Falkensee heraldry** - Warm RPG tone anchored in Waldemar's arms, compact, and ordered-codewright background
-- **Parchment & Leather** - Dark backgrounds evoke ancient libraries and chronicles
-- **Golden Accents** - Warm gold represents nobility, importance, and fantasy opulence
-- **Readability** - High contrast between text and backgrounds for terminal clarity
-- **Windows Terminal** - Colors optimized for typical Windows Terminal settings (dark background)
-
----
-
-## 🔍 Validation Checklist
-
-### Installation & Discovery ✅
-- [x] package.json has `pi` manifest
-- [x] package.json includes `pi-package` keyword
-- [x] All resource directories present (extensions, themes, skills, prompts)
-- [x] Themes properly formatted as .json files
-- [x] Extensions properly formatted as .ts files
-
-### Extension Validation ✅
-- [x] Uses ExtensionAPI correctly
-- [x] Implements async export function
-- [x] Proper TypeScript types imported
-- [x] Event listeners configured correctly
-- [x] Commands registered with descriptions
-- [x] Error handling for file operations
-- [x] Runtime package dependencies are declared in `package.json`
-- [x] Package explicitly loads through `pi -e ~/.pi/waldemar --offline --list-models`
-- [x] Core command handlers exercised with `pi --offline -e ~/.pi/waldemar --no-session -p`
-
-### Theme Validation ✅
-- [x] All 51 required color tokens defined
-- [x] Valid hex color codes (#RRGGBB format)
-- [x] Uses variables consistently ($vars)
-- [x] Proper JSON syntax
-- [x] Export section for HTML output
-- [x] Thinking level colors form clear progression
-- [x] Good contrast for readability
-- [x] Color harmony across palette
-
-### Documentation Validation ✅
-- [x] README.md explains package purpose
-- [x] Commands and prompt templates documented in `docs/commands.md`; README keeps only a concise fast summary
-- [x] Every `extensions/*.ts` entrypoint has a matching `docs/extensions/*.md` purpose document
-- [x] Native CodeGraph behavior and MCP compatibility details are documented in `docs/mcp.md`
-- [x] Customization paths clearly stated
-- [x] Git publishing instructions included
-- [x] Theme customization guidance provided
-- [x] Structure diagram included
-
-### Settings Management ✅
-- [x] `/waldemar-setup` command implemented
-- [x] Settings file path handled correctly
-- [x] Merge logic preserves existing settings
-- [x] Error handling for corrupted JSON
-- [x] User feedback on success/failure
-- [x] Directory creation logic robust
-
----
-
-## 📊 Package Statistics
-
-```
-Waldemar Pi Package
-├── Extensions: 19 focused entrypoints (chamber, chronicle, codegraph, customize, doctor, inventory, persona, postures, presence, reasoning, safeguards, sessions, setup, skill-catalog, startup, status, system-prompt, tool-catalog, tooling)
-├── Themes: 2 (chronicle-keeper.json, falkensee-heraldry.json)
-├── Skills: 4 packaged skills (epic-writer, ticket-validator, ticket-writer, write-documentation)
-├── Prompts: 2 packaged prompts (write-epic, write-ticket)
-├── Commands: 17 (/waldemar, /waldemar-arms, /falkensee-compact, /waldemar-theme, /posture, /postures, /chronicle, /chronicles, /waldemar-setup, /waldemar-tooling, /waldemar-inventory, /waldemar-doctor, /waldemar-system-prompt, /sessions, /waldemar-customize, /waldemar-status, /usage)
-├── Events: lifecycle, model/thinking, provider-request, tool-call, session-tree, compaction, session-info, and inter-extension Falkensee events
-└── Documentation: README, HERALDRY, AGENTS.md, and docs/ guides
-
-Lines of Code
-├── Extensions: focused TypeScript entrypoints plus shared lib helpers
-├── Themes: 2 theme files with full color palettes
-└── Documentation: expanded README, validation, and focused docs/ extension guides
-
-Package Quality
-├── TypeScript: ✅ Fully typed with ExtensionAPI
-├── Error Handling: ✅ Comprehensive try-catch blocks
-├── User Experience: ✅ Clear feedback and guidance
-├── Transportability: ✅ Fully portable across machines
-└── Extensibility: ✅ Ready for custom skills/prompts
+```bash
+npm test
+pi --offline -e . --list-models
+for theme in falkensee-heraldry-light falkensee-heraldry atlavium falkensee-heraldry-light/falkensee-heraldry; do pi --offline -e . --use-theme "$theme" --list-models >/dev/null; done
+bash -n scripts/bootstrap-skills.sh
+node -e "JSON.parse(require('fs').readFileSync('package.json','utf8'))"
+node -e "for (const f of require('fs').readdirSync('themes').filter(f => f.endsWith('.json'))) JSON.parse(require('fs').readFileSync('themes/'+f,'utf8'))"
+git diff --check
 ```
 
----
+`npm test` verifies the extension roster and documentation coverage, bundled `pi-subagents` resources and role definitions, the package manifest without `pi-mcp-adapter`, the light/dark theme role match, CodeGraph's Pi-native server configuration and index gate, structured prompt-section updates, additive tool defaults, and safe migration of only the exact old CodeGraph entry. The Pi CLI smoke checks load the package and its themes through the active host runtime; they are not a standalone TypeScript compiler check. Interactive TUI surfaces should also be checked manually in both the default fullscreen mode and `pi --tui-mode regular -e .`: switch themes through Pi's `/settings`, inspect the system-prompt viewer, and cancel a run to confirm the cancelled status.
 
-## 🚀 Recommended Next Steps
+## Runtime readiness rules
 
-### For Personal Use
-1. Run `pi install ~/.pi/waldemar` (if not already done)
-2. Run `pi` to start pi
-3. Execute `/waldemar-setup` to apply recommended settings, including `falkensee-heraldry`
-4. Execute `/reload` to apply theme changes
-5. Run `pi --theme chronicle-keeper` or `pi --theme falkensee-heraldry` to test a packaged theme
+- `/waldemar-doctor` owns readiness judgments, including whether CodeGraph is registered and whether the `codegraph` binary is available when the current workspace has an index.
+- `/waldemar-inventory` reports configuration and discovered resources as facts; Pi's `/session` reports current-session details.
+- A missing CodeGraph index keeps the extension-registered server disabled unless a same-named file-configured MCP server overrides it. Create the index and reload Pi to enable the extension registration.
+- A same-named file-configured MCP server takes precedence over Waldemar's extension registration. Inspect `/mcp` before changing existing MCP configuration.
+- Missing optional CLI tools and external skills should be reported with actionable guidance, not treated as evidence that the package itself failed to load.
 
-### For Distribution
-1. Update `package.json` repository URL to your GitHub
-2. Push repository to GitHub
-3. Add `pi-package` keyword to GitHub topics
-4. Share package URL: `pi install git:github.com/DZunke/pi-waldemar`
+## Current package surface
 
-### For Customization
-- Add custom skills in `./skills/` directory
-- Add custom prompts in `./prompts/` directory
-- Create additional themes in `./themes/` directory
-- Extend functionality by adding focused files in `./extensions/` and shared helpers in `./lib/`
+- 10 focused extension entrypoints under `extensions/`, each with a purpose page under `docs/extensions/`.
+- 6 Waldemar commands, plus the bundled `/usage` dashboard and `pi-subagents` commands.
+- 3 packaged role agents: Jessica, Brunhilde Nordwald, and Albert Metzler.
+- 3 packaged themes: `falkensee-heraldry-light`, `falkensee-heraldry`, and `atlavium`.
+- 4 handwritten skills and 2 prompt templates.
+- Pi-native MCP, `tool_search`, `codemode`, and skill discovery; Waldemar does not include a custom MCP adapter or duplicate tool/skill catalogs.
 
----
+## Portability notes
 
-## ✨ Conclusion
-
-The Waldemar Pi Package is **production-ready** and follows all pi coding agent best practices:
-
-- ✅ Proper pi package structure and manifest
-- ✅ Well-implemented extension with proper lifecycle management
-- ✅ Complete, accessible themes with Windows Terminal optimization
-- ✅ Comprehensive documentation for users and developers
-- ✅ Fully transportable setup for multi-machine deployments
-- ✅ Safe, robust settings management with user feedback
-- ✅ Falkensee command-chamber experience: posture modes, loyal-dissent safeguards, chronicle cards, ceremonial overlays, and persistent header/footer presence
-- ✅ Ready for sharing via GitHub or npm
-
-**Status: VALIDATED AND RECOMMENDED FOR USE** 🏆
+- Pi reconciles third-party package dependencies for git/npm installs. A local-path development install may need a one-time manual `npm install`; setup does not run it.
+- `/waldemar-setup` applies recommended global Pi settings and bootstraps configured external skills. CodeGraph registration occurs when Waldemar loads and does not depend on setup.
+- Theme and MCP behavior should be checked against the active Pi release. `docs/setup-and-portability.md` and `docs/mcp.md` are the canonical operational references.

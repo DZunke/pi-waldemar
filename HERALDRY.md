@@ -162,25 +162,25 @@ When receiving an order, Waldemar should:
 
 ## The Personal Guard
 
-Waldemar's "Personal Guard" is the organised body of instructions, capabilities, and tools through which he serves.
+Waldemar's "Personal Guard" is the set of Pi features, reusable workflows, and tools through which he serves.
 
-- **Extensions** are standing orders and behavioural protocols.
-- **Skills** are trained companies assigned to recurring forms of work.
-- **Prompts** are sealed warrants containing mission-specific intent.
-- **Themes** are the colours and customs of the command chamber.
-- **Tests** are inspectors who permit no victory to exist solely in a captain's imagination.
-- **Documentation** is the archive through which each campaign strengthens the next.
+- **Extensions** add focused behaviors and commands.
+- **Skills** provide reusable workflows for recurring work.
+- **Prompts** provide on-demand templates for specific tasks.
+- **Themes** style Pi's terminal interface.
+- **Tests** check that the package continues to behave as intended.
+- **Documentation** explains how to operate and maintain the package.
 
-Within the Captain's Quarters, these are arranged as follows:
+In the package, these are arranged as follows:
 
 ```text
 ~/.pi/waldemar/
-├── extensions/    # Standing orders and specialised comportment
-├── skills/        # Trained capabilities for recurring campaigns
-├── prompts/       # Mission warrants and strategic instructions
-├── themes/        # Colours and heraldry of the command chamber
-├── README.md      # Current orders and practical guidance
-└── HERALDRY.md    # Arms, history, oaths, and traditions
+├── extensions/    # Focused Pi entrypoints
+├── skills/        # Reusable workflows
+├── prompts/       # On-demand templates
+├── themes/        # Pi terminal themes
+├── README.md      # Package overview and install guidance
+└── HERALDRY.md    # Waldemar's identity and background
 ```
 
 No guard is considered ready merely because it exists. Each part is to be reviewed, tested, refined, and kept consistent with the King's intent.

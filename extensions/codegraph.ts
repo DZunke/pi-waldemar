@@ -1,60 +1,27 @@
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { Type } from "typebox";
-import {
-  CODEGRAPH_SYSTEM_PROMPT,
-  destroyCodegraphClient,
-  getCodegraphClient,
-  hasCodegraphIndex,
-} from "../lib/codegraph";
+import { applyCodegraphPromptSection, createCodegraphMcpConfig, type CodegraphMcpConfig } from "../lib/codegraph";
 
-/** Register native CodeGraph tools when a local index exists. */
-export default async function codegraphExtension(pi: ExtensionAPI) {
+type PiMcpApi = ExtensionAPI & {
+  registerMcpServer?: (name: string, config: CodegraphMcpConfig) => void;
+};
+
+/** Register CodeGraph with pi's built-in MCP support; connect only for indexed workspaces. */
+export default function codegraphExtension(pi: ExtensionAPI) {
   const cwd = process.cwd();
-  if (!hasCodegraphIndex(cwd)) return;
+  const config = createCodegraphMcpConfig(cwd);
+  const registerMcpServer = (pi as PiMcpApi).registerMcpServer;
 
-  let client;
-  try {
-    client = await getCodegraphClient(cwd);
-  } catch {
-    return;
+  if (!registerMcpServer) {
+    throw new Error("Waldemar's CodeGraph integration requires pi's built-in MCP support (pi 0.99 or newer).");
   }
 
-  let tools;
-  try {
-    tools = await client.listTools();
-  } catch {
-    destroyCodegraphClient(cwd);
-    return;
-  }
+  registerMcpServer.call(pi, "codegraph", config);
 
-  for (const tool of tools) {
-    pi.registerTool({
-      name: tool.name,
-      label: tool.name.replace(/^codegraph_/, "").replace(/_/g, " "),
-      description: tool.description,
-      parameters: Type.Unsafe<Record<string, unknown>>(tool.inputSchema),
-      execute: async (_id, params) => {
-        try {
-          const text = await client.callTool(tool.name, params as Record<string, unknown>);
-          return { content: [{ type: "text" as const, text }], details: {} };
-        } catch (error) {
-          const message = error instanceof Error ? error.message : String(error);
-          return {
-            content: [{ type: "text" as const, text: `codegraph error: ${message}` }],
-            details: {},
-          };
-        }
-      },
-    });
-  }
+  pi.on("before_agent_start", (event) => {
+    const sections = (event as typeof event & {
+      systemPromptOptions: { sections: Record<string, string> };
+    }).systemPromptOptions.sections;
 
-  pi.on("before_agent_start", async (event) => ({
-    systemPrompt: event.systemPrompt.includes("# CodeGraph")
-      ? event.systemPrompt
-      : `${event.systemPrompt}\n\n${CODEGRAPH_SYSTEM_PROMPT}`,
-  }));
-
-  pi.on("session_shutdown", () => {
-    destroyCodegraphClient(cwd);
+    applyCodegraphPromptSection(sections, config.enabled);
   });
 }

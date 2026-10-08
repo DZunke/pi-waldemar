@@ -10,12 +10,12 @@ This repository packages the Waldemar pi agent. Treat it as a portable personal-
 - Shared constants, helpers, and types belong outside `extensions/`, preferably in `lib/`, so pi does not try to load helper files as extensions.
 - Prefer this structure:
   - `extensions/persona.ts` — system prompt/persona rules
-  - `extensions/setup.ts` — machine bootstrap and settings reconciliation
-  - `extensions/startup.ts` — greeting and lifecycle UI status
-  - `extensions/sessions.ts` — session/campaign commands
-  - `extensions/inventory.ts` — installed package/MCP/skill inspection
-  - `extensions/customize.ts` — customization guidance
-  - `extensions/status.ts` — operational status report
+  - `extensions/machine-setup.ts` — machine bootstrap and settings reconciliation
+  - `extensions/startup-status.ts` — startup note and lifecycle status
+  - `extensions/package-inventory.ts` — installed package/MCP/skill inspection
+  - `extensions/readiness-check.ts` — package and machine readiness
+  - `extensions/tui-presence.ts` — TUI title, header, footer, and working indicator
+  - `agents/*.md` — focused child-agent roles; Waldemar remains the lead coordinator
   - `lib/waldemar.ts` — shared constants and helper functions
 
 ## Documentation policy
@@ -39,7 +39,7 @@ This repository packages the Waldemar pi agent. Treat it as a portable personal-
   - the relevant `docs/extensions/*.md` file for every changed extension
 - When adding, removing, or changing commands, update `docs/commands.md`, `README.md` if it affects the short command list, and the relevant extension docs in the same change.
 - When adding, removing, or changing prompt templates, update `docs/prompts.md` in the same change.
-- When changing readiness behavior, keep `/waldemar-doctor` as the single health-check authority; keep `/waldemar-inventory` factual and `/waldemar-status` lightweight.
+- When changing readiness behavior, keep `/waldemar-doctor` as the single health-check authority and `/waldemar-inventory` factual.
 - Before committing documentation changes, verify the edited file's level:
   - README: orientation and links, minimal duplication
   - `docs/*.md`: canonical durable details
