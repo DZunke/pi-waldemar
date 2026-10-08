@@ -1,4 +1,5 @@
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
+import { createNotificationGate } from "../lib/notification-gate";
 import {
   buildWaldemarNotification,
   burntToastInstallGuidance,
@@ -22,6 +23,7 @@ export default function desktopNotificationsExtension(pi: ExtensionAPI) {
   let lastAssistantText = "";
   let sawAssistantReply = false;
   let lastUserActivityAt = Date.now();
+  const notificationGate = createNotificationGate();
 
   pi.registerCommand("waldemar-notifications", {
     description: "Configure Waldemar desktop notifications for questions and settled work",
@@ -48,8 +50,12 @@ export default function desktopNotificationsExtension(pi: ExtensionAPI) {
     },
   });
 
-  pi.on("input", async () => {
-    lastUserActivityAt = Date.now();
+  pi.on("input", async (event) => {
+    // Extension-generated follow-ups are not new user activity and must not re-arm the gate.
+    if (event.source !== "extension") {
+      lastUserActivityAt = Date.now();
+      notificationGate.reset();
+    }
     return { action: "continue" as const };
   });
 
@@ -75,14 +81,14 @@ export default function desktopNotificationsExtension(pi: ExtensionAPI) {
 
     const body = summarizeNotificationBody(lastAssistantText);
     if (looksLikeQuestion(lastAssistantText)) {
-      if (settings.onQuestions) {
+      if (settings.onQuestions && notificationGate.claim()) {
         const payload = buildWaldemarNotification("question", body);
         await sendDesktopNotification(payload.title, payload.body);
       }
       return;
     }
 
-    if (settings.onSettled) {
+    if (settings.onSettled && notificationGate.claim()) {
       const payload = buildWaldemarNotification("settled", body);
       await sendDesktopNotification(payload.title, payload.body);
     }

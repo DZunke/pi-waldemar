@@ -19,9 +19,10 @@ Edit the concise startup message and lifecycle labels in `extensions/startup-sta
 
 - Command surface: `extensions/desktop-notifications.ts`
 - Transport and persistence helpers: `lib/notifications.ts`
+- One-alert-per-input gate: `lib/notification-gate.ts`
 - User preference file: `~/.pi/agent/waldemar-notifications.json`
 
-Use `/waldemar-notifications` to switch between `all`, `questions`, `settled`, `off`, and `test` without editing files. You can also tune the idle gate with `/waldemar-notifications idle <seconds>`, for example `/waldemar-notifications idle 30`.
+Use `/waldemar-notifications` to switch between `all`, `questions`, `settled`, `off`, and `test` without editing files. You can also tune the idle gate with `/waldemar-notifications idle <seconds>`, for example `/waldemar-notifications idle 30`. Waldemar sends at most one desktop notification per interactive or RPC user input; another user input re-arms notifications, while extension-generated follow-ups do not.
 
 On WSL, Waldemar prefers Windows toast notifications through the BurntToast PowerShell module. If `/waldemar-notifications test` reports that BurntToast is missing, install it in Windows PowerShell with `Install-Module -Name BurntToast -Scope AllUsers` or `-Scope CurrentUser`.
 

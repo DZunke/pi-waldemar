@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
 import { applyCodegraphPromptSection, createCodegraphMcpConfig } from "../lib/codegraph.ts";
+import { createNotificationGate } from "../lib/notification-gate.ts";
 import { mergeDefaultTools, removeLegacyCodegraphMcpEntry } from "../lib/setup.ts";
 
 const root = path.resolve(import.meta.dirname, "..");
@@ -87,6 +88,14 @@ test("Waldemar delegates selectively while retaining coordination and QA", () =>
   assert.match(persona, /Do not imply direct peer conversation/);
   assert.match(persona, /Never hardcode model IDs, reasoning settings, or thread limits/);
   assert.doesNotMatch(persona, /gpt-6-(?:luna|sol|astra)/i);
+});
+
+test("desktop notification gate allows one alert until the next user input", () => {
+  const gate = createNotificationGate();
+  assert.equal(gate.claim(), true);
+  assert.equal(gate.claim(), false);
+  gate.reset();
+  assert.equal(gate.claim(), true);
 });
 
 test("Falkensee light and dark themes share valid color roles", () => {
